@@ -28,29 +28,16 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@vendor/almasaeed201
 <body class="hold-transition skin-red-light sidebar-mini">
 <?php $this->beginBody() ?>
 <div class="wrapper">
-
-    <?php if(\Yii::$app->user->identity):?>
-    <?= $this->render(
-        'header.php',
-        ['directoryAsset' => $directoryAsset]
-    ) ?>
-
-    <?= $this->render(
-        'left.php',
-        ['directoryAsset' => $directoryAsset]
-    )
-    ?>
-    <?= $this->render(
-        'content.php',
-        ['content' => $content, 'directoryAsset' => $directoryAsset]
-    ) ?>
-  <?php else:?>
-    <?= $this->render(
-        'main-login.php',
-        ['content' => $content,'directoryAsset' => $directoryAsset]
-    )
-    ?>
-  <?php endif;?>
+<?php 
+    if(\Yii::$app->user->identity){
+        echo $this->render('header.php',['directoryAsset' => $directoryAsset]);
+        echo $this->render('left.php',['directoryAsset' => $directoryAsset]);
+        echo $this->render('content.php',['content' => $content, 'directoryAsset' => $directoryAsset]);
+    }
+    else{
+        echo $this->render('main-login.php',['content' => $content,'directoryAsset' => $directoryAsset]);
+    }
+?>
 
 </div>
 
