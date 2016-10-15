@@ -39,7 +39,7 @@ class BaseController extends \yii\web\Controller
                         'allow' => true,
                         'roles' => ['serviceAdmin', 'serviceManager'],
                         //'roles' => ['@']
-                        'actions' => ['logout', 'index', 'update', 'create', 'view'],
+                        'actions' => ['index', 'update', 'create', 'login', 'view','product','order','profile','user','payments'],
                     ],
                     [
                         'allow' => true,

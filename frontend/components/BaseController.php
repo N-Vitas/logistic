@@ -92,7 +92,7 @@ class BaseController extends \yii\web\Controller
                         'allow' => true,
                         'roles' => ['clientAdmin', 'clientManager', 'serviceAdmin'],
                         //'roles' => ['@']
-                        'actions' => ['logout', 'index', 'update', 'create', 'view','product'],
+                        'actions' => ['index', 'logout', 'update', 'create', 'login', 'view','product','order','profile','user','payments'],
                     ],
                     [
                         'allow' => true,
