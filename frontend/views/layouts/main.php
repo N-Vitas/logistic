@@ -42,13 +42,13 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@vendor/almasaeed201
         'content.php',
         ['content' => $content, 'directoryAsset' => $directoryAsset]
     ) ?>
-  <? else:?>
+  <?php else:?>
     <?= $this->render(
         'main-login.php',
         ['content' => $content,'directoryAsset' => $directoryAsset]
     )
     ?>
-  <? endif;?>
+  <?php endif;?>
 
 </div>
 
