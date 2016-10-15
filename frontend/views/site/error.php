@@ -9,7 +9,7 @@ use yii\helpers\Html;
 
 $this->title = $name;
 ?>
-<? if(\Yii::$app->user->identity):?>
+<?php if(\Yii::$app->user->identity):?>
     <div class="site-error">
 
         <h1><?= Html::encode($this->title) ?></h1>
@@ -24,7 +24,7 @@ $this->title = $name;
             Please contact us if you think this is a server error. Thank you.
         </p>
     </div>
-<? else:?>
+<?php else:?>
   <div class="login-box">
     <?= \common\widgets\Alert::widget(); ?>
     <div class="login-logo">
@@ -43,4 +43,4 @@ $this->title = $name;
         </div>
     </div>
   </div><!-- /.login-box -->
-<? endif;?>
+<?php endif;?>
