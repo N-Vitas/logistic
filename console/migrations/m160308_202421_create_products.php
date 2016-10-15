@@ -12,7 +12,7 @@ class m160308_202421_create_products extends Migration
             'client_id' => $this->integer()->notNull(),
             'article' => $this->string()->notNull(),
             'barcode' => $this->string()->notNull(),
-            'balance' => $this->integer()->notNull(),
+            'balance' => $this->string()->notNull(),
             'created_at' => $this->timestamp()->defaultExpression('CURRENT_TIMESTAMP')
         ]);
     }
