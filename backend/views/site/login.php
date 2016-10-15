@@ -53,9 +53,6 @@ $fieldOptions2 = [
 
         <?php ActiveForm::end(); ?>
 
-
-        <a href="#">Забыл пароль</a><br>
-
     </div>
     <!-- /.login-box-body -->
 </div><!-- /.login-box -->

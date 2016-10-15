@@ -119,10 +119,8 @@ if ($countDelivering) {
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <?php if ($user->image) : ?>
-                            <img src="<?= \yii\helpers\Url::to('@web/' . $user->image)?>" class="user-image" alt="User Image"/>
-                        <?php endif; ?>
-
-                        <?php if (!$user->image) : ?>
+                            <img src="<?= \yii\helpers\Url::to('@web' . $user->image)?>" class="user-image" alt="User Image"/>
+                        <?php else: ?>
                             <img src="<?= $directoryAsset ?>/img/user2-160x160.jpg" class="user-image" alt="User Image"/>
                         <?php endif; ?>
                         <span class="hidden-xs"><?= $user->username ?></span>
@@ -132,10 +130,8 @@ if ($countDelivering) {
                         <li class="user-header">
 
                             <?php if ($user->image) : ?>
-                                <img src="<?= \yii\helpers\Url::to('@web/' . $user->image)?>" class="img-circle" alt="User Image"/>
-                            <?php endif; ?>
-
-                            <?php if (!$user->image) : ?>
+                                <img src="<?= \yii\helpers\Url::to('@web' . $user->image)?>" class="img-circle" alt="User Image"/>
+                            <?php else: ?>
                                 <img src="<?= $directoryAsset ?>/img/user2-160x160.jpg" class="img-circle" alt="User Image"/>
                             <?php endif; ?>
 

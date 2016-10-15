@@ -79,7 +79,7 @@ class BaseController extends \yii\web\Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['index', 'logout', 'update', 'create', 'login', 'view'],
+                'only' => ['index', 'logout', 'update', 'create', 'login', 'view','product','order','profile','user','payments'],
                 'rules' => [
                     [
                         'actions' => ['login'],
@@ -92,7 +92,7 @@ class BaseController extends \yii\web\Controller
                         'allow' => true,
                         'roles' => ['clientAdmin', 'clientManager', 'serviceAdmin'],
                         //'roles' => ['@']
-                        'actions' => ['logout', 'index', 'update', 'create', 'view'],
+                        'actions' => ['logout', 'index', 'update', 'create', 'view','product'],
                     ],
                     [
                         'allow' => true,
@@ -100,6 +100,19 @@ class BaseController extends \yii\web\Controller
                         'actions' => ['profile']
                     ]
                 ]
+            ],
+        ];
+    }
+
+    public function actions()
+    {
+        return [
+            'error' => [
+                'class' => 'yii\web\ErrorAction',
+            ],
+            'captcha' => [
+                'class' => 'yii\captcha\CaptchaAction',
+                'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
             ],
         ];
     }

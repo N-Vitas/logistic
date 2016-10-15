@@ -19,27 +19,14 @@ class UserController extends BaseController
 {
     public function behaviors()
     {
-        return [
+        return array_merge(parent::behaviors(), [
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['post'],
                 ],
-            ],
-            'access' => [
-                'class' => AccessControl::className(),
-                'only' => ['index', 'logout', 'update', 'create', 'view'],
-                'rules' =>[
-                    // Разрешаем доступ нужным пользователям.
-                    [
-                        'allow' => true,
-                        'roles' => ['clientAdmin'],
-                        //'roles' => ['@']
-                        'actions' => ['index', 'update', 'create', 'view'],
-                    ]
-                ]
-            ],
-        ];
+            ]
+        ]);
     }
 
     /**

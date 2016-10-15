@@ -5,8 +5,6 @@
 use yii\grid\GridView;
 
 $this->title = "Главная";
-
-echo Yii::$app->controller->layout;
 ?>
 <div class="site-index">
     <div>

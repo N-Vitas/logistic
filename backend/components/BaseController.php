@@ -26,7 +26,7 @@ class BaseController extends \yii\web\Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['index', 'logout', 'update', 'create', 'login', 'view'],
+                'only' => ['index', 'update', 'create', 'login', 'view','product','order','profile','user','payments'],
                 'rules' =>[
                     [
                         'actions' => [ 'login' ],

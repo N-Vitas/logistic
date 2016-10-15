@@ -29,6 +29,7 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@vendor/almasaeed201
 <?php $this->beginBody() ?>
 <div class="wrapper">
 
+    <? if(\Yii::$app->user->identity):?>
     <?= $this->render(
         'header.php',
         ['directoryAsset' => $directoryAsset]
@@ -39,11 +40,17 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@vendor/almasaeed201
         ['directoryAsset' => $directoryAsset]
     )
     ?>
-
     <?= $this->render(
         'content.php',
         ['content' => $content, 'directoryAsset' => $directoryAsset]
     ) ?>
+  <? else:?>
+    <?= $this->render(
+        'main-login.php',
+        ['content' => $content,'directoryAsset' => $directoryAsset]
+    )
+    ?>
+  <? endif;?>
 
 </div>
 

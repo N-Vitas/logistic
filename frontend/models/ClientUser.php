@@ -30,6 +30,12 @@ class ClientUser extends \common\models\User
     {
         return array_merge(parent::rules(), [
             [['role', 'username', 'email'], 'string'],
+            [['username', 'email'], 'required'],
+            ['password', 'string', 'min' => 6, 'tooShort' => 'Минимальная длина пароля - 6 символов'],
+            [['imageFile'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg'],
+            ['imageFile', 'safe'],
+            ['passwordCompare', 'compare', 'compareAttribute' => 'password',
+                'message' => 'Поле "{attribute}" должно совпадать с полем "{compareValueOrAttribute}"'],
 
         ]);
     }
@@ -48,12 +54,12 @@ class ClientUser extends \common\models\User
         if ($insert) {
             $this->client_id = \Yii::$app->user->getIdentity()->client_id;
         }
-        if ($this->imageFile) {
-            $fileName = 'uploads/' . $this->imageFile->baseName . '.' . $this->imageFile->extension;
-            if ($this->imageFile->saveAs($fileName)) {
-                $this->image = $fileName;
-            }
-        }
+        // if ($this->imageFile) {
+        //     $fileName = 'uploads/' . $this->imageFile->baseName . '.' . $this->imageFile->extension;
+        //     if ($this->imageFile->saveAs($fileName)) {
+        //         $this->image = $fileName;
+        //     }
+        // }
         return parent::beforeSave($insert);
     }
 

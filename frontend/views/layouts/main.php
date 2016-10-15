@@ -12,7 +12,6 @@ if (class_exists('frontend\assets\AppAsset')) {
 }
 
 dmstr\web\AdminLteAsset::register($this);
-
 $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@vendor/almasaeed2010/adminlte/dist');
 ?>
 <?php $this->beginPage() ?>
@@ -28,7 +27,7 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@vendor/almasaeed201
 <body class="hold-transition skin-blue-light sidebar-mini">
 <?php $this->beginBody() ?>
 <div class="wrapper">
-
+  <? if(\Yii::$app->user->identity):?>
     <?= $this->render(
         'header.php',
         ['directoryAsset' => $directoryAsset]
@@ -39,11 +38,17 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@vendor/almasaeed201
         ['directoryAsset' => $directoryAsset]
     )
     ?>
-
     <?= $this->render(
         'content.php',
         ['content' => $content, 'directoryAsset' => $directoryAsset]
     ) ?>
+  <? else:?>
+    <?= $this->render(
+        'main-login.php',
+        ['content' => $content,'directoryAsset' => $directoryAsset]
+    )
+    ?>
+  <? endif;?>
 
 </div>
 

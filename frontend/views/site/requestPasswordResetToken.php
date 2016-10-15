@@ -7,25 +7,38 @@
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
-$this->title = 'Request password reset';
+$this->title = 'Форма востановления пароля';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="site-request-password-reset">
-    <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>Please fill out your email. A link to reset password will be sent there.</p>
 
-    <div class="row">
-        <div class="col-lg-5">
-            <?php $form = ActiveForm::begin(['id' => 'request-password-reset-form']); ?>
-
-                <?= $form->field($model, 'email')->textInput(['autofocus' => true]) ?>
-
-                <div class="form-group">
-                    <?= Html::submitButton('Send', ['class' => 'btn btn-primary']) ?>
-                </div>
-
-            <?php ActiveForm::end(); ?>
-        </div>
+<div class="login-box">
+    <?= \common\widgets\Alert::widget(); ?>
+    <div class="login-logo">
+        <a href="#"><b>Cabinet</b>Clicklog</a>
     </div>
-</div>
+    <!-- /.login-logo -->
+    <div class="login-box-body">
+        <p class="login-box-msg">Восстановление пароля</p>
+
+        <?php $form = ActiveForm::begin(['id' => 'request-password-reset-form']); ?>
+
+            <?= $form->field($model, 'email')->textInput(['autofocus' => true]) ?>
+            <div class="row">
+                <div class="col-xs-6">
+                    <?= Html::submitButton('Отправить', ['class' => 'btn btn-primary btn-block btn-flat']) ?>
+                </div>
+                <!-- /.col -->
+                <div class="col-xs-6">
+                    <a href="/site/login" class="btn btn-primary btn-block btn-flat">Вернуться назад</a>
+                </div>
+                <!-- /.col -->
+            </div>
+
+        <?php ActiveForm::end(); ?>
+
+
+
+    </div>
+    <!-- /.login-box-body -->
+</div><!-- /.login-box -->

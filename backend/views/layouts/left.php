@@ -10,11 +10,9 @@ $user = \Yii::$app->user->identity; ?>
             <div class="pull-left image">
 
                 <?php if ($user->image) : ?>
-                    <img src="<?= \yii\helpers\Url::to('@web/' . $user->image)?>" class="img-circle" alt="User Image"/>
-                <?php endif; ?>
-
-                <?php if (!$user->image) : ?>
-                    <img src="<?= $directoryAsset ?>/img/user2-160x160.jpg" class="img-circle" alt="User Image"/>
+                    <img src="<?= \yii\helpers\Url::to('@web' . $user->image)?>" class="img-circle" alt="User Image"/>
+                <?php else: ?>
+                    <img src="/images/user2-160x160.jpg" class="img-circle" alt="User Image"/>
                 <?php endif; ?>
             </div>
             <div class="pull-left info">
@@ -52,7 +50,7 @@ $user = \Yii::$app->user->identity; ?>
                         'icon' => 'fa fa-gear',
                         'url' => '#',
                         'items' => [
-                            ['label' => 'Настройки сервиса', 'icon' => 'fa fa-gear', 'url' => ['/settings']],
+                            // ['label' => 'Настройки сервиса', 'icon' => 'fa fa-gear', 'url' => ['/settings']],
                             ['label' => 'Профиль', 'icon' => 'fa fa-user', 'url' => ['site/profile']],
                             ['label' => 'Города', 'icon' => 'fa fa-building', 'url' => ['/city']],
 

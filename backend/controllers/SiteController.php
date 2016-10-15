@@ -23,20 +23,6 @@ class SiteController extends BaseController
     public function behaviors()
     {
         return array_merge(parent::behaviors(), [
-            'access' => [
-                'class' => AccessControl::className(),
-                'rules' => [
-                    [
-                        'actions' => ['login', 'error'],
-                        'allow' => true,
-                    ],
-                    [
-                        'actions' => ['logout', 'index', 'profile', 'export-orders'],
-                        'allow' => true,
-                        'roles' => ['@'],
-                    ],
-                ],
-            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -114,10 +100,22 @@ class SiteController extends BaseController
         $user = ServiceUser::findOne($user_id);
 
         if (Yii::$app->request->isPost) {
-            $user->imageFile = UploadedFile::getInstance($user, 'imageFile');
-
-            if ($user->load(Yii::$app->request->post()) && $user->save()) {
-                \Yii::$app->session->setFlash('success', 'Профиль успешно обновлен');
+            if ($user->load(Yii::$app->request->post())) {
+                $user->imageFile = UploadedFile::getInstance($user, 'imageFile');
+                if($user->imageFile){
+                    $basePath = \Yii::getAlias('@frontend/web/upload/').$user->imageFile->name;
+                    $uri = '/upload/'.$user->imageFile->name;
+                    // if(!is_dir($dirPath)){
+                    //     var_dump(is_dir($dirPath));die;
+                    //     mkdir($dirPath,0777,true);
+                    // }
+                    move_uploaded_file($user->imageFile->tempName, $basePath);
+                    $user->image = $uri;          
+                }
+                if($user->save(false)){
+                    // \Yii::$app->session->setFlash('success', 'Профиль успешно обновлен');
+                    $this->refresh();
+                }
             }
         }
         return $this->render('@backend/views/user/profile', [
