@@ -13,7 +13,8 @@ $notificationsCount = 0;
 $client = \Yii::$app->controller->client;
 
 $lowProducts = \Yii::$app->controller->settings->low_products;
-
+$countLowProducts = 0;
+$countEnded = 0;
 $products = Product::find()->where(['client_id' => $client->is_id])->all();
 foreach ($products as $product) {
     $balance = $product->getBalance()->one();
