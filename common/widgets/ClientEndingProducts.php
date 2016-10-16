@@ -23,6 +23,8 @@ class ClientEndingProducts extends Widget
 
     private $endingProducts = [];
     private $endedProducts = [];
+    private $endingProductsCount = 0;
+    private $endedProductsCount = 0;
 
     public function init()
     {
@@ -32,20 +34,22 @@ class ClientEndingProducts extends Widget
         if (empty($this->client) && $this->client_id) {
             $this->client = Client::find()->where(['id' => $this->client_id])->one();
         }
-
-        $this->endingProducts = Product::find()
-//            ->where(['<', 'balance', 20])
-            ->where(['>', 'balance', 0])
-            ->andWhere(['client_id' => $this->client->is_id])
+        $products = Product::find()->where(['client_id' => $this->client->is_id])
             ->orderBy('balance ASC')
-            ->limit(10)
             ->all();
-
-        $this->endedProducts = Product::find()
-            ->where(['balance' => 0])
-            ->andWhere(['client_id' => $this->client->is_id])
-            ->limit(20)
-            ->all();
+        foreach ($products as $product) {
+            $balance = $product->getBalance()->one();
+            if($balance){
+                if($product->balance < $balance->min_balance){
+                    $this->endingProducts[] = $product;
+                    $this->endingProductsCount++;
+                }
+                if($product->balance == 0){
+                    $this->endedProducts[] = $product;
+                    $this->endedProductsCount++;
+                }
+            }
+        }
     }
 
     public function run()
@@ -55,6 +59,8 @@ class ClientEndingProducts extends Widget
             [
                 'endingProducts' => $this->endingProducts,
                 'endedProducts' => $this->endedProducts,
+                'endingProductsCount' => $this->endingProductsCount,
+                'endedProductsCount' => $this->endedProductsCount,
             ]
         );
     }

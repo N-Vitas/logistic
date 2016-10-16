@@ -37,9 +37,9 @@ class OrderController extends BaseController
         $searchModel = new OrderSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams, $this->client->is_id);
 
-        $yesterdayBegin = strtotime(date('Y-m-d') . ' -1 day');
-        $yesterdayEnd = strtotime(date('Y-m-d') . '');
-
+        $yesterdayBegin = date('Y-m-d H:i:s',mktime(date("H"), date("i"), date("s"), date("m")  , date("d")-1, date("Y")));// strtotime(date('Y-m-d') . ' -1 day');
+        $yesterdayEnd = date('Y-m-d H:i:s',mktime(date("H"), date("i"), date("s"), date("m")  , date("d"), date("Y")));//strtotime(date('Y-m-d') . '');
+        
         $deliveredYesterday = Order::find()
             ->where(['between', 'delivery_date', $yesterdayBegin, $yesterdayEnd])
             ->andWhere(['client_id' => $this->client->is_id])
@@ -51,10 +51,9 @@ class OrderController extends BaseController
             ->andWhere(['client_id' => $this->client->is_id])
             ->andWhere(['status' => Order::STATUS_COMPLETE])
             ->count();
-
         $toDeliver = Order::find()
             ->andWhere(['client_id' => $this->client->is_id])
-            ->where(['in', 'status', Order::$activeStatuses])
+            ->where(['in', 'status', Order::STATUS_DELIVERING])
             ->count();
 
         return $this->render('index', [

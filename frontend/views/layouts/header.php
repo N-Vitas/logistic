@@ -170,6 +170,9 @@ if ($countDelivering) {
                     </ul>
                 </li>
 
+                <a href="#" class="sidebar-toggle" data-toggle="control-sidebar" role="button">
+                    <span class="sr-only">Toggle navigation</span>
+                </a>
             </ul>
         </div>
     </nav>

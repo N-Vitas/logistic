@@ -10,12 +10,12 @@
     <div class="col-md-6">
         <div class="alert alert-warning">
 
-            <a class="accordion-toggle" role="button" data-toggle="collapse" href="#ending-products-collapse"
+            <a class="accordion-toggle collapsed" role="button" data-toggle="collapse" href="#ending-products-collapse"
                aria-expanded="false" aria-controls="ending-products-collapse">
-                <i class="fa fa-sort-numeric-desc"></i> Заканчивающийся товар
+                <i class="fa fa-sort-numeric-desc"></i> Заканчивающихся товаров <?= $endingProductsCount ? '('.$endingProductsCount.')':'нет';?>
             </a>
 
-            <div class="collapse in" id="ending-products-collapse" aria-expanded="true">
+            <div class="collapse" id="ending-products-collapse" aria-expanded="true">
                 <table class="table">
                     <thead>
                     <tr>
@@ -39,11 +39,11 @@
     <div class="col-md-6">
         <div class="alert alert-danger">
 
-            <a class="accordion-toggle" role="button" data-toggle="collapse" href="#ended-products-collapse"
+            <a class="accordion-toggle collapsed" role="button" data-toggle="collapse" href="#ended-products-collapse"
                aria-expanded="false" aria-controls="ended-products-collapse">
-                <i class="fa fa-times"></i> Закончившийся товар
+                <i class="fa fa-times"></i> Закончившихся товаров <?= $endedProductsCount ? '('.$endedProductsCount.')':'нет';?>
             </a>
-            <div class="collapse in" id="ended-products-collapse" aria-expanded="true">
+            <div class="collapse" id="ended-products-collapse" aria-expanded="true">
 
                 <table class="table">
                     <thead>

@@ -11,8 +11,19 @@ return [
     'name' => 'Сервис ClickLog',
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'backend\controllers',
-    'bootstrap' => ['log'],
-    'modules' => [],
+    'bootstrap' => ['log','gii','debug'],
+    'modules' => [
+        'gii'=>[
+            'class'=>'yii\gii\Module',
+            'allowedIPs' => ['*']
+        ],
+        'debug'=>[
+            'class' => 'yii\debug\Module',
+             // permits any and all IPs
+             // you should probably restrict this
+            'allowedIPs' => ['172.17.0.1']
+        ]
+    ],
     'components' => [
         'user' => [
             'identityClass' => 'common\models\User',

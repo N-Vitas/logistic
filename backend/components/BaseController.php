@@ -26,7 +26,7 @@ class BaseController extends \yii\web\Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['index', 'update', 'create', 'login', 'view','product','order','profile','user','payments'],
+                'only' => ['index', 'update', 'create', 'login', 'view','product','order','profile','user','payments','gii'],
                 'rules' =>[
                     [
                         'actions' => [ 'login' ],
@@ -39,7 +39,7 @@ class BaseController extends \yii\web\Controller
                         'allow' => true,
                         'roles' => ['serviceAdmin', 'serviceManager'],
                         //'roles' => ['@']
-                        'actions' => ['index', 'update', 'create', 'login', 'view','product','order','profile','user','payments'],
+                        'actions' => ['index', 'update', 'create', 'login', 'view','product','order','profile','user','payments','gii'],
                     ],
                     [
                         'allow' => true,

@@ -53,8 +53,14 @@ class ProductController extends BaseController
      */
     public function actionView($id)
     {
+        $model = $this->findModel($id);
+        $balance = $model->getBalance()->one();
+        if ($balance->load(Yii::$app->request->post()) && $balance->save()) {
+            Yii::$app->session->setFlash('success', 'Критический остаток успешно сохранен.');
+        }
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $model,
+            'balance' => $balance,
         ]);
     }
 
