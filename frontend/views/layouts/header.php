@@ -1,5 +1,6 @@
 <?php
 use yii\helpers\Html;
+use \common\models\Product;
 
 /* @var $this \yii\web\View */
 /* @var $content string */
@@ -12,23 +13,42 @@ $notificationsCount = 0;
 $client = \Yii::$app->controller->client;
 
 $lowProducts = \Yii::$app->controller->settings->low_products;
-$countLowProducts = \common\models\Product::find()
-    ->where(['<', 'balance', $lowProducts])
-    ->count();
+
+$products = Product::find()->where(['client_id' => $client->is_id])->all();
+foreach ($products as $product) {
+    $balance = $product->getBalance()->one();
+    if($balance){
+        if($product->balance < $balance->min_balance){
+            $this->endingProducts[] = $product;
+            $countLowProducts++;
+        }
+        if($product->balance == 0){
+            $this->endedProducts[] = $product;
+            $countEnded++;
+        }
+    }
+}
+
+// $countLowProducts = \common\models\Product::find()
+//     ->where(['<', 'balance', $lowProducts])
+//     ->count();
 
 if ($countLowProducts) {
     $notificationsCount++;
 }
 
-$countEnded = \common\models\Product::find()
-    ->where(['balance' => 0])
-    ->count();
+// $countEnded = \common\models\Product::find()
+//     ->where(['balance' => 0])
+//     ->count();
 if ($countEnded) {
     $notificationsCount++;
 }
 
-$today = strtotime(date('Y-m-d'));
-$tomorrow = strtotime(date('Y-m-d') . ' +1 day');
+// $today = strtotime(date('Y-m-d'));
+// $tomorrow = strtotime(date('Y-m-d') . ' +1 day');
+
+$tomorrow = date('Y-m-d H:i:s',mktime(date("H"), date("i"), date("s"), date("m")  , date("d")+1, date("Y")));// strtotime(date('Y-m-d') . ' -1 day');
+$today = date('Y-m-d H:i:s',mktime(date("H"), date("i"), date("s"), date("m")  , date("d"), date("Y")));//strtotime(date('Y-m-d') . '');
 
 $countDelivered = \common\models\OrderLog::find()
     ->where(['status' => \common\models\Order::STATUS_COMPLETE])
@@ -69,7 +89,9 @@ if ($countDelivering) {
                 <li class="dropdown notifications-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <i class="fa fa-bell-o"></i>
-                        <span class="label label-warning"><?= $notificationsCount ?></span>
+                        <?php if($notificationsCount):?>
+                            <span class="label label-warning"><?= $notificationsCount ?></span>
+                        <?php endif;?>
                     </a>
                     <ul class="dropdown-menu">
                         <li class="header">У вас <?= $notificationsCount ?> уведомлений</li>
