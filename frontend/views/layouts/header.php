@@ -18,12 +18,13 @@ $countEnded = 0;
 $products = Product::find()->where(['client_id' => $client->is_id])->all();
 foreach ($products as $product) {
     $balance = $product->getBalance()->one();
+    $product->balance;
     if($balance){
-        if($product->balance < $balance->min_balance){
+        if((int) preg_replace('/\s/',"",$product->balance) < $balance->min_balance){
             //$this->endingProducts[] = $product;
             $countLowProducts++;
         }
-        if($product->balance == 0){
+        if((int) preg_replace('/\s/',"",$product->balance) == 0){
             //$this->endedProducts[] = $product;
             $countEnded++;
         }

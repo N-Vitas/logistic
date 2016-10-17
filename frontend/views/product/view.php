@@ -35,6 +35,7 @@ $atributes = $model->attributeLabels();
       </tbody>
     </table>    
     <!-- Modal -->
+    <?php if($balance):?>
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -55,5 +56,5 @@ $atributes = $model->attributeLabels();
         </div>
       </div>
     </div>
-
+    <?php endif;?>
 </div>
