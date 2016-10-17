@@ -71,7 +71,9 @@ a.desc:after {
 .sort-ordinal a.desc:after {
     content: "\e156";
 }
-
+.grid-view{
+    overflow-x: scroll;
+}
 .grid-view td {
     white-space: nowrap;
 }
