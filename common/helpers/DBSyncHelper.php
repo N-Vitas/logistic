@@ -54,9 +54,7 @@ class DBSyncHelper
             } else {
                 $updated++;
             }
-
-            $obj->balance = intval(preg_replace('/\s/',"",$a['balance']));//intval($a['balance']);
-
+            $obj->balance = (int) preg_replace('/\D/',"",$a['balance']);           
             $obj->updated_at = time();
 
             if (!$obj->save()) {

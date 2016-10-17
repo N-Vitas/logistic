@@ -40,11 +40,11 @@ class ClientEndingProducts extends Widget
         foreach ($products as $product) {
             $balance = $product->getBalance()->one();
             if($balance){
-                if(preg_replace('/\s/',"",$product->balance) <= $balance->min_balance){
+                if(preg_replace('/\D/',"",$product->balance) <= $balance->min_balance){
                     $this->endingProducts[] = $product;
                     $this->endingProductsCount++;
                 }
-                if(preg_replace('/\s/',"",$product->balance) == 0){
+                if(preg_replace('/\D/',"",$product->balance) == 0){
                     $this->endedProducts[] = $product;
                     $this->endedProductsCount++;
                 }
