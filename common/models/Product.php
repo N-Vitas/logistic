@@ -82,7 +82,11 @@ class Product extends \yii\db\ActiveRecord
 
             $analytics->save();
         }
-        if(!$this->getBalance()->one()){
+        $balance = $this->getBalance()->one();
+        if($balance){
+            $balance->balance = $this->balance;
+            $balance->save();
+        }else{
             $balance = new Balance();
             $balance->product_id = $this->id;
             $balance->balance = $this->balance;
