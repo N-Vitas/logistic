@@ -20,11 +20,11 @@ foreach ($products as $product) {
     $balance = $product->getBalance()->one();
     if($balance){
         if($product->balance < $balance->min_balance){
-            $this->endingProducts[] = $product;
+            //$this->endingProducts[] = $product;
             $countLowProducts++;
         }
         if($product->balance == 0){
-            $this->endedProducts[] = $product;
+            //$this->endedProducts[] = $product;
             $countEnded++;
         }
     }
