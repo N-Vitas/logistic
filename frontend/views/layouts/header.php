@@ -20,7 +20,7 @@ foreach ($products as $product) {
     $balance = $product->getBalance()->one();
     $product->balance;
     if($balance){
-        if((int) preg_replace('/\s/',"",$product->balance) < $balance->min_balance){
+        if((int) preg_replace('/\s/',"",$product->balance) <= $balance->min_balance){
             //$this->endingProducts[] = $product;
             $countLowProducts++;
         }
