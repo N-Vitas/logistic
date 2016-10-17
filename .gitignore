@@ -34,3 +34,4 @@ phpunit.phar
 
 backend/web/uploads
 frontend/web/uploads
+frontend/web/phpMyAdmin

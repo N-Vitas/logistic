@@ -55,7 +55,7 @@ class DBSyncHelper
                 $updated++;
             }
 
-            $obj->balance = intval($a['balance']);
+            $obj->balance = $a['balance'];//intval($a['balance']);
 
             $obj->updated_at = time();
 
