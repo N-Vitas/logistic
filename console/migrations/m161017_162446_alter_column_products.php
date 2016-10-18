@@ -6,7 +6,8 @@ class m161017_162446_alter_column_products extends Migration
 {
     public function up()
     {
-        $this->alterColumn('products', 'balance', $this->char(18));    
+        $this->alterColumn('products', 'balance', $this->integer(11));
+        $this->alterColumn('balance', 'balance', $this->integer(11));    
     }
 
     public function down()
