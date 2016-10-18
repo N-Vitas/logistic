@@ -39,7 +39,6 @@ $this->title = "Отчет по остаткам";
           ]); ?>
       </div>
       <div class="btn-group pull-right">
-        <?= Html::a('Экспорт в XLS', [Url::current(['xls' => true])], ['class' => 'btn btn-info']) ?>
       </div>
       <?php ActiveForm::end() ?>
     </div>
