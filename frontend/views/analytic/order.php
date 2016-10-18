@@ -7,7 +7,7 @@ use yii\grid\GridView;
 
 
 $products = \common\models\Product::find()
-    ->where(['client_id' => Yii::$app->controller->client_id])
+    ->where(['client_id' => Yii::$app->controller->client->is_id])
     ->asArray()
     ->all();
 
@@ -81,41 +81,41 @@ init();
 
 ");
 
-$this->title = "Отчет по платежам";
+$this->title = "Отчет по доставкам";
 ?>
-
-
-<?= $this->render('_client_form'); ?>
-
-
 
 <?php \yii\widgets\ActiveForm::begin([
     'method' => 'get',
-    'action' => \yii\helpers\Url::to(['analyze/payments'])
+    // 'action' => \yii\helpers\Url::to(['analyze/order'])
 ]) ?>
 
     <div class="pull-right">
         <div class="row">
-            <div class="col-md-8">
-                <?= \dosamigos\datepicker\DateRangePicker::widget([
-                    'name' => 'dateFrom',
-                    'value' => !empty($dateFrom) ? $dateFrom : date('Y-m-01'),
-                    'nameTo' => 'dateTo',
-                    'valueTo' => !empty($dateTo) ? $dateTo : date('Y-m-d'),
-                    'labelTo' => 'До',
-                    'clientOptions' => [
-                        'autoclose' => true,
-                        'format' => 'yyyy-mm-dd',
-                    ],
-                ]); ?>
+            <div class="col-md-12">
+                <div class="btn-toolbar">
+                    <div class="btn-group">
+                        <?= \dosamigos\datepicker\DateRangePicker::widget([
+                            'name' => 'dateFrom',
+                            'value' => !empty($dateFrom) ? $dateFrom : date('Y-m-01'),
+                            'nameTo' => 'dateTo',
+                            'valueTo' => !empty($dateTo) ? $dateTo : date('Y-m-d'),
+                            'labelTo' => 'До',
+                            'clientOptions' => [
+                                'autoclose' => true,
+                                'format' => 'yyyy-mm-dd',
+                            ],
+                        ]); ?>
 
-            </div>
+                    </div>
 
-            <div class="col-md-4">
-                <?= \yii\helpers\Html::button('<i class="glyphicon glyphicon-ok"></i> Сформулировать отчет', [
-                    'class' => 'btn btn-success pull-right',
-                    'type' => 'submit'
-                ]) ?>
+                    <div class="btn-group pull-right">
+                        <?= \yii\helpers\Html::button('<i class="glyphicon glyphicon-ok"></i> Сформулировать отчет', [
+                            'class' => 'btn btn-success',
+                            'type' => 'submit'
+                        ]) ?>
+                        <?= \yii\helpers\Html::a('Экспорт в XLS', [\yii\helpers\Url::current(['xls' => true])], ['class' => 'btn btn-info']) ?>
+                    </div>                    
+                </div>
             </div>
         </div>
 
@@ -265,7 +265,6 @@ $this->title = "Отчет по платежам";
 ]) ?>
 
 <?php \yii\widgets\ActiveForm::end() ?>
-<?= $this->render('_xls-button'); ?>
 
     <div class="row">
         <div class="col-md-6">

@@ -43,13 +43,15 @@ class ProductAnalytics extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'product_id' => 'Продукт',
-            'decrease' => 'Уменьшение',
-            'increase' => 'Увеличение',
+            'decrease' => 'Уход',
+            'increase' => 'Приход',
             'created_at' => 'Дата отчета',
             'product_article' => 'Артикуль',
             'product_barcode' => 'Штрих-код',
             'product_code_client' => 'Код клиента',
             'product_title' => 'Наименование',
+            'product_nomenclature' => 'Номенклатура',
+            'product_balance' => 'Остатки на складе',
         ];
     }
 

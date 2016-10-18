@@ -18,11 +18,12 @@ class ProductAnalyzeSearch extends ProductAnalytics
     public $product_barcode;
     public $product_nomenclature;
     public $product_code_client;
+    public $product_balance;
 
     public function rules()
     {
         return array_merge(parent::rules(), [
-            [['product_title', 'product_article', 'product_barcode', 'product_nomenclature', 'product_code_client'], 'string']
+            [['product_title', 'product_article', 'product_barcode', 'product_nomenclature', 'product_code_client','product_balance'], 'string']
         ]);
     }
 
@@ -32,7 +33,8 @@ class ProductAnalyzeSearch extends ProductAnalytics
             'product_article',
             'product_barcode',
             'product_nomenclature',
-            'product_code_client'
+            'product_code_client',
+            'product_balance',
         ]);
     }
 
@@ -50,9 +52,40 @@ class ProductAnalyzeSearch extends ProductAnalytics
             $query->andWhere(['<=', 'product_analytics.created_at', $dateTo]);
         }
         
-        $dataProvider = new ActiveDataProvider(['query' => $query, 'sort' => [
-            'defaultOrder' => ['created_at' => SORT_DESC]
-        ]]);
+        $dataProvider = new ActiveDataProvider(['query' => $query]);
+
+        $dataProvider->setSort([
+            'defaultOrder' => ['created_at' => SORT_DESC],
+            'attributes' => [
+                'increase',
+                'decrease',
+                'created_at',
+                'product_title' => [
+                    'asc' => ['products.title' => SORT_ASC],
+                    'desc' => ['products.title' => SORT_DESC],
+                ], 
+                'product_article' => [
+                    'asc' => ['products.article' => SORT_ASC],
+                    'desc' => ['products.article' => SORT_DESC],
+                ], 
+                'product_barcode' => [
+                    'asc' => ['products.barcode' => SORT_ASC],
+                    'desc' => ['products.barcode' => SORT_DESC],
+                ], 
+                'product_nomenclature' => [
+                    'asc' => ['products.nomenclature' => SORT_ASC],
+                    'desc' => ['products.nomenclature' => SORT_DESC],
+                ], 
+                'product_code_client' => [
+                    'asc' => ['products.code_client' => SORT_ASC],
+                    'desc' => ['products.code_client' => SORT_DESC],
+                ], 
+                'product_balance' => [
+                    'asc' => ['products.balance' => SORT_ASC],
+                    'desc' => ['products.balance' => SORT_DESC],
+                ]
+            ]
+        ]);    
 
         $this->load($post);
 
@@ -70,6 +103,9 @@ class ProductAnalyzeSearch extends ProductAnalytics
         }
         if ($this->product_title) {
             $query->andWhere(['like', 'products.title', $this->product_title]);
+        }
+        if ($this->product_balance) {
+            $query->andWhere(['like', 'products.balance', $this->product_balance]);
         }
 
         return $dataProvider;

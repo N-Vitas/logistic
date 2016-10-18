@@ -8,17 +8,18 @@
 
 namespace frontend\controllers;
 
-
+use Yii;
 use common\models\Order;
 use frontend\components\BaseController;
 use common\models\Client;
 use common\models\NotificationSettings;
 use frontend\models\ClientUser;
 use frontend\models\search\ProductAnalyzeSearch;
+use frontend\models\ProductSearch;
 use yii\data\ActiveDataProvider;
 use yii\helpers\ArrayHelper;
 
-class AnalyzeController extends BaseController
+class AnalyticController extends BaseController
 {
     public $toXls = "";
 
@@ -74,7 +75,8 @@ class AnalyzeController extends BaseController
         ]);
     }
 
-    public function actionProduct($dateFrom = false, $dateTo = false)
+
+    public function actionMotion($dateFrom = false, $dateTo = false)
     {
         $searchModel = new ProductAnalyzeSearch();
 
@@ -94,12 +96,25 @@ class AnalyzeController extends BaseController
             ];
         }
 
-        return $this->render($this->toXls.'product', [
+        return $this->render($this->toXls.'motion', [
             'columns' => $columns,
             'dataProvider' => $dataProvider,
             'searchModel' => $searchModel,
             'dateFrom' => $dateFrom,
             'dateTo' => $dateTo
+        ]);
+    }
+
+    public function actionProduct($dateFrom = false, $dateTo = false)
+    {
+        $searchModel = new ProductSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider->query->andWhere(['client_id' => $this->client->is_id]);
+
+        return $this->render('product', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+            'columns' => $this->showColumns,
         ]);
     }
 

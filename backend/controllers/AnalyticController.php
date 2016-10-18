@@ -8,17 +8,18 @@
 
 namespace backend\controllers;
 
-
+use yii;
 use backend\components\BaseController;
 use common\models\Client;
 use common\models\NotificationSettings;
 use common\models\Order;
 use frontend\models\ClientUser;
 use frontend\models\search\ProductAnalyzeSearch;
+use frontend\models\ProductSearch;
 use yii\data\ActiveDataProvider;
 use yii\helpers\ArrayHelper;
 
-class AnalyzeController extends BaseController
+class AnalyticController extends BaseController
 {
     public $clients;
     public $client_id;
@@ -91,6 +92,35 @@ class AnalyzeController extends BaseController
             'dataProvider' => $dataProvider,
             'dateFrom' => $dateFrom,
             'dateTo' => $dateTo,
+        ]);
+    }
+
+    public function actionMotion($dateFrom = false, $dateTo = false)
+    {
+        $searchModel = new ProductAnalyzeSearch();
+
+        if (isset($_GET['dateFrom']))
+            $dateFrom = $_GET['dateFrom'];
+
+        if (isset($_GET['dateTo']))
+            $dateTo = $_GET['dateTo'];
+
+        $dataProvider = $searchModel->search($this->client->is_id, \Yii::$app->request->get(), $dateFrom, $dateTo);
+
+        $columns = [];
+        foreach ($this->getClientColumns() as $key => $col) {
+            $columns[] = [
+                'value' => 'product.' . $col,
+                'attribute' => 'product_' . $col,
+            ];
+        }
+
+        return $this->render('motion', [
+            'columns' => $columns,
+            'dataProvider' => $dataProvider,
+            'searchModel' => $searchModel,
+            'dateFrom' => $dateFrom,
+            'dateTo' => $dateTo
         ]);
     }
 

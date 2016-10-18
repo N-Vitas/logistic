@@ -62,12 +62,13 @@ $user = \Yii::$app->user->identity; ?>
                         'url' => '#',
                         'items' => [
                             [
-                                'label' => 'Менеджеры', 'icon' => 'fa fa-users', 'url' => ['analyze/user'],
+                                'label' => 'Менеджеры', 'icon' => 'fa fa-users', 'url' => ['/analytic/user'],
                                 'visible' => \Yii::$app->user->can('createClientManager'),
                             ],
-                            ['label' => 'Остатки на складе', 'icon' => 'fa fa-archive', 'url' => ['analyze/product'],],
-                            ['label' => 'Доставка', 'icon' => 'fa fa-truck', 'url' => ['analyze/order'],],
-                            ['label' => 'Наложенные платежи', 'icon' => 'fa fa-dollar', 'url' => ['analyze/payments'],],
+                            ['label' => 'Остатки на складе', 'icon' => 'fa fa-archive', 'url' => ['/analytic/product']],
+                            ['label' => 'Движение на складе', 'icon' => 'glyphicon glyphicon-transfer', 'url' => ['analytic/motion']],
+                            ['label' => 'Доставка', 'icon' => 'fa fa-truck', 'url' => ['/analytic/order'],],
+                            ['label' => 'Наложенные платежи', 'icon' => 'fa fa-dollar', 'url' => ['/analytic/payments']],
 
                         ],
 //                        'visible' =>
