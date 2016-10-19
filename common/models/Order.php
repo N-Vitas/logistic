@@ -29,8 +29,10 @@ class Order extends \yii\db\ActiveRecord
     const STATUS_DELIVERING = 2;
     const STATUS_COMPLETE = 3;
     const STATUS_CANCELED = 4;
+    const STATUS_DEFAULT = -1;
 
     public static $statuses = [
+        self::STATUS_DEFAULT => 'Выберите статус',
         self::STATUS_NEW => 'На оформлении',
         self::STATUS_FILLED => 'Оформлен',
         self::STATUS_DELIVERING => 'Отправлен',
@@ -52,6 +54,7 @@ class Order extends \yii\db\ActiveRecord
     ];
 
     public static $paymentTypes = [
+        -1 => 'Выберите платеж',
         0 => 'Наложенный платеж',
         1 => 'Не получать платеж'
     ];
@@ -92,7 +95,7 @@ class Order extends \yii\db\ActiveRecord
                 }"
             ],
             [['address', 'city_id'], 'safe'],
-            [['client_id', 'status', 'city_id'], 'integer'],
+            [['id','client_id', 'status', 'city_id'], 'integer'],
             [['price'], 'number'],
             [
                 [
