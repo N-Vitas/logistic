@@ -16,11 +16,12 @@ use common\models\Order;
 class DeliverySearch extends Order
 {
   public $orderStatus;
+  public $city;
   public function rules()
   {
       return [
             [['id', 'client_id'], 'integer'],
-            [['created_at', 'client_name', 'address', 'phone', 'email', 'orderStatus','payment_type','delivery_date'], 'safe'],
+            [['created_at', 'client_name', 'address', 'phone', 'email', 'orderStatus','payment_type','delivery_date','city'], 'safe'],
             [['price'], 'number'],
         ];
   }
@@ -100,7 +101,6 @@ class DeliverySearch extends Order
         // $query->where('0=1');
         return $dataProvider;
     }
-    print_r($this->orderStatus);
     $query->andFilterWhere([
         'id' => $this->id,
         'client_id' => $client_id ? $client_id : $this->client_id,
@@ -110,6 +110,15 @@ class DeliverySearch extends Order
     }
     if($this->payment_type != -1){
       $query->andFilterWhere(['payment_type' => $this->payment_type]);
+    }
+    if(!empty($this->city)){
+      $city_id = City::find()->where(['like','title',$this->city]);
+      if($city_id->count()){
+        foreach ($city_id->all() as $model) {          
+          $query->andFilterWhere(['city_id' => $model->id]);
+        }
+      }else
+      $query->andFilterWhere(['city_id' => 0]);
     }
     $query->andFilterWhere(['like', 'id', $this->id])
         ->andFilterWhere(['like', 'client_name', $this->client_name])
