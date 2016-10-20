@@ -17,11 +17,16 @@ class DeliverySearch extends Order
 {
   public $orderStatus;
   public $city;
+  public $filter = 'title';
+  public $date_from;
+  public $date_to;
+  public $product_id;
+  public $products;
   public function rules()
   {
       return [
             [['id', 'client_id'], 'integer'],
-            [['created_at', 'client_name', 'address', 'phone', 'email', 'orderStatus','payment_type','delivery_date','city'], 'safe'],
+            [['products','product_id','created_at', 'date_from','date_to','client_name', 'address', 'phone', 'email', 'orderStatus','payment_type','delivery_date','city','filter'], 'safe'],
             [['price'], 'number'],
         ];
   }
@@ -105,6 +110,9 @@ class DeliverySearch extends Order
         'id' => $this->id,
         'client_id' => $client_id ? $client_id : $this->client_id,
     ]);
+    if(!empty($this->date_to) && !empty($this->date_from)){
+      $query->andFilterWhere(['between', 'created_at', $this->date_from, $this->date_to]);      
+    }
     if($this->orderStatus != -1){
       $query->andFilterWhere(['status' => $this->orderStatus]);
     }
