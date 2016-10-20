@@ -40,9 +40,6 @@ class DeliveryController extends BaseController
             'columns' => $this->showColumns,
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-            'deliveredYesterday' => $deliveredYesterday,
-            'deliveredToday' => $deliveredToday,
-            'toDeliver' => $toDeliver
         ]);
     }
 }
