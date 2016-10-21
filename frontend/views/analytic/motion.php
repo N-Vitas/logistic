@@ -61,7 +61,23 @@ $this->title = "Отчет по остаткам";
           'value' => 'product.nomenclature',
           'attribute' => 'product_nomenclature'
         ],
-        'created_at',
+        [
+            'attribute' => 'created_at',
+            // 'format' => 'raw',
+            'value' => 'created_at',
+            'filter' => DatePicker::widget([
+              'model' => $searchModel,
+              'language' => 'ru',
+              // 'size' => 'lg',
+              'attribute' => 'created_at',
+              // 'template' => '{addon}{input}',
+              'clientOptions' => [
+                  'autoclose' => true,
+                  'format' => 'yyyy-mm-dd',
+                  'clearBtn'=>true,
+              ]
+            ])
+          ],
         'increase',
         'decrease',
       ]

@@ -68,7 +68,7 @@ $this->params['breadcrumbs'][] = $this->title;
 					    'attribute' => 'created_at',
 					    // 'template' => '{addon}{input}',
 			        'clientOptions' => [
-			            'autoclose' => false,
+			            'autoclose' => true,
 			            'format' => 'yyyy-mm-dd',
               		'clearBtn'=>true,
 			        ]
