@@ -23,7 +23,8 @@ class DeliveryStatus extends Widget
   private $deliveredToday;
   private $toDeliver;
 
-  public function init(){
+  public function init()
+  {
     $yesterdayBegin = date('Y-m-d H:i:s',mktime(date("H"), date("i"), date("s"), date("m")  , date("d")-1, date("Y")));
     $yesterdayEnd = date('Y-m-d H:i:s',mktime(date("H"), date("i"), date("s"), date("m")  , date("d"), date("Y")));
     if (!empty($this->client)) {
@@ -50,7 +51,6 @@ class DeliveryStatus extends Widget
 
   public function run()
   {
-
     return $this->render('delivery-status', [
       'deliveredYesterday' => $this->deliveredYesterday,
       'deliveredToday' => $this->deliveredToday,
