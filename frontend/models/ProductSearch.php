@@ -18,8 +18,8 @@ class ProductSearch extends Product
     public function rules()
     {
         return [
-            [['id', 'client_id', 'balance'], 'integer'],
-            [['title', 'article', 'barcode', 'barcode', 'nomenclature', 'code_client'], 'safe'],
+            [['id', 'client_id'], 'integer'],
+            [['title', 'article', 'balance', 'barcode', 'barcode', 'nomenclature', 'code_client'], 'safe'],
         ];
     }
 
@@ -58,7 +58,6 @@ class ProductSearch extends Product
         $query->andFilterWhere([
             'id' => $this->id,
             'client_id' => $this->client_id,
-            'balance' => $this->balance,
             'created_at' => $this->created_at,
         ]);
 
@@ -67,6 +66,7 @@ class ProductSearch extends Product
             ->andFilterWhere(['like', 'nomenclature', $this->nomenclature])
             ->andFilterWhere(['like', 'barcode', $this->barcode])
             ->andFilterWhere(['like', 'code_client', $this->code_client]);
+            ->andFilterWhere(['like', 'balance', $this->balance]);
 
         return $dataProvider;
     }
