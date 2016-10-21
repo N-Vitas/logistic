@@ -44,6 +44,9 @@ class ProductAnalyzeSearch extends ProductAnalytics
         $query = self::find()
             ->where(['client_id' => $client_id])->joinWith('product');
         
+        $query->andWhere(['>', 'product_analytics.increase', 0]);
+        $query->andWhere(['>', 'product_analytics.decrease', 0]);
+
         if (!empty($dateFrom)) {
             $query->andWhere(['>=', 'product_analytics.created_at', $dateFrom]);
         }
