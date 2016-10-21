@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 use \dosamigos\datepicker\DateRangePicker;
+use \dosamigos\datepicker\DatePicker;
 /**
  * @var $dataProvider \yii\data\ActiveDataProvider
  */
