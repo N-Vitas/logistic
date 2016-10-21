@@ -8,8 +8,10 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\helpers\ArrayHelper;
 use dosamigos\datepicker\DateRangePicker;
+use kartik\select2\Select2;
 use yii\widgets\ActiveForm;
 use common\models\Product;
+use yii\web\JsExpression;
 
 $radiolist = [
   'title' => 'По наименованию',
@@ -21,7 +23,6 @@ $products = Product::find()
     ->where(['client_id' => Yii::$app->controller->client->is_id])
     ->asArray()
     ->all();
-$placeholder = ArrayHelper::map($products, 'id', $filterModel->filter);
 switch ($filterModel->filter) {
   case 'code_client':
     $placeholder[0] = 'Выберите код клиента';
@@ -38,40 +39,32 @@ switch ($filterModel->filter) {
     break;
 }
 ksort($placeholder);
-
-$script = <<< JS
-jQuery(document).ready(function() {
-  $('#add-product').click(function(){
-    alert($filterModel->product_id = $('#product :selected').val())
-    if (productId && !productIds[productId]) {
-        $('.no-products').addClass('hidden');
-        productIds[productId] = productId;
-  });
-});
-JS;
-$this->registerJs($script);
 ?>
 <?php Pjax::begin(); ?>
 <div class="row">
   <?php $form = ActiveForm::begin(['method' => 'get']); ?>
   <div class="col-md-8">
-      <div class="btn-group">
-        <?= $form->field($filterModel, 'filter',['template'=>'{input}'])->dropDownList($radiolist, ['class' => 'form-control','id'=>'change', 'onchange'=>'this.form.submit()']); ?>
+      <div class="btn-group btn-block">
+        <?= $form->field($filterModel, 'filter',['template'=>'{label}{input}'])->dropDownList($radiolist, ['class' => 'form-control','id'=>'change', 'onchange'=>'this.form.submit()']); ?>
       </div>
-      <div class="btn-group">
-        <?= $form->field($filterModel, 'product_id',['template'=>'{input}'])->dropDownList($placeholder, ['class' => 'form-control','id'=>'product']); ?>
-      </div>   
-      <div class="btn-group pull-right">
-          <?= Html::button('<i class="glyphicon glyphicon-plus"></i> Добавить', [
-              'class' => 'btn btn-success btn-block add-product',
-              'id' => 'add-product',
-              'type' => 'submit'
-          ]) ?>          
+      <div class="btn-group btn-block">
+        <?= $form->field($filterModel, 'product_id',['template'=>'{label}{input}'])
+          ->widget(Select2::className(), [
+            'data' => ArrayHelper::map($products, 'id', $filterModel->filter),
+            'options' => [
+                'placeholder' => 'Выберите продукт',
+                'multiple' => true,
+            ],
+            'pluginOptions' => [
+              'allowClear' => true,
+            ],            
+          ]);
+        ?>
       </div>           
   </div>
   <div class="col-md-4">
-      <div class="btn-group pull-right">
-        <?= $form->field($filterModel, 'date_from',['template'=>'{input}'])->widget(DateRangePicker::className(), [
+      <div class="btn-group btn-block">
+        <?= $form->field($filterModel, 'date_from',['template'=>'{label}{input}'])->widget(DateRangePicker::className(), [
           'attributeTo' => 'date_to', 
           'form' => $form, // best for correct client validation
           'language' => 'ru',
@@ -85,7 +78,7 @@ $this->registerJs($script);
           ]
         ]); ?>
       </div>
-      <div class="btn-group pull-right">
+      <div class="btn-group btn-block">
           <?= Html::button('<i class="glyphicon glyphicon-ok"></i> Сформулировать отчет', [
               'class' => 'btn btn-success btn-block',
               'type' => 'submit'

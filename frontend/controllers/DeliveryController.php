@@ -15,6 +15,13 @@ use yii\helpers\ArrayHelper;
  */
 class DeliveryController extends BaseController
 {
+
+  public $toXls = "";
+  public function init()
+  {
+    parent::init();
+    $this->toXls = empty($_GET['xls']) ? "" : "xls-";
+  }
   public function behaviors()
   {
     return array_merge(parent::behaviors(), [
@@ -36,7 +43,7 @@ class DeliveryController extends BaseController
     $searchModel = new DeliverySearch();
     $dataProvider = $searchModel->search($this->client->is_id,Yii::$app->request->queryParams);
 
-    return $this->render('index', [
+    return $this->render($this->toXls.'index', [
       'columns' => $this->showColumns,
       'searchModel' => $searchModel,
       'dataProvider' => $dataProvider,

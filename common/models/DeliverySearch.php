@@ -54,7 +54,10 @@ class DeliverySearch extends Order
    */
   public function attributeLabels()
   {
-    return parent::attributeLabels();
+    return array_merge(parent::attributeLabels(),[
+      'date_from' => 'Выбор перриода',
+      'filter' => 'Фильтр продукта',
+    ]);
   }
 
   public function scenarios()
@@ -110,6 +113,9 @@ class DeliverySearch extends Order
         'id' => $this->id,
         'client_id' => $client_id ? $client_id : $this->client_id,
     ]);
+    if(is_array($this->product_id) && count($this->product_id)){
+      $query->joinWith('items')->andWhere(['IN', 'item_id', $this->product_id]);
+    }
     if(!empty($this->date_to) && !empty($this->date_from)){
       $query->andFilterWhere(['between', 'created_at', $this->date_from, $this->date_to]);      
     }

@@ -34,8 +34,7 @@ class Balance extends \yii\db\ActiveRecord
     {
         return [
             [['product_id'], 'required'],
-            [['min_balance','product_id'], 'integer'],
-            [['balance'], 'string', 'max' => 255]
+            [['min_balance','product_id','balance'], 'integer'],
         ];
     }
 

@@ -10,6 +10,8 @@ use yii\widgets\Pjax;
 $this->title = 'Доставка';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+
+<?= \common\widgets\DeliveryStatus::widget(['client_id' => \Yii::$app->user->getIdentity()->client_id]) ?>
 <?= \common\widgets\FilterForm::widget(['filterModel' => $searchModel]) ?>
 <div class="row">
 	<div class="col-md-12">
@@ -91,7 +93,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'format' => 'raw',
             'value' => function($model) {
                 return Html::a('<i class="glyphicon glyphicon-eye-open"></i>',
-                  ['view', 'id' => $model->id],['class' => 'btn btn-info']);                    
+                  ['view', 'id' => $model->id],['class' => 'btn btn-info','target'=>'_blank']);                    
             }
           ]
         ],
