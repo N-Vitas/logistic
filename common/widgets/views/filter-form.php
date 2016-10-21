@@ -40,7 +40,7 @@ switch ($filterModel->filter) {
 }
 ksort($placeholder);
 ?>
-<?php Pjax::begin(); ?>
+<?php ////Pjax::begin(); ?>
 <div class="row">
   <?php $form = ActiveForm::begin(['method' => 'get']); ?>
   <div class="col-md-8">
@@ -88,4 +88,4 @@ ksort($placeholder);
   </div>
   <?php ActiveForm::end(); ?>  
 </div>
-<?php Pjax::end(); ?>
+<?php //Pjax::end(); ?>
