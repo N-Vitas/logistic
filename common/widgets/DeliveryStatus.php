@@ -44,7 +44,7 @@ class DeliveryStatus extends Widget
         ->andWhere(['status' => Order::STATUS_COMPLETE])
         ->count();
     $this->toDeliver = Order::find()
-        ->andWhere(['client_id' => $thisclient->is_id])
+        ->andWhere(['client_id' => $this->client->is_id])
         ->where(['in', 'status', Order::STATUS_DELIVERING])
         ->count();
   }
