@@ -23,7 +23,7 @@ class ProductAnalyzeSearch extends ProductAnalytics
     public function rules()
     {
         return array_merge(parent::rules(), [
-            [['increase','decrease','product_title', 'product_article', 'product_barcode', 'product_nomenclature', 'product_code_client','product_balance'], 'string']
+            [['created_at','increase','decrease','product_title', 'product_article', 'product_barcode', 'product_nomenclature', 'product_code_client','product_balance'], 'string']
         ]);
     }
 
@@ -92,6 +92,9 @@ class ProductAnalyzeSearch extends ProductAnalytics
 
         $this->load($post);
 
+        if ($this->created_at) {
+            $query->andWhere(['like', 'product_analytics.created_at', $this->created_at]);
+        }
         if ($this->increase) {
             $query->andWhere(['like', 'product_analytics.increase', $this->increase]);
         }
