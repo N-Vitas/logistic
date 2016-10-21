@@ -83,7 +83,7 @@ ksort($placeholder);
               'class' => 'btn btn-success btn-block',
               'type' => 'submit'
           ]) ?>
-          <?= Html::a('Экспорт в XLS', [Url::current(['xls' => true])], ['class' => 'btn btn-info btn-block']) ?>
+          <?= Html::a('Экспорт в XLS', [Url::current(['xls' => true])], ['class' => 'btn btn-info btn-block','target'=>'_blank']) ?>
       </div>   
   </div>
   <?php ActiveForm::end(); ?>  

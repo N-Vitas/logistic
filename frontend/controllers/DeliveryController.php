@@ -43,11 +43,11 @@ class DeliveryController extends BaseController
     $searchModel = new DeliverySearch();
     $dataProvider = $searchModel->search($this->client->is_id,Yii::$app->request->queryParams);
 
-    return $this->render($this->toXls.'index', [
+    return $this->render('index', [
       'columns' => $this->showColumns,
       'searchModel' => $searchModel,
       'dataProvider' => $dataProvider,
-      'time' => date('H:i:s'),
+      'toXls' => $this->toXls,
     ]);
   }
 

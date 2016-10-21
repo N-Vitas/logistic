@@ -13,6 +13,36 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <?= \common\widgets\DeliveryStatus::widget(['client_id' => \Yii::$app->user->getIdentity()->client_id]) ?>
 <?= \common\widgets\FilterForm::widget(['filterModel' => $searchModel]) ?>
+<?php
+  if($toXls){
+    \moonland\phpexcel\Excel::export([
+      'models' => $dataProvider->query->all(),
+      'columns' => [
+        'id',
+        'created_at',
+        'city.title',
+        'address',
+        'client_name',
+        'phone',
+        // 'product_id',
+        // 'email:email',
+        'paymentType',
+        'price',
+
+        [
+            'attribute' => 'orderStatus',
+            'format' => 'raw',
+            'value' => function($model) {
+                return $model->getOrderStatus(false);
+            },
+
+        ],
+
+        'delivery_date',
+      ]
+    ]);    
+  }
+?>
 <div class="row">
 	<div class="col-md-12">
 	<?php Pjax::begin(); ?>
@@ -93,7 +123,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'format' => 'raw',
             'value' => function($model) {
                 return Html::a('<i class="glyphicon glyphicon-eye-open"></i>',
-                  ['view', 'id' => $model->id],['class' => 'btn btn-info','target'=>'_blank']);                    
+                  ['view', 'id' => $model->id],['class' => 'btn btn-info']);                    
             }
           ]
         ],
