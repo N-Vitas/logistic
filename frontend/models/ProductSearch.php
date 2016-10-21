@@ -65,7 +65,7 @@ class ProductSearch extends Product
             ->andFilterWhere(['like', 'article', $this->article])
             ->andFilterWhere(['like', 'nomenclature', $this->nomenclature])
             ->andFilterWhere(['like', 'barcode', $this->barcode])
-            ->andFilterWhere(['like', 'code_client', $this->code_client]);
+            ->andFilterWhere(['like', 'code_client', $this->code_client])
             ->andFilterWhere(['like', 'balance', $this->balance]);
 
         return $dataProvider;
