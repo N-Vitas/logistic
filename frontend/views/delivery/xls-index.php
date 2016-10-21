@@ -26,6 +26,5 @@
         ],
 
         'delivery_date',
-    ], //without header working, because the header will be get label from attribute label.
-//    'header' => ['column1' => 'Header Column 1','column2' => 'Header Column 2', 'column3' => 'Header Column 3'],
+    ]
 ]);
