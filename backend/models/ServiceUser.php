@@ -8,8 +8,9 @@
 
 namespace backend\models;
 
+use common\models\User;
 
-class ServiceUser extends UserSearch
+class ServiceUser extends User
 {
     public $imageFile;
     public $role;

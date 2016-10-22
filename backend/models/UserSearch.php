@@ -5,20 +5,22 @@ namespace backend\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
+use backend\models\ServiceUser;
 use common\models\User;
 
 /**
  * UserSearch represents the model behind the search form about `common\models\User`.
  */
-class UserSearch extends User
+class UserSearch extends ServiceUser
 {
     public $role;
+    // public $username;
+    // public $email;
 
     public function rules()
     {
         return [
-            [['username', 'email', 'role'], 'string'],
-            ['email', 'email'],
+            [['username', 'email'], 'save']
         ];
     }
 
@@ -51,13 +53,46 @@ class UserSearch extends User
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            // Лимит постраничной навигации
+            'pagination' => [
+                'pagesize' => 10,
+            ],
+            // сортировака по полям
+            'sort' => [
+                'defaultOrder' => ['username' => SORT_ASC], // сортировка по умолчанию
+                'attributes' => [ 
+                    'username', 
+                    'email',             
+                    // 'role' => [
+                    //     'asc' => ['auth_assignment.item_name' => SORT_ASC],
+                    //     'desc' => ['auth_assignment.item_name' => SORT_DESC],
+                    // ],            
+                    'created_at',
+                    'status',
+                ]
+            ]
+            //   'city' => [
+            //     'asc' => ['city_id' => SORT_ASC],
+            //     'desc' => ['city_id' => SORT_DESC],
+            //   ],
+            //   'address',
+            //   'client_name',
+            //   'phone',
+            //   'paymentType' => [
+            //     'asc' => ['payment_type' => SORT_ASC],
+            //     'desc' => ['payment_type' => SORT_DESC],
+            //   ],
+            //   'price',
+            //   'orderStatus' => [
+            //     'asc' => ['status' => SORT_ASC],
+            //     'desc' => ['status' => SORT_DESC],
+            //   ],
+            //   'delivery_date',
+            // ],
+            // 'username', 'email', 'role','created_at','status'
         ]);
 
-        $this->load($params);
-
-        if (!$this->validate()) {
-            // uncomment the following line if you do not want to return any records when validation fails
-            // $query->where('0=1');
+        if (!$this->load($params)) {
             return $dataProvider;
         }
 
@@ -69,10 +104,23 @@ class UserSearch extends User
         ]);
 
         $query->andFilterWhere(['like', 'username', $this->username])
-            ->andFilterWhere(['like', 'auth_key', $this->auth_key])
-            ->andFilterWhere(['like', 'password_reset_token', $this->password_reset_token])
             ->andFilterWhere(['like', 'email', $this->email]);
 
         return $dataProvider;
+    }
+
+    public function getRoleId($title){
+        switch ($title) {
+            case 'Администратор сервиса':
+                return self::SERVICE_ADMIN_ROLE;
+                break;
+            case 'Менеджер сервиса':
+                return self::SERVICE_MANAGER_ROLE;
+                break;
+            
+            default:
+                return self::SERVICE_ADMIN_ROLE;
+                break;
+        }
     }
 }

@@ -241,6 +241,9 @@ class User extends ActiveRecord implements IdentityInterface
     {
         $this->password_reset_token = null;
     }
+    public function getAuth_assignment(){
+        return \Yii::$app->authManager->getRolesByUser($this->id);
+    }
 
     public function getUserRoles()
     {

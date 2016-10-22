@@ -5,6 +5,7 @@ namespace backend\controllers;
 use Yii;
 use common\models\User;
 use backend\models\ServiceUser;
+use backend\models\UserSearch;
 use backend\components\BaseController;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -32,7 +33,7 @@ class UserController extends BaseController
      */
     public function actionIndex()
     {
-        $searchModel = new ServiceUser();
+        $searchModel = new UserSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $dataProvider->query->andWhere('client_id = 0 OR client_id IS NULL');
 

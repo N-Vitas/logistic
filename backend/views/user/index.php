@@ -28,6 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'username',
              'email:email',
             [
+                'attribute' => 'role',
                 'value' => function ($data) {
                     /* @var $data \backend\models\ClientUser */
                     return $data->userRoles;
