@@ -43,8 +43,20 @@ class DeliveryController extends BaseController
     $searchModel = new DeliverySearch();
     $dataProvider = $searchModel->search($this->client->is_id,Yii::$app->request->queryParams);
 
-    return $this->render('index', [
-      'columns' => $this->showColumns,
+    return $this->render($this->toXls.'index', [
+      'searchModel' => $searchModel,
+      'dataProvider' => $dataProvider,
+      'toXls' => $this->toXls,
+    ]);
+  }
+
+  public function actionPayments()
+  {
+    $searchModel = new DeliverySearch();
+    $dataProvider = $searchModel->search($this->client->is_id,Yii::$app->request->queryParams);
+    $dataProvider->query->andWhere(['orders.payment_type' => Order::PAYMENT_COD]);
+
+    return $this->render($this->toXls.'payments', [
       'searchModel' => $searchModel,
       'dataProvider' => $dataProvider,
       'toXls' => $this->toXls,

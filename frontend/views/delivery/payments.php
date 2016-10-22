@@ -11,8 +11,8 @@ $this->title = 'Доставка';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
-<?= \common\widgets\DeliveryStatus::widget(['client_id' => \Yii::$app->user->getIdentity()->client_id]) ?>
-<?= \common\widgets\FilterDeliveryForm::widget(['filterModel' => $searchModel]) ?>
+<?= \common\widgets\PaymentsStatus::widget(['client_id' => \Yii::$app->user->getIdentity()->client_id]) ?>
+<?= \common\widgets\FilterDateRangeForm::widget(['filterModel' => $searchModel]) ?>
 <div class="row">
 	<div class="col-md-12">
 	<?php ////Pjax::begin(); ?>
@@ -54,14 +54,14 @@ $this->params['breadcrumbs'][] = $this->title;
           'phone',
           // 'product_id',
           // 'email:email',,
-	        [
-            'attribute' => 'paymentType',
-            'format' => 'raw',
-            // 'value' => function($model) {
-            //     return $model->getOrderStatus();
-            // },
-            'filter' => Html::activeDropDownList($searchModel, 'payment_type', Order::$paymentTypes,['class' => 'form-control']),
-	        ],
+	        // [
+         //    'attribute' => 'paymentType',
+         //    'format' => 'raw',
+         //    // 'value' => function($model) {
+         //    //     return $model->getOrderStatus();
+         //    // },
+         //    'filter' => Html::activeDropDownList($searchModel, 'payment_type', Order::$paymentTypes,['class' => 'form-control']),
+	        // ],
           // 'paymentType',
           'price',
 	        [
@@ -115,7 +115,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'phone',
         // 'product_id',
         // 'email:email',
-        'paymentType',
+        // 'paymentType',
         'price',
 
         [

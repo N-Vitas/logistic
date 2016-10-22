@@ -31,6 +31,9 @@ class Order extends \yii\db\ActiveRecord
     const STATUS_CANCELED = 4;
     const STATUS_DEFAULT = -1;
 
+    const PAYMENT_COD = 0;
+    const PAYMENT_NO_COD = 1;
+
     public static $statuses = [
         self::STATUS_DEFAULT => 'Выберите статус',
         self::STATUS_NEW => 'На оформлении',
@@ -54,9 +57,9 @@ class Order extends \yii\db\ActiveRecord
     ];
 
     public static $paymentTypes = [
-        -1 => 'Выберите платеж',
-        0 => 'Наложенный платеж',
-        1 => 'Не получать платеж'
+        self::STATUS_DEFAULT => 'Выберите платеж',
+        self::PAYMENT_COD => 'Наложенный платеж',
+        self::PAYMENT_NO_COD => 'Не получать платеж'
     ];
 
     public static $cities = [

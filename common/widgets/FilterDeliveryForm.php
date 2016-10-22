@@ -8,25 +8,21 @@
 
 namespace common\widgets;
 
-
-use common\models\Client;
 use yii\base\Widget;
 
-class FilterForm extends Widget
+class FilterDeliveryForm extends Widget
 {
     /**
      * @var $client Client клиент, по которому отображается информация
      */
     public $filterModel;
 
+    public function init(){
+        
+    }
+
     public function run()
     {
-        return $this->render(
-            'filter-form',
-            [
-                'filterModel' => $this->filterModel,
-                'time' => date('H:i:s'),
-            ]
-        );
+        return $this->render('filter-delivary-form',['filterModel' => $this->filterModel]);
     }
 }
