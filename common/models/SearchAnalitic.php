@@ -13,7 +13,7 @@ use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use common\models\Order;
 
-class DeliverySearch extends Order
+class SearchAnalitic extends Order
 {
   public $orderStatus;
   public $city;

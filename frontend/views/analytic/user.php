@@ -45,16 +45,27 @@ $this->title = "Отчет по менеджерам";
         <?= Html::a('< Назад', ['user/'], ['class' => 'btn btn-info']) ?>
         <?= Html::a('Экспорт в XLS', [Url::current(['xls' => true])], ['class' => 'btn btn-info']) ?>
     <hr>
-
 <?= GridView::widget([
     'dataProvider' => $dataProvider,
     'columns' => [
         ['class' => 'yii\grid\SerialColumn'],
         'username',
         [
-            'attribute' => 'orderCount',
+            'attribute' => 'newOrderCount',
             'value' => function($model) use ($dateFrom, $dateTo) {
-                return $model->getOrdersCount($dateFrom, $dateTo);
+                return $model->getNewOrdersCount($dateFrom, $dateTo);
+            }
+        ],
+        [
+            'attribute' => 'workOrderCount',
+            'value' => function($model) use ($dateFrom, $dateTo) {
+                return $model->getWorkOrdersCount($dateFrom, $dateTo);
+            }
+        ],
+        [
+            'attribute' => 'completeOrderCount',
+            'value' => function($model) use ($dateFrom, $dateTo) {
+                return $model->getCompleteOrdersCount($dateFrom, $dateTo);
             }
         ],
         // 'created_at',

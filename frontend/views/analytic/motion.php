@@ -11,8 +11,10 @@ use \dosamigos\datepicker\DatePicker;
 
 $this->title = "Отчет по остаткам";
 ?>
+
+<?= \common\widgets\FilterDateRangeForm::widget(['filterModel' => $searchModel]) ?>
 <div class="row">
-  <div class="col-md-12">
+  <!-- <div class="col-md-12">
     <div class="btn-toolbar" role="toolbar">
       <div class="btn-group">
         <?= Html::a('< Назад', ['/product'], ['class' => 'btn btn-info']) ?>        
@@ -47,7 +49,7 @@ $this->title = "Отчет по остаткам";
       <?php ActiveForm::end() ?>
     </div>
   </div>
-  <hr/>
+  <hr/> -->
   <div class="col-md-12">
     <?= GridView::widget([
       'dataProvider' => $dataProvider,

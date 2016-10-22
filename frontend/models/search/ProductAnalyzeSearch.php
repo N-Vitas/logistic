@@ -19,11 +19,14 @@ class ProductAnalyzeSearch extends ProductAnalytics
     public $product_nomenclature;
     public $product_code_client;
     public $product_balance;
+    public $date_from;
+    public $date_to;
 
     public function rules()
     {
         return array_merge(parent::rules(), [
-            [['created_at','increase','decrease','product_title', 'product_article', 'product_barcode', 'product_nomenclature', 'product_code_client','product_balance'], 'string']
+            [['created_at','increase','decrease','product_title', 'product_article', 'product_barcode', 'product_nomenclature', 'product_code_client','product_balance'], 'string'],
+            [['date_from','date_to'],'safe']
         ]);
     }
 
@@ -35,10 +38,11 @@ class ProductAnalyzeSearch extends ProductAnalytics
             'product_nomenclature',
             'product_code_client',
             'product_balance',
+            'date_from' => 'Выбор перриода',
         ]);
     }
 
-    public function search($client_id, $post, $dateFrom = false, $dateTo = false)
+    public function search($client_id, $params)
     {
 
         $query = self::find()
@@ -47,13 +51,9 @@ class ProductAnalyzeSearch extends ProductAnalytics
         // $query->andWhere(['>', 'product_analytics.increase', 0]);
         // $query->andWhere(['>', 'product_analytics.decrease', 0]);
 
-        if (!empty($dateFrom)) {
-            $query->andWhere(['>=', 'product_analytics.created_at', $dateFrom]);
-        }
-
-        if (!empty($dateTo)) {
-            $query->andWhere(['<=', 'product_analytics.created_at', $dateTo]);
-        }
+        // if(!empty($this->date_to) && !empty($this->date_from)){
+        //     $query->andFilterWhere(['between', 'product_analytics.created_at', $this->date_from, $this->date_to]);      
+        // }
         
         $dataProvider = new ActiveDataProvider(['query' => $query]);
 
@@ -90,8 +90,17 @@ class ProductAnalyzeSearch extends ProductAnalytics
             ]
         ]);    
 
-        $this->load($post);
+        if(!$this->load($params)){
+            return $dataProvider;
+        }
+        
+        if (!empty($this->date_from)) {
+            $query->andWhere(['>=', 'product_analytics.created_at', $this->date_from]);
+        }
 
+        if (!empty($this->date_to)) {
+            $query->andWhere(['<=', 'product_analytics.created_at', $this->date_to]);
+        }
         if ($this->created_at) {
             $query->andWhere(['like', 'product_analytics.created_at', $this->created_at]);
         }

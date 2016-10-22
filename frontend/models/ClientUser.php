@@ -45,7 +45,9 @@ class ClientUser extends \common\models\User
 
         return array_merge(parent::attributeLabels(), [
             'role' => 'Роль',
-            'orderCount' => 'Кол-во оформленных заказов'
+            'newOrderCount' => 'Кол-во оформленных заказов',
+            'workOrderCount' => 'Кол-во заказов в работе',
+            'completeOrderCount' => 'Кол-во завершенных заказов'
         ]);
     }
 
@@ -117,15 +119,53 @@ class ClientUser extends \common\models\User
         return self::hasMany(Order::className(), ['user_id' => 'id']);
     }
 
-    public function getOrdersCount($dateFrom = false, $dateTo = false)
+    public function getNewOrdersCount($dateFrom = false, $dateTo = false)
     {
         $query = Order::find()
             ->where([
-                'client_id' => $this->client_id,
-                'status' => Order::STATUS_COMPLETE,
+                'client_id' => $this->client->is_id,
+                'status' => Order::STATUS_NEW,
                 'user_id' => $this->id
             ]);
+        if (!empty($dateFrom)) {
+            $query->andWhere(['>=', 'created_at', $dateFrom]);
+        }
 
+        if (!empty($dateTo)) {
+            $query->andWhere(['<=', 'created_at', $dateTo]);
+        }
+
+        return $query->count();
+    }
+
+    public function getWorkOrdersCount($dateFrom = false, $dateTo = false)
+    {
+        $query = Order::find()
+            ->where([
+                'client_id' => $this->client->is_id,
+                'status' => Order::STATUS_FILLED,
+                'user_id' => $this->id
+            ]);
+        if (!empty($dateFrom)) {
+            $query->andWhere(['>=', 'created_at', $dateFrom]);
+        }
+
+        if (!empty($dateTo)) {
+            $query->andWhere(['<=', 'created_at', $dateTo]);
+        }
+
+        return $query->count();
+    }
+
+    public function getCompleteOrdersCount($dateFrom = false, $dateTo = false)
+    {
+
+        // var_dump($this->client);die;
+        $query = Order::find()
+            ->where([
+                'client_id' => $this->client->is_id,
+                'user_id' => $this->id
+            ])->andWhere(['in','status',[Order::STATUS_CANCELED,Order::STATUS_COMPLETE]]);
         if (!empty($dateFrom)) {
             $query->andWhere(['>=', 'created_at', $dateFrom]);
         }

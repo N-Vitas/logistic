@@ -10,7 +10,7 @@ namespace common\widgets;
 use Yii;
 use common\models\Client;
 use common\models\Order;
-use common\models\DeliverySearch;
+use common\models\SearchAnalitic;
 use yii\base\Widget;
 
 class PaymentsStatus extends Widget
@@ -29,7 +29,7 @@ class PaymentsStatus extends Widget
     if (empty($this->client) && $this->client_id) {
       $this->client = Client::find()->where(['id' => $this->client_id])->one();
     }    
-    $searchModel = new DeliverySearch();
+    $searchModel = new SearchAnalitic();
   	$finished = $searchModel->search($this->client->is_id,Yii::$app->request->queryParams);
   	$toFinish = $searchModel->search($this->client->is_id,Yii::$app->request->queryParams);
     $canceled = $searchModel->search($this->client->is_id,Yii::$app->request->queryParams);

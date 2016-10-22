@@ -51,8 +51,8 @@
                             ],
                             ['label' => 'Остатки на складе', 'icon' => 'fa fa-archive', 'url' => ['analytic/product'],],
                             ['label' => 'Движение на складе', 'icon' => 'glyphicon glyphicon-transfer', 'url' => ['analytic/motion'],],
-                            ['label' => 'Доставка', 'icon' => 'fa fa-truck', 'url' => ['/delivery'],],
-                            ['label' => 'Наложенные платежи', 'icon' => 'fa fa-dollar', 'url' => ['/delivery/payments'],],
+                            ['label' => 'Доставка', 'icon' => 'fa fa-truck', 'url' => ['/analytic/delivery'],],
+                            ['label' => 'Наложенные платежи', 'icon' => 'fa fa-dollar', 'url' => ['/analytic/payments'],],
 
                         ],
 //                        'visible' =>

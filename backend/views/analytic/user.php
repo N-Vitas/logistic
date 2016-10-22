@@ -51,9 +51,21 @@ $this->title = "Отчет по менеджерам";
         ['class' => 'yii\grid\SerialColumn'],
         'username',
         [
-            'attribute' => 'orderCount',
+            'attribute' => 'newOrderCount',
             'value' => function($model) use ($dateFrom, $dateTo) {
-                return $model->getOrdersCount($dateFrom, $dateTo);
+                return $model->getNewOrdersCount($dateFrom, $dateTo);
+            }
+        ],
+        [
+            'attribute' => 'workOrderCount',
+            'value' => function($model) use ($dateFrom, $dateTo) {
+                return $model->getWorkOrdersCount($dateFrom, $dateTo);
+            }
+        ],
+        [
+            'attribute' => 'completeOrderCount',
+            'value' => function($model) use ($dateFrom, $dateTo) {
+                return $model->getCompleteOrdersCount($dateFrom, $dateTo);
             }
         ],
         // 'created_at',

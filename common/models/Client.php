@@ -51,7 +51,7 @@ class Client extends \yii\db\ActiveRecord
             'is_id' => 'Индитивикатор для связки с ИС "Хранение и доставка"',
             'created_at' => 'Дата регистрации',
             'is_active' => 'Активный клиент',
-            'productCount' => 'Товаров на хранении',
+            'productCount' => 'Кол-во наименований товара',
             'activeOrders' => 'Заказов в работе',
             'admin.username' => 'Администратор клиента'
         ];

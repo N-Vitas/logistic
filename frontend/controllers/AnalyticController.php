@@ -10,9 +10,10 @@ namespace frontend\controllers;
 
 use Yii;
 use common\models\Order;
-use frontend\components\BaseController;
 use common\models\Client;
 use common\models\NotificationSettings;
+use common\models\SearchAnalitic;
+use frontend\components\BaseController;
 use frontend\models\ClientUser;
 use frontend\models\search\ProductAnalyzeSearch;
 use frontend\models\ProductSearch;
@@ -49,6 +50,31 @@ class AnalyticController extends BaseController
         return $columns;
     }
 
+    public function actionDelivery()
+    {
+      $searchModel = new SearchAnalitic();
+      $dataProvider = $searchModel->search($this->client->is_id,Yii::$app->request->queryParams);
+
+      return $this->render($this->toXls.'index', [
+        'searchModel' => $searchModel,
+        'dataProvider' => $dataProvider,
+        'toXls' => $this->toXls,
+      ]);
+    }
+
+    public function actionPayments()
+    {
+      $searchModel = new SearchAnalitic();
+      $dataProvider = $searchModel->search($this->client->is_id,Yii::$app->request->queryParams);
+      $dataProvider->query->andWhere(['orders.payment_type' => Order::PAYMENT_COD]);
+
+      return $this->render($this->toXls.'payments', [
+        'searchModel' => $searchModel,
+        'dataProvider' => $dataProvider,
+        'toXls' => $this->toXls,
+      ]);
+    }
+
     public function actionUser($dateFrom = false, $dateTo = false)
     {
 
@@ -78,103 +104,51 @@ class AnalyticController extends BaseController
 
     public function actionMotion($dateFrom = false, $dateTo = false)
     {
-        $searchModel = new ProductAnalyzeSearch();
+      $searchModel = new ProductAnalyzeSearch();
 
-        if (isset($_GET['dateFrom']))
-            $dateFrom = $_GET['dateFrom'];
+      if (isset($_GET['dateFrom']))
+        $dateFrom = $_GET['dateFrom'];
 
-        if (isset($_GET['dateTo']))
-            $dateTo = $_GET['dateTo'];
+      if (isset($_GET['dateTo']))
+        $dateTo = $_GET['dateTo'];
 
-        $dataProvider = $searchModel->search($this->client->is_id, \Yii::$app->request->get(), $dateFrom, $dateTo);
+      $dataProvider = $searchModel->search($this->client->is_id, \Yii::$app->request->queryParams);
 
-        $columns = [];
-        foreach ($this->getClientColumns() as $key => $col) {
-            $columns[] = [
-                'value' => 'product.' . $col,
-                'attribute' => 'product_' . $col,
-            ];
+      $columns = [];
+      foreach ($this->getClientColumns() as $key => $col) {
+        $columns[] = [
+          'value' => 'product.' . $col,
+          'attribute' => 'product_' . $col,
+        ];
         }
 
-        return $this->render($this->toXls.'motion', [
-            'columns' => $columns,
-            'dataProvider' => $dataProvider,
-            'searchModel' => $searchModel,
-            'dateFrom' => $dateFrom,
-            'dateTo' => $dateTo
-        ]);
+      return $this->render($this->toXls.'motion', [
+        'columns' => $columns,
+        'dataProvider' => $dataProvider,
+        'searchModel' => $searchModel
+      ]);
     }
 
     public function actionProduct($dateFrom = false, $dateTo = false)
     {
-        $searchModel = new ProductSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        $dataProvider->query->andWhere(['client_id' => $this->client->is_id]);
+      $searchModel = new ProductSearch();
+      $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+      $dataProvider->query->andWhere(['client_id' => $this->client->is_id]);
 
-        return $this->render('product', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-            'columns' => $this->showColumns,
-        ]);
+      return $this->render('product', [
+        'searchModel' => $searchModel,
+        'dataProvider' => $dataProvider,
+        'columns' => $this->showColumns,
+      ]);
     }
 
-    public function actionOrder($dateFrom = false, $dateTo = false)
-    {
-        $searchModel = new \common\models\OrderAnalyticsSearch();
-        $searchModel->load(\Yii::$app->request->get());
 
-        if (isset($_GET['dateFrom']))
-            $dateFrom = $_GET['dateFrom'];
-
-        if (isset($_GET['dateTo']))
-            $dateTo = $_GET['dateTo'];
-
-        $dataProvider = $searchModel->search($this->client->is_id, \Yii::$app->request->get(), $dateFrom, $dateTo);
-
-        $finishedPayments = $searchModel->search($this->client->is_id, \Yii::$app->request->get(), $dateFrom, $dateTo)
-            ->query->andWhere(['orders.status' => Order::STATUS_COMPLETE])
-            ->sum('orders.price');
-        $toFinishPayments = $searchModel->search($this->client->is_id, \Yii::$app->request->get(), $dateFrom, $dateTo)
-            ->query->andWhere(['NOT IN', 'orders.status', [Order::STATUS_COMPLETE, Order::STATUS_CANCELED]])
-            ->sum('orders.price');
-
-        return $this->render($this->toXls.'order', [
-            'dataProvider' => $dataProvider,
-            'searchModel' => $searchModel,
-            'dateFrom' => $dateFrom,
-            'dateTo' => $dateTo,
-            'finishedPayments' => $finishedPayments,
-            'toFinishPayments' => $toFinishPayments
-        ]);
+  public function actionView($id)
+  {
+    $model = Order::findOne($id);
+    if($model == null){
+      throw new NotFoundHttpException('The requested page does not exist.');
     }
-
-    public function actionPayments($dateFrom = false, $dateTo = false)
-    {
-        $searchModel = new \common\models\OrderAnalyticsSearch();
-        $searchModel->load(\Yii::$app->request->get());
-
-        if (isset($_GET['dateFrom']))
-            $dateFrom = $_GET['dateFrom'];
-
-        if (isset($_GET['dateTo']))
-            $dateTo = $_GET['dateTo'];
-
-        $dataProvider = $searchModel->search($this->client->is_id, \Yii::$app->request->get(), $dateFrom, $dateTo);
-
-        $finishedPayments = $searchModel->search($this->client->is_id, \Yii::$app->request->get(), $dateFrom, $dateTo)
-            ->query->andWhere(['orders.status' => Order::STATUS_COMPLETE])
-            ->sum('orders.price');
-        $toFinishPayments = $searchModel->search($this->client->is_id, \Yii::$app->request->get(), $dateFrom, $dateTo)
-            ->query->andWhere(['NOT IN', 'orders.status', [Order::STATUS_COMPLETE, Order::STATUS_CANCELED]])
-            ->sum('orders.price');
-
-        return $this->render($this->toXls.'payments', [
-            'dataProvider' => $dataProvider,
-            'searchModel' => $searchModel,
-            'dateFrom' => $dateFrom,
-            'dateTo' => $dateTo,
-            'finishedPayments' => $finishedPayments,
-            'toFinishPayments' => $toFinishPayments
-        ]);
-    }
+    return $this->render('view', compact('model'));
+  }
 }
