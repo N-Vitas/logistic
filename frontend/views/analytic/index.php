@@ -72,6 +72,13 @@ $this->params['breadcrumbs'][] = $this->title;
             },
             'filter' => \yii\bootstrap\Html::activeDropDownList($searchModel, 'orderStatus', Order::$statuses,['class' => 'form-control']),
 	        ],
+          [
+            'attribute' => 'deliveryStatus',
+            'value' => function($model){
+              return $model->getOrderStatus();
+            },
+            'filter' => \yii\bootstrap\Html::activeDropDownList($searchModel, 'deliveryStatus', Order::$statuses,['class' => 'form-control']),
+          ],
       //     [
       //     	'attribute' => 'delivery_date',
       //     	// 'format' => 'raw',

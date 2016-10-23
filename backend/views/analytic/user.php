@@ -14,7 +14,6 @@ $this->title = "Отчет по менеджерам";
     <div class="pull-right">
         <?php \yii\widgets\ActiveForm::begin([
             'method' => 'get',
-            'action' => \yii\helpers\Url::to(['analyze/user'])
         ]) ?>
         <div class="row">
             <div class="col-md-8">

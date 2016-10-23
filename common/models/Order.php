@@ -98,7 +98,7 @@ class Order extends \yii\db\ActiveRecord
                 }"
             ],
             [['address', 'city_id'], 'safe'],
-            [['id','client_id', 'status', 'city_id'], 'integer'],
+            [['id','client_id', 'status', 'city_id','status_delivery', 'status_payments'], 'integer'],
             [['price'], 'number'],
             [
                 [
@@ -132,6 +132,8 @@ class Order extends \yii\db\ActiveRecord
             'city_id' => 'Город доставки',
             'city' => 'Город доставки',
             'orderStatus' => 'Статус заказа',
+            'deliveryStatus' => 'Статус доставки',
+            'paymentStatus' => 'Статус оплаты',
             'orderCount' => 'Кол-во доставок',
             'comment' => 'Комментарий к заказу',
             'no_shipping' => 'Самовывоз',
