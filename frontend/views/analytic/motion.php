@@ -14,42 +14,6 @@ $this->title = "Отчет по остаткам";
 
 <?= \common\widgets\FilterDateRangeForm::widget(['filterModel' => $searchModel]) ?>
 <div class="row">
-  <!-- <div class="col-md-12">
-    <div class="btn-toolbar" role="toolbar">
-      <div class="btn-group">
-        <?= Html::a('< Назад', ['/product'], ['class' => 'btn btn-info']) ?>        
-      </div>
-      <?php ActiveForm::begin([
-          'method' => 'get',
-          // navbar-form navbar-left
-          // 'action' => Url::to(['analyze/product'])
-      ]) ?>
-      <div class="btn-group pull-right">
-        <?= Html::button('<i class="glyphicon glyphicon-ok"></i> Сформулировать отчет', [
-            'class' => 'btn btn-success',
-            'type' => 'submit'
-        ]) ?>        
-      </div>
-      <div class="btn-group pull-right">
-          <?= DateRangePicker::widget([
-              'name' => 'dateFrom',
-              'value' => !empty($dateFrom) ? $dateFrom : date('Y-m-01'),
-              'nameTo' => 'dateTo',
-              'valueTo' => !empty($dateTo) ? $dateTo : date('Y-m-d'),
-              'labelTo' => 'До',
-              'clientOptions' => [
-                  'autoclose' => true,
-                  'format' => 'yyyy-mm-dd',
-              ],
-          ]); ?>
-      </div>
-      <div class="btn-group pull-right">
-        <?= Html::a('Экспорт в XLS', [Url::current(['xls' => true])], ['class' => 'btn btn-info']) ?>
-      </div>
-      <?php ActiveForm::end() ?>
-    </div>
-  </div>
-  <hr/> -->
   <div class="col-md-12">
     <?= GridView::widget([
       'dataProvider' => $dataProvider,
@@ -65,22 +29,30 @@ $this->title = "Отчет по остаткам";
           'attribute' => 'product_nomenclature'
         ],
         [
-            'attribute' => 'created_at',
-            // 'format' => 'raw',
-            'value' => 'created_at',
-            'filter' => DatePicker::widget([
-              'model' => $searchModel,
-              'language' => 'ru',
-              // 'size' => 'lg',
-              'attribute' => 'created_at',
-              // 'template' => '{addon}{input}',
-              'clientOptions' => [
-                  'autoclose' => true,
-                  'format' => 'yyyy-mm-dd',
-                  'clearBtn'=>true,
-              ]
-            ])
-          ],
+          'value' => 'product.barcode',
+          'attribute' => 'product_barcode'
+        ],
+        [
+          'value' => 'product.code_client',
+          'attribute' => 'product_code_client'
+        ],
+        // [
+        //     'attribute' => 'created_at',
+        //     // 'format' => 'raw',
+        //     'value' => 'created_at',
+        //     'filter' => DatePicker::widget([
+        //       'model' => $searchModel,
+        //       'language' => 'ru',
+        //       // 'size' => 'lg',
+        //       'attribute' => 'created_at',
+        //       // 'template' => '{addon}{input}',
+        //       'clientOptions' => [
+        //           'autoclose' => true,
+        //           'format' => 'yyyy-mm-dd',
+        //           'clearBtn'=>true,
+        //       ]
+        //     ])
+        //   ],
         'increase',
         'decrease',
       ]

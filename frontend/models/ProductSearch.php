@@ -19,7 +19,7 @@ class ProductSearch extends Product
     {
         return [
             [['id', 'client_id'], 'integer'],
-            [['title', 'article', 'balance', 'barcode', 'barcode', 'nomenclature', 'code_client'], 'safe'],
+            [['title', 'article', 'balance', 'barcode', 'nomenclature', 'code_client'], 'safe'],
         ];
     }
 

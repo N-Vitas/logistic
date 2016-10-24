@@ -16,7 +16,6 @@ use common\models\Order;
 class SearchAnalitic extends Order
 {
   public $orderStatus;
-  public $deliveryStatus;
   public $paymentStatus;
   public $city;
   public $filter = 'title';
@@ -28,7 +27,7 @@ class SearchAnalitic extends Order
   {
       return [
             [['id', 'client_id'], 'integer'],
-            [['products','product_id','created_at', 'date_from','date_to','client_name', 'address', 'phone', 'email', 'orderStatus','payment_type','delivery_date','city','filter','deliveryStatus','paymentStatus'], 'safe'],
+            [['products','product_id','created_at', 'date_from','date_to','client_name', 'address', 'phone', 'email', 'orderStatus','payment_type','delivery_date','city','filter','paymentStatus'], 'safe'],
             [['price'], 'number'],
         ];
   }
@@ -100,10 +99,6 @@ class SearchAnalitic extends Order
             'asc' => ['status' => SORT_ASC],
             'desc' => ['status' => SORT_DESC],
           ],
-          'deliveryStatus' => [
-            'asc' => ['status_delivery' => SORT_ASC],
-            'desc' => ['status_delivery' => SORT_DESC],
-          ],
           'paymentStatus' => [
             'asc' => ['status_payments' => SORT_ASC],
             'desc' => ['status_payments' => SORT_DESC],
@@ -134,9 +129,6 @@ class SearchAnalitic extends Order
     }
     if($this->paymentStatus != -1){
       $query->andFilterWhere(['status_payments' => $this->paymentStatus]);
-    }
-    if($this->deliveryStatus != -1){
-      $query->andFilterWhere(['status_delivery' => $this->deliveryStatus]);
     }
 
 

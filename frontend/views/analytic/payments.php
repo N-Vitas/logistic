@@ -7,7 +7,7 @@ use yii\grid\GridView;
 use dosamigos\datepicker\DatePicker;
 use yii\widgets\Pjax;
 
-$this->title = 'Доставка';
+$this->title = 'Отчет по платежам';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
@@ -72,6 +72,15 @@ $this->params['breadcrumbs'][] = $this->title;
             },
             'filter' => \yii\bootstrap\Html::activeDropDownList($searchModel, 'orderStatus', Order::$statuses,['class' => 'form-control']),
 	        ],
+          [
+            'attribute' => 'paymentStatus',
+            'format' => 'raw',
+            'value' => function ($model) {
+              $status = Order::$statusesPayments[$model->status_payments];
+              return \yii\bootstrap\Html::tag('span', $status, ['class'=>'label label-'.Order::$statusClasses[$model->status_payments]]);
+            },
+            'filter' => \yii\bootstrap\Html::activeDropDownList($searchModel, 'paymentStatus', Order::$statusesPayments,['class' => 'form-control']),
+          ],
       //     [
       //     	'attribute' => 'delivery_date',
       //     	// 'format' => 'raw',
@@ -125,6 +134,13 @@ $this->params['breadcrumbs'][] = $this->title;
                 return $model->getOrderStatus(false);
             },
 
+        ],
+        [
+          'attribute' => 'paymentStatus',
+          'format' => 'raw',
+          'value' => function ($model) {
+            return Order::$statusesPayments[$model->status_payments];
+          },
         ],
 
         'delivery_date',

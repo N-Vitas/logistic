@@ -7,6 +7,7 @@ use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
 use yii\web\UploadedFile;
+use common\models\Order;
 
 /**
  * User model
@@ -243,6 +244,15 @@ class User extends ActiveRecord implements IdentityInterface
     }
     public function getAuth_assignment(){
         return \Yii::$app->authManager->getRolesByUser($this->id);
+    }
+
+    public function getOrder()
+    {
+        return $this->hasOne(Order::className(), ['id' => 'user_id']);
+    }
+    public function getOrders()
+    {
+        return $this->hasMany(Order::className(), ['user_id' => 'id']);
     }
 
     public function getUserRoles()

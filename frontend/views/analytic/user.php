@@ -12,39 +12,45 @@ use yii\widgets\ActiveForm;
 
 $this->title = "Отчет по менеджерам";
 ?>
-    <div class="pull-right">
-        <?php ActiveForm::begin([
-            'method' => 'get',
-            // 'action' => Url::to(['analyze/user'])
-        ]) ?>
-        <div class="row">
-            <div class="col-md-8">
-                <?= \dosamigos\datepicker\DateRangePicker::widget([
-                    'name' => 'dateFrom',
-                    'value' => !empty($dateFrom) ? $dateFrom : date('Y-m-01'),
-                    'nameTo' => 'dateTo',
-                    'valueTo' => !empty($dateTo) ? $dateTo : date('Y-m-d'),
-                    'labelTo' => 'До',
-                    'clientOptions' => [
-                        'autoclose' => true,
-                        'format' => 'yyyy-mm-dd',
-                    ],
-                ]); ?>
-
-            </div>
-
-            <div class="col-md-4">
-                <?= Html::button('<i class="glyphicon glyphicon-ok"></i> Сформулировать отчет', [
-                    'class' => 'btn btn-success pull-right',
-                    'type' => 'submit'
-                ]) ?>
-            </div>
-        </div>
-        <?php ActiveForm::end() ?>
+<div class="row">
+  <?php $form = ActiveForm::begin(['method' => 'get']); ?>
+  <div class="col-md-3">         
+    <div class="btn-group btn-block">
+      <?= Html::a('< назад', ['/user'], ['class' => 'btn btn-info btn-block']) ?>
+    </div> 
+  </div>
+  <div class="col-md-3">         
+    <div class="btn-group btn-block">
+        <?= \dosamigos\datepicker\DateRangePicker::widget([
+            'name' => 'dateFrom',
+            'value' => !empty($dateFrom) ? $dateFrom : "",
+            'nameTo' => 'dateTo',
+            'valueTo' => !empty($dateTo) ? $dateTo : "",
+            'labelTo' => 'До',
+            'language' => 'ru',
+            'clientOptions' => [
+                'autoclose' => true,
+                'clearBtn'=>true,
+                'format' => 'yyyy-mm-dd',
+            ],
+        ]); ?>
     </div>
-        <?= Html::a('< Назад', ['user/'], ['class' => 'btn btn-info']) ?>
-        <?= Html::a('Экспорт в XLS', [Url::current(['xls' => true])], ['class' => 'btn btn-info']) ?>
-    <hr>
+  </div>
+  <div class="col-md-3">
+    <div class="btn-group btn-block">
+      <?= Html::button('<i class="glyphicon glyphicon-ok"></i> Сформулировать отчет', [
+          'class' => 'btn btn-success btn-block',
+          'type' => 'submit'
+      ]) ?>
+    </div>
+  </div>
+  <div class="col-md-3">         
+    <div class="btn-group btn-block">
+      <?= Html::a('Экспорт в XLS', [Url::current(['xls' => true])], ['class' => 'btn btn-info btn-block','target'=>'_blank']) ?>
+    </div> 
+  </div>
+  <?php ActiveForm::end(); ?>  
+</div>
 <?= GridView::widget([
     'dataProvider' => $dataProvider,
     'columns' => [

@@ -13,6 +13,7 @@ use common\models\Order;
 use common\models\Client;
 use common\models\NotificationSettings;
 use common\models\SearchAnalitic;
+use common\models\SearchClient;
 use frontend\components\BaseController;
 use frontend\models\ClientUser;
 use frontend\models\search\ProductAnalyzeSearch;
@@ -81,15 +82,6 @@ class AnalyticController extends BaseController
         $query = ClientUser::find()
             ->where(['user.client_id' => $this->client_id]);
 
-
-        if (!empty($dateFrom)) {
-            $query->andWhere(['>=', 'created_at', strtotime($dateFrom)]);
-        }
-
-        if (!empty($dateTo)) {
-            $query->andWhere(['<=', 'created_at', strtotime($dateTo)]);
-        }
-
         $dataProvider = new ActiveDataProvider(['query' => $query, 'sort' => [
             'defaultOrder' => ['created_at' => SORT_DESC]
         ]]);
@@ -101,17 +93,9 @@ class AnalyticController extends BaseController
         ]);
     }
 
-
     public function actionMotion($dateFrom = false, $dateTo = false)
     {
       $searchModel = new ProductAnalyzeSearch();
-
-      if (isset($_GET['dateFrom']))
-        $dateFrom = $_GET['dateFrom'];
-
-      if (isset($_GET['dateTo']))
-        $dateTo = $_GET['dateTo'];
-
       $dataProvider = $searchModel->search($this->client->is_id, \Yii::$app->request->queryParams);
 
       $columns = [];

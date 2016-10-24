@@ -24,6 +24,13 @@
         },
 
     ],
+    [
+        'attribute' => 'paymentStatus',
+        'format' => 'raw',
+        'value' => function ($model) {
+            return Order::$statusesPayments[$model->status_payments];
+        },
+    ],
 
     'delivery_date',
   ]

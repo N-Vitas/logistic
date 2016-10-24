@@ -11,8 +11,13 @@ $this->title = 'Доставка';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
-<?= \common\widgets\DeliveryStatus::widget(['client_id' => \Yii::$app->user->getIdentity()->client_id]) ?>
-<?= \common\widgets\FilterDeliveryForm::widget(['filterModel' => $searchModel]) ?>
+<div class="row">
+<div class="col-md-12">
+  <?= $this->render('_client_form'); ?>
+</div>
+</div>
+<?= \common\widgets\DeliveryStatus::widget(['client_id' => $client_id]) ?>
+<?= \common\widgets\FilterDeliveryForm::widget(['filterModel' => $searchModel,'export'=>false]) ?>
 <div class="row">
 	<div class="col-md-12">
 	<?php ////Pjax::begin(); ?>
@@ -101,34 +106,3 @@ $this->params['breadcrumbs'][] = $this->title;
 		<?php //Pjax::end(); ?>
 	</div>
 </div>
-
-<?php
-  if($toXls){
-    \moonland\phpexcel\Excel::export([
-      'models' => $dataProvider->query->all(),
-      'columns' => [
-        'id',
-        'created_at',
-        'city.title',
-        'address',
-        'client_name',
-        'phone',
-        // 'product_id',
-        // 'email:email',
-        'paymentType',
-        'price',
-
-        [
-            'attribute' => 'orderStatus',
-            'format' => 'raw',
-            'value' => function($model) {
-                return $model->getOrderStatus(false);
-            },
-
-        ],
-
-        'delivery_date',
-      ]
-    ]);    
-  }
-?>

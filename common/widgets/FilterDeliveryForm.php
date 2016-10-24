@@ -16,6 +16,7 @@ class FilterDeliveryForm extends Widget
      * @var $client Client клиент, по которому отображается информация
      */
     public $filterModel;
+    public $export =true;
 
     public function init(){
         
@@ -23,6 +24,6 @@ class FilterDeliveryForm extends Widget
 
     public function run()
     {
-        return $this->render('filter-delivary-form',['filterModel' => $this->filterModel]);
+        return $this->render('filter-delivary-form',['filterModel' => $this->filterModel,'export'=>$this->export]);
     }
 }

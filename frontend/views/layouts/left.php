@@ -50,7 +50,7 @@
                                 'visible' => \Yii::$app->user->can('createClientManager'),
                             ],
                             ['label' => 'Остатки на складе', 'icon' => 'fa fa-archive', 'url' => ['analytic/product'],],
-                            ['label' => 'Движение на складе', 'icon' => 'glyphicon glyphicon-transfer', 'url' => ['analytic/motion'],],
+                            ['label' => 'Движение товара', 'icon' => 'glyphicon glyphicon-transfer', 'url' => ['analytic/motion'],],
                             ['label' => 'Доставка', 'icon' => 'fa fa-truck', 'url' => ['/analytic/delivery'],],
                             ['label' => 'Наложенные платежи', 'icon' => 'fa fa-dollar', 'url' => ['/analytic/payments'],],
 

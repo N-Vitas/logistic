@@ -14,7 +14,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <div class="row">
       <div class="col-md-12">
-      <?= $this->render('_search_client_form'); ?>
+      <?= $this->render('_client_form'); ?>
       </div>
       <div class="col-md-12">
         <?= GridView::widget([
@@ -22,26 +22,32 @@ $this->params['breadcrumbs'][] = $this->title;
             'filterModel' => $searchModel,
             'columns' => [
                 ['class' => 'yii\grid\SerialColumn'],
-                [
-                  'value' => 'product.title',
-                  'attribute' => 'product_title'
-                ],
-                [
-                  'value' => 'product.nomenclature',
-                  'attribute' => 'product_nomenclature'
-                ],
-                [
-                  'value' => 'product.code_client',
-                  'attribute' => 'product_code_client'
-                ],
-                [
-                  'value' => 'product.barcode',
-                  'attribute' => 'product_barcode'
-                ],
-                [
-                  'value' => 'product.balance',
-                  'attribute' => 'product_balance'
-                ],
+                'title', 
+                'article', 
+                'barcode', 
+                'code_client',
+                'nomenclature', 
+                'balance'
+                // [
+                //   'value' => 'product.title',
+                //   'attribute' => 'product_title'
+                // ],
+                // [
+                //   'value' => 'product.nomenclature',
+                //   'attribute' => 'product_nomenclature'
+                // ],
+                // [
+                //   'value' => 'product.code_client',
+                //   'attribute' => 'product_code_client'
+                // ],
+                // [
+                //   'value' => 'product.barcode',
+                //   'attribute' => 'product_barcode'
+                // ],
+                // [
+                //   'value' => 'product.balance',
+                //   'attribute' => 'product_balance'
+                // ],
             ]
         ]); ?>
       </div>

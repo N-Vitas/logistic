@@ -14,7 +14,7 @@ use common\models\Product;
 use yii\web\JsExpression;
 
 ?>
-<?php ////Pjax::begin(); ?>
+<?php if($export): ?>
 <div class="row">
   <?php $form = ActiveForm::begin(['method' => 'get']); ?>
   <div class="col-md-4">         
@@ -49,4 +49,41 @@ use yii\web\JsExpression;
   </div>
   <?php ActiveForm::end(); ?>  
 </div>
-<?php //Pjax::end(); ?>
+<?php else: ?>
+<div class="row">
+  <?php $form = ActiveForm::begin(['method' => 'get']); ?>
+  <div class="col-md-2">         
+    <div class="btn-group btn-block">
+      <?= Html::a('< назад', ['/user'], ['class' => 'btn btn-info btn-block']) ?>
+    </div> 
+  </div>
+  <div class="col-md-4">  
+  </div>
+  <div class="col-md-4">        
+    <div class="btn-group btn-block">
+      <?= $form->field($filterModel, 'date_from',['template'=>'{input}'])->widget(DateRangePicker::className(), [
+        'attributeTo' => 'date_to', 
+        'form' => $form, // best for correct client validation
+        'language' => 'ru',
+        'labelTo' => 'До',
+        // 'size' => 'lg',
+        'clientOptions' => [
+            'autoclose' => true,
+            'format' => 'yyyy-mm-dd',
+            'clearBtn'=>true,
+            'toggleActive' => true,
+        ]
+      ]); ?>
+    </div>
+  </div>
+  <div class="col-md-2">
+    <div class="btn-group btn-block">
+      <?= Html::button('<i class="glyphicon glyphicon-ok"></i> Сформулировать отчет', [
+          'class' => 'btn btn-success btn-block',
+          'type' => 'submit'
+      ]) ?>
+    </div>
+  </div>
+  <?php ActiveForm::end(); ?>  
+</div>
+<?php endif; ?>

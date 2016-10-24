@@ -29,6 +29,7 @@ class Order extends \yii\db\ActiveRecord
     const STATUS_DELIVERING = 2;
     const STATUS_COMPLETE = 3;
     const STATUS_CANCELED = 4;
+    const STATUS_BLOCKED = 5;
     const STATUS_DEFAULT = -1;
 
     const PAYMENT_COD = 0;
@@ -42,12 +43,22 @@ class Order extends \yii\db\ActiveRecord
         self::STATUS_COMPLETE => 'Получен',
         self::STATUS_CANCELED => 'Отменен',
     ];
+    public static $statusesPayments = [
+        self::STATUS_DEFAULT => 'Выберите статус',
+        self::STATUS_NEW => 'Создан',
+        self::STATUS_FILLED => 'Ожидает обработки',
+        self::STATUS_DELIVERING => 'Обрабатывается',
+        self::STATUS_COMPLETE => 'Оплачен',
+        self::STATUS_CANCELED => 'Отменен',
+        self::STATUS_BLOCKED => 'Заморожен',
+    ];
     public static $statusClasses = [
         self::STATUS_NEW => 'info',
         self::STATUS_FILLED => 'primary',
         self::STATUS_DELIVERING => 'warning',
         self::STATUS_COMPLETE => 'success',
         self::STATUS_CANCELED => 'danger',
+        self::STATUS_BLOCKED => 'default',
     ];
 
     public static $activeStatuses = [
@@ -98,7 +109,7 @@ class Order extends \yii\db\ActiveRecord
                 }"
             ],
             [['address', 'city_id'], 'safe'],
-            [['id','client_id', 'status', 'city_id','status_delivery', 'status_payments'], 'integer'],
+            [['id','client_id', 'status', 'city_id', 'status_payments'], 'integer'],
             [['price'], 'number'],
             [
                 [
@@ -123,6 +134,8 @@ class Order extends \yii\db\ActiveRecord
             'phone' => 'Телефон получателя',
             'product_id' => 'Продукт',
             'email' => 'E-mail получателя',
+            'paymentStatus' => 'Статус оплаты',
+            'status_payments' => 'Статус оплаты',
             'payment_type' => 'Вид платежа',
             'paymentType' => 'Вид платежа',
             'product_count' => 'Кол-во продуктов',
@@ -132,8 +145,6 @@ class Order extends \yii\db\ActiveRecord
             'city_id' => 'Город доставки',
             'city' => 'Город доставки',
             'orderStatus' => 'Статус заказа',
-            'deliveryStatus' => 'Статус доставки',
-            'paymentStatus' => 'Статус оплаты',
             'orderCount' => 'Кол-во доставок',
             'comment' => 'Комментарий к заказу',
             'no_shipping' => 'Самовывоз',
@@ -194,5 +205,14 @@ class Order extends \yii\db\ActiveRecord
         }
 
         return parent::beforeValidate();
+    }
+
+    public function getUser()
+    {
+        return $this->hasOne(User::className(), ['id' => 'user_id']);
+    }
+    public function getUsers()
+    {
+        return $this->hasMany(User::className(), ['user_id' => 'id']);
     }
 }

@@ -12,38 +12,11 @@ $this->title = "Отчет по остаткам";
 ?>
 <div class="row">
   <div class="col-md-12">
-    <div class="btn-toolbar" role="toolbar">
-      <?= $this->render('_search_client_form'); ?>
-      <?php ActiveForm::begin([
-          'method' => 'get',
-          // navbar-form navbar-left
-          // 'action' => Url::to(['analyze/product'])
-      ]) ?>
-      <div class="btn-group pull-right">
-        <?= Html::button('<i class="glyphicon glyphicon-ok"></i> Сформулировать отчет', [
-            'class' => 'btn btn-success',
-            'type' => 'submit'
-        ]) ?>        
-      </div>
-      <div class="btn-group pull-right">
-          <?= DateRangePicker::widget([
-              'name' => 'dateFrom',
-              'value' => !empty($dateFrom) ? $dateFrom : date('Y-m-01'),
-              'nameTo' => 'dateTo',
-              'valueTo' => !empty($dateTo) ? $dateTo : date('Y-m-d'),
-              'labelTo' => 'До',
-              'clientOptions' => [
-                  'autoclose' => true,
-                  'format' => 'yyyy-mm-dd',
-              ],
-          ]); ?>
-      </div>
-      <div class="btn-group pull-right">
-      </div>
-      <?php ActiveForm::end() ?>
-    </div>
+      <?= $this->render('_client_form'); ?>
   </div>
-  <hr/>
+  <div class="col-md-12">
+  <?= \common\widgets\FilterDateRangeForm::widget(['filterModel' => $searchModel,'export'=>false]) ?>
+  </div>
   <div class="col-md-12">
     <?= GridView::widget([
       'dataProvider' => $dataProvider,
@@ -58,7 +31,15 @@ $this->title = "Отчет по остаткам";
           'value' => 'product.nomenclature',
           'attribute' => 'product_nomenclature'
         ],
-        'created_at',
+        [
+          'value' => 'product.barcode',
+          'attribute' => 'product_barcode'
+        ],
+        [
+          'value' => 'product.code_client',
+          'attribute' => 'product_code_client'
+        ],
+        // 'created_at',
         'increase',
         'decrease',
       ]
