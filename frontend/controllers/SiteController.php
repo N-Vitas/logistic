@@ -8,6 +8,7 @@ use frontend\models\ClientUser;
 use frontend\models\OrderSearch;
 use Yii;
 use common\models\LoginForm;
+use common\models\SearchAnalitic;
 use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use yii\base\InvalidParamException;
@@ -58,15 +59,22 @@ class SiteController extends BaseController
      */
     public function actionIndex()
     {
-        $searchToDeliver = new OrderSearch(['status' => Order::STATUS_DELIVERING]);
-        $toDeliverProvider = $searchToDeliver
-            ->search(Yii::$app->request->queryParams);
-        $toDeliverProvider->query->andWhere(['status' => Order::STATUS_DELIVERING]);
+        $searchToDeliver = new SearchAnalitic();
+        $toDeliverProvider = $searchToDeliver->search($this->client->is_id,Yii::$app->request->queryParams);
+        $toDeliverProvider->query->where(['status' => Order::STATUS_DELIVERING]);
+        $searchDelivered = new SearchAnalitic();
+        $deliveredProvider = $searchDelivered->search($this->client->is_id,Yii::$app->request->queryParams);
+        $deliveredProvider->query->where(['status' => Order::STATUS_COMPLETE]);
 
-        $searchDelivered = new OrderSearch();
-        $deliveredProvider = $searchDelivered
-            ->search(Yii::$app->request->queryParams);
-        $deliveredProvider->query->andWhere(['status' => Order::STATUS_COMPLETE]);
+        // $searchToDeliver = new OrderSearch(['status' => Order::STATUS_DELIVERING]);
+        // $toDeliverProvider = $searchToDeliver
+        //     ->search(Yii::$app->request->queryParams);
+        // $toDeliverProvider->query->andWhere(['status' => Order::STATUS_DELIVERING]);
+
+        // $searchDelivered = new OrderSearch();
+        // $deliveredProvider = $searchDelivered
+        //     ->search(Yii::$app->request->queryParams);
+        // $deliveredProvider->query->andWhere(['status' => Order::STATUS_COMPLETE]);
 
         return $this->render('index', [
             'searchToDeliver' => $searchToDeliver,
@@ -190,5 +198,13 @@ class SiteController extends BaseController
         return $this->render('@frontend/views/user/profile', [
             'model' => $user,
         ]);
+    }
+    public function actionView($id)
+    {
+        $model = Order::findOne($id);
+        if($model == null){
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+        return $this->render('view', compact('model'));
     }
 }

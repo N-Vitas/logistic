@@ -41,10 +41,21 @@ class NotificationSettings extends \yii\db\ActiveRecord
             [['client_id', 'low_products'], 'required'],
             ['low_products', 'default', 'value' => 20],
             [['client_id', 'low_products', 'client_notification', 'client_complete_notification'], 'integer'],
-            [['emails'], 'string'],
+            [['emails'], 'emails'],
             [['name', 'address', 'phone', 'email'], 'safe'],
             [['show_article', 'show_barcode', 'show_code_client'], 'safe']
         ];
+    }
+
+    public function emails($attribute)
+    {
+        // $array = explode(',',$this->$attribute);
+        $pattern = "/^(([a-zA-Z0-9_\-.]+)@([a-zA-Z0-9\-]+)\.[a-zA-Z0-9\-.]+$)/";
+        foreach(explode(',',$this->$attribute) as $value) {
+            if(!preg_match($pattern, $value)){                
+                $this->addError($attribute, $value.' не является правильным email адресом?');
+            }            
+        }
     }
 
     /**

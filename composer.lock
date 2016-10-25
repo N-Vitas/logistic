@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "ce0dd9225c6123f3d4dab87802d21507",
-    "content-hash": "1155e111704090496b5a7bcbdb799f1c",
+    "hash": "331419a32d18bc5471feab7c63c6b0ee",
+    "content-hash": "1d096ca3e413d0dd2c1714b1d167d876",
     "packages": [
         {
             "name": "2amigos/yii2-date-picker-widget",
@@ -251,23 +251,86 @@
             ]
         },
         {
-            "name": "bower-asset/jquery",
-            "version": "2.2.1",
+            "name": "bower-asset/bootstrap-tagsinput",
+            "version": "0.8.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/jquery/jquery-dist.git",
-                "reference": "788eaba2f83e7b7445c7a83a50c81c0704423874"
+                "url": "https://github.com/bootstrap-tagsinput/bootstrap-tagsinput.git",
+                "reference": "5380ff820805a19807cd93d2da44bf9d26c5324a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jquery/jquery-dist/zipball/788eaba2f83e7b7445c7a83a50c81c0704423874",
-                "reference": "788eaba2f83e7b7445c7a83a50c81c0704423874",
+                "url": "https://api.github.com/repos/bootstrap-tagsinput/bootstrap-tagsinput/zipball/5380ff820805a19807cd93d2da44bf9d26c5324a",
+                "reference": "5380ff820805a19807cd93d2da44bf9d26c5324a",
                 "shasum": ""
+            },
+            "require": {
+                "bower-asset/jquery": "~2.1.1"
+            },
+            "require-dev": {
+                "bower-asset/angular": "~1.2.21",
+                "bower-asset/bootstrap": "~2.3.2",
+                "bower-asset/jasmine": "~2.0.1",
+                "bower-asset/typeahead.js": "~0.10.4"
+            },
+            "type": "bower-asset-library",
+            "extra": {
+                "bower-asset-main": [
+                    "dist/bootstrap-tagsinput.js",
+                    "dist/bootstrap-tagsinput.css"
+                ],
+                "bower-asset-ignore": [
+                    "**/.*",
+                    "node_modules",
+                    "bower_components",
+                    "lib",
+                    "test"
+                ]
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "jQuery plugin providing a Twitter Bootstrap user interface for managing tags.",
+            "keywords": [
+                "bootstrap",
+                "form",
+                "input",
+                "select",
+                "tags"
+            ]
+        },
+        {
+            "name": "bower-asset/jquery",
+            "version": "2.1.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jquery/jquery-dist.git",
+                "reference": "7751e69b615c6eca6f783a81e292a55725af6b85"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jquery/jquery-dist/zipball/7751e69b615c6eca6f783a81e292a55725af6b85",
+                "reference": "7751e69b615c6eca6f783a81e292a55725af6b85",
+                "shasum": ""
+            },
+            "require-dev": {
+                "bower-asset/qunit": "1.14.0",
+                "bower-asset/requirejs": "2.1.10",
+                "bower-asset/sinon": "1.8.1",
+                "bower-asset/sizzle": "2.1.1-patch2.1"
             },
             "type": "bower-asset-library",
             "extra": {
                 "bower-asset-main": "dist/jquery.js",
                 "bower-asset-ignore": [
+                    "**/.*",
+                    "build",
+                    "dist/cdn",
+                    "speed",
+                    "test",
+                    "*.md",
+                    "AUTHORS.txt",
+                    "Gruntfile.js",
                     "package.json"
                 ]
             },
@@ -275,7 +338,6 @@
                 "MIT"
             ],
             "keywords": [
-                "browser",
                 "javascript",
                 "jquery",
                 "library"
@@ -981,6 +1043,56 @@
                 "mailer"
             ],
             "time": "2016-07-08 11:51:25"
+        },
+        {
+            "name": "wbraganca/yii2-tagsinput",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/wbraganca/yii2-tagsinput.git",
+                "reference": "8db3328da9ee783354862f35b15079c6b22657d7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/wbraganca/yii2-tagsinput/zipball/8db3328da9ee783354862f35b15079c6b22657d7",
+                "reference": "8db3328da9ee783354862f35b15079c6b22657d7",
+                "shasum": ""
+            },
+            "require": {
+                "bower-asset/bootstrap-tagsinput": "~0.6",
+                "yiisoft/yii2": "~2.0",
+                "yiisoft/yii2-bootstrap": "~2.0.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~5.0"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "wbraganca\\tagsinput\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Wanderson Bragança",
+                    "email": "wanderson.wbc@gmail.com",
+                    "homepage": "http://wbraganca.com"
+                }
+            ],
+            "description": "The yii2-tagsinput is a Yii 2 wrapper for [bootstrap-tagsinput](https://github.com/timschlechter/bootstrap-tagsinput). A user interface for managing tags.",
+            "homepage": "https://github.com/wbraganca/yii2-tagsinput",
+            "keywords": [
+                "extension",
+                "wbraganca",
+                "yii2",
+                "yii2 tags input",
+                "yii2-tagsinput"
+            ],
+            "time": "2015-11-08 12:43:42"
         },
         {
             "name": "yiisoft/yii2",

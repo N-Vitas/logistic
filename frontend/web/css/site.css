@@ -125,3 +125,6 @@ a.accordion-toggle {
     /* symbol for "collapsed" panels */
     content: "\e080";    /* adjust as needed, taken from bootstrap.css */
 }
+.bootstrap-tagsinput{
+    display: block;
+}

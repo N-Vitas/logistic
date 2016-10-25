@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use wbraganca\tagsinput\TagsinputWidget;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\NotificationSettings */
@@ -14,8 +15,17 @@ use yii\widgets\ActiveForm;
 
     <?php if (\Yii::$app->user->can('createClientManager')) : ?>
         <?= $form->field($model, 'low_products')->textInput() ?>
-
-        <?= $form->field($model, 'emails')->textarea(['rows' => 6]) ?>
+        <div class="btn-block">
+            <?= $form->field($model, 'emails')->widget(TagsinputWidget::classname(), [
+                'clientOptions' => [
+                    'trimValue' => true,
+                    'allowDuplicates' => false,
+                    'tagClass' => 'label label-success',
+                    // 'focusClass' => 'form-control',
+                ],
+                'options'=>['class'=>'form-control']
+            ])/*->textarea(['rows' => 6])*/ ?>            
+        </div>
 
         <?= $form->field($model, 'client_notification')->checkbox() ?>
 
