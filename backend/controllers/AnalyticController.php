@@ -53,7 +53,7 @@ class AnalyticController extends BaseController
      public function actions()
     {
         if(!empty($_POST['client_id'])){
-            unset($_GET);
+            unset($_GET['SearchAnalitic']);
         }
         return [
             'error' => [
