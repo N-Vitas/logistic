@@ -14,16 +14,15 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>
-        
-    </p>
+    
+    <?= Html::a('< Назад', Yii::$app->request->referrer, ['class' => 'btn btn-info']) ?>
 
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
             'id',
             'created_at',
-            'client_id',
+            // 'client_id',
             'client_name',
             'city.title',
             'address',
@@ -42,6 +41,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <th>Наименование</th>
                 <th>Цена</th>
                 <th>Кол-во</th>
+                <th>Сумма</th>
             </tr>
         </thead>
         <tbody>
@@ -50,6 +50,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <td><?= $item->product->title ?></td>
                 <td><?= $item->price ?></td>
                 <td><?= $item->quantity ?></td>
+                <td><?= $item->quantity*$item->price ?></td>
             </tr>
         <?php endforeach; ?>
         </tbody>

@@ -16,7 +16,7 @@ $this->title = "Отчет по менеджерам";
   <?php $form = ActiveForm::begin(['method' => 'get']); ?>
   <div class="col-md-3">         
     <div class="btn-group btn-block">
-      <?= Html::a('< назад', ['/user'], ['class' => 'btn btn-info btn-block']) ?>
+      <?= Html::a('< Назад', ['/user'], ['class' => 'btn btn-info btn-block']) ?>
     </div> 
   </div>
   <div class="col-md-3">         

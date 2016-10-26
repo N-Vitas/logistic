@@ -43,13 +43,24 @@ class AnalyticController extends BaseController
             foreach ($this->clients as $id => $name) {
                 $this->client_id = $id;
                 break;
-            }
+            }  
         }
         \Yii::$app->session->set('service_client_id', $this->client_id);
 
         $this->client = Client::findOne($this->client_id);
     }
 
+     public function actions()
+    {
+        if(!empty($_POST['client_id'])){
+            unset($_GET);
+        }
+        return [
+            'error' => [
+                'class' => 'yii\web\ErrorAction',
+            ],
+        ];
+    }
 
     public function getClientColumns()
     {

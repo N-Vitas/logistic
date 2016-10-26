@@ -85,6 +85,7 @@ ksort($placeholder);
           ]) ?>
           <?php if($export):?>
           <?= Html::a('Экспорт в XLS', [Url::current(['xls' => true])], ['class' => 'btn btn-info btn-block','target'=>'_blank']) ?>
+          <?= Html::a('< Назад', ['/order'], ['class' => 'btn btn-info btn-block']) ?>
           <?php endif;?>
       </div>   
   </div>

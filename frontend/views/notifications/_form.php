@@ -12,7 +12,7 @@ use wbraganca\tagsinput\TagsinputWidget;
 <div class="notification-settings-form">
 
     <?php $form = ActiveForm::begin(); ?>
-
+    <?php empty($model->errors) ? $tagClass = 'label label-success' : $tagClass = 'label label-danger';?>
     <?php if (\Yii::$app->user->can('createClientManager')) : ?>
         <?= $form->field($model, 'low_products')->textInput() ?>
         <div class="btn-block">
@@ -20,7 +20,7 @@ use wbraganca\tagsinput\TagsinputWidget;
                 'clientOptions' => [
                     'trimValue' => true,
                     'allowDuplicates' => false,
-                    'tagClass' => 'label label-success',
+                    'tagClass' => $tagClass,
                     // 'focusClass' => 'form-control',
                 ],
                 'options'=>['class'=>'form-control']

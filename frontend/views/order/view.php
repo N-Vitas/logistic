@@ -14,6 +14,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
 
+    <?= Html::a('< Назад', Yii::$app->request->referrer, ['class' => 'btn btn-info']) ?>
     <p>
         
     </p>
@@ -23,7 +24,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id',
             'created_at',
-            'client_id',
+            // 'client_id',
             'client_name',
             'city.title',
             'address',

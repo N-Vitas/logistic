@@ -15,7 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <div class="pull-right">
-        <?= Html::a('Отчет по остаткам', ['analytic/motion'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Отчет по остаткам', ['analytic/product'], ['class' => 'btn btn-success']) ?>
     </div>
 
     <p>

@@ -14,76 +14,148 @@ use common\models\Product;
 use yii\web\JsExpression;
 
 ?>
-<?php if($export): ?>
-<div class="row">
-  <?php $form = ActiveForm::begin(['method' => 'get']); ?>
-  <div class="col-md-4">         
-    <div class="btn-group btn-block">
-      <?= $form->field($filterModel, 'date_from',['template'=>'{input}'])->widget(DateRangePicker::className(), [
-        'attributeTo' => 'date_to', 
-        'form' => $form, // best for correct client validation
-        'language' => 'ru',
-        'labelTo' => 'До',
-        // 'size' => 'lg',
-        'clientOptions' => [
-            'autoclose' => true,
-            'format' => 'yyyy-mm-dd',
-            'clearBtn'=>true,
-            'toggleActive' => true,
-        ]
-      ]); ?>
+<?php if($export && $back): ?>
+   <div class="row">
+    <?php $form = ActiveForm::begin(['method' => 'get']); ?>
+    <div class="col-md-3"> 
+      <div class="btn-group btn-block">
+        <?= Html::a('< Назад', [$back], ['class' => 'btn btn-info btn-block']) ?>
+      </div> 
     </div>
-  </div>
-  <div class="col-md-4">
-    <div class="btn-group btn-block">
-      <?= Html::button('<i class="glyphicon glyphicon-ok"></i> Сформулировать отчет', [
-          'class' => 'btn btn-success btn-block',
-          'type' => 'submit'
-      ]) ?>
+    <div class="col-md-3">         
+      <div class="btn-group btn-block">
+        <?= $form->field($filterModel, 'date_from',['template'=>'{input}'])->widget(DateRangePicker::className(), [
+          'attributeTo' => 'date_to', 
+          'form' => $form, // best for correct client validation
+          'language' => 'ru',
+          'labelTo' => 'До',
+          // 'size' => 'lg',
+          'clientOptions' => [
+              'autoclose' => true,
+              'format' => 'yyyy-mm-dd',
+              'clearBtn'=>true,
+              'toggleActive' => true,
+          ]
+        ]); ?>
+      </div>
     </div>
+    <div class="col-md-3">
+      <div class="btn-group btn-block">
+        <?= Html::button('<i class="glyphicon glyphicon-ok"></i> Сформулировать отчет', [
+            'class' => 'btn btn-success btn-block',
+            'type' => 'submit'
+        ]) ?>
+      </div>
+    </div>
+    <div class="col-md-3">         
+      <div class="btn-group btn-block">
+        <?= Html::a('Экспорт в XLS', [Url::current(['xls' => true])], ['class' => 'btn btn-info btn-block','target'=>'_blank']) ?>
+      </div> 
+    </div>
+    <?php ActiveForm::end(); ?>  
   </div>
-  <div class="col-md-4">         
-    <div class="btn-group btn-block">
-      <?= Html::a('Экспорт в XLS', [Url::current(['xls' => true])], ['class' => 'btn btn-info btn-block','target'=>'_blank']) ?>
-    </div> 
+<?php elseif($export && !$back): ?>
+  <div class="row">
+    <?php $form = ActiveForm::begin(['method' => 'get']); ?>
+    <div class="col-md-4">         
+      <div class="btn-group btn-block">
+        <?= $form->field($filterModel, 'date_from',['template'=>'{input}'])->widget(DateRangePicker::className(), [
+          'attributeTo' => 'date_to', 
+          'form' => $form, // best for correct client validation
+          'language' => 'ru',
+          'labelTo' => 'До',
+          // 'size' => 'lg',
+          'clientOptions' => [
+              'autoclose' => true,
+              'format' => 'yyyy-mm-dd',
+              'clearBtn'=>true,
+              'toggleActive' => true,
+          ]
+        ]); ?>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="btn-group btn-block">
+        <?= Html::button('<i class="glyphicon glyphicon-ok"></i> Сформулировать отчет', [
+            'class' => 'btn btn-success btn-block',
+            'type' => 'submit'
+        ]) ?>
+      </div>
+    </div>
+    <div class="col-md-4">         
+      <div class="btn-group btn-block">
+        <?= Html::a('Экспорт в XLS', [Url::current(['xls' => true])], ['class' => 'btn btn-info btn-block','target'=>'_blank']) ?>
+      </div> 
+    </div>
+    <?php ActiveForm::end(); ?>  
   </div>
-  <?php ActiveForm::end(); ?>  
-</div>
+<?php elseif(!$export && !$back): ?>
+  <div class="row">
+    <?php $form = ActiveForm::begin(['method' => 'get']); ?>
+    <div class="col-md-6">  
+    </div>
+    <div class="col-md-4">        
+      <div class="btn-group btn-block">
+        <?= $form->field($filterModel, 'date_from',['template'=>'{input}'])->widget(DateRangePicker::className(), [
+          'attributeTo' => 'date_to', 
+          'form' => $form, // best for correct client validation
+          'language' => 'ru',
+          'labelTo' => 'До',
+          // 'size' => 'lg',
+          'clientOptions' => [
+              'autoclose' => true,
+              'format' => 'yyyy-mm-dd',
+              'clearBtn'=>true,
+              'toggleActive' => true,
+          ]
+        ]); ?>
+      </div>
+    </div>
+    <div class="col-md-2">
+      <div class="btn-group btn-block">
+        <?= Html::button('<i class="glyphicon glyphicon-ok"></i> Сформулировать отчет', [
+            'class' => 'btn btn-success btn-block',
+            'type' => 'submit'
+        ]) ?>
+      </div>
+    </div>
+    <?php ActiveForm::end(); ?>  
+  </div>
 <?php else: ?>
-<div class="row">
-  <?php $form = ActiveForm::begin(['method' => 'get']); ?>
-  <div class="col-md-2">         
-    <div class="btn-group btn-block">
-      <?= Html::a('< назад', ['/user'], ['class' => 'btn btn-info btn-block']) ?>
-    </div> 
-  </div>
-  <div class="col-md-4">  
-  </div>
-  <div class="col-md-4">        
-    <div class="btn-group btn-block">
-      <?= $form->field($filterModel, 'date_from',['template'=>'{input}'])->widget(DateRangePicker::className(), [
-        'attributeTo' => 'date_to', 
-        'form' => $form, // best for correct client validation
-        'language' => 'ru',
-        'labelTo' => 'До',
-        // 'size' => 'lg',
-        'clientOptions' => [
-            'autoclose' => true,
-            'format' => 'yyyy-mm-dd',
-            'clearBtn'=>true,
-            'toggleActive' => true,
-        ]
-      ]); ?>
+  <div class="row">
+    <?php $form = ActiveForm::begin(['method' => 'get']); ?>
+    <div class="col-md-2">         
+      <div class="btn-group btn-block">
+        <?= Html::a('< Назад', ['/user'], ['class' => 'btn btn-info btn-block']) ?>
+      </div> 
     </div>
-  </div>
-  <div class="col-md-2">
-    <div class="btn-group btn-block">
-      <?= Html::button('<i class="glyphicon glyphicon-ok"></i> Сформулировать отчет', [
-          'class' => 'btn btn-success btn-block',
-          'type' => 'submit'
-      ]) ?>
+    <div class="col-md-4">  
     </div>
+    <div class="col-md-4">        
+      <div class="btn-group btn-block">
+        <?= $form->field($filterModel, 'date_from',['template'=>'{input}'])->widget(DateRangePicker::className(), [
+          'attributeTo' => 'date_to', 
+          'form' => $form, // best for correct client validation
+          'language' => 'ru',
+          'labelTo' => 'До',
+          // 'size' => 'lg',
+          'clientOptions' => [
+              'autoclose' => true,
+              'format' => 'yyyy-mm-dd',
+              'clearBtn'=>true,
+              'toggleActive' => true,
+          ]
+        ]); ?>
+      </div>
+    </div>
+    <div class="col-md-2">
+      <div class="btn-group btn-block">
+        <?= Html::button('<i class="glyphicon glyphicon-ok"></i> Сформулировать отчет', [
+            'class' => 'btn btn-success btn-block',
+            'type' => 'submit'
+        ]) ?>
+      </div>
+    </div>
+    <?php ActiveForm::end(); ?>  
   </div>
-  <?php ActiveForm::end(); ?>  
-</div>
 <?php endif; ?>

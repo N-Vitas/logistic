@@ -17,6 +17,7 @@ class FilterDateRangeForm extends Widget
      */
     public $filterModel;
     public $export=true;
+    public $back=false;
 
     public function init(){
         
@@ -24,6 +25,6 @@ class FilterDateRangeForm extends Widget
 
     public function run()
     {
-        return $this->render('filter-date-range-form',['filterModel' => $this->filterModel,'export'=>$this->export]);
+        return $this->render('filter-date-range-form',['filterModel' => $this->filterModel,'export'=>$this->export,'back'=>$this->back]);
     }
 }
