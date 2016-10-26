@@ -115,43 +115,43 @@ class SearchAnalitic extends Order
         return $dataProvider;
     }
     $query->andFilterWhere([
-        'id' => $this->id,
-        'client_id' => $client_id ? $client_id : $this->client_id,
+        'orders.id' => $this->id,
+        'orders.client_id' => $client_id ? $client_id : $this->client_id,
     ]);
     if(is_array($this->product_id) && count($this->product_id)){
-      $query->joinWith('items')->andWhere(['IN', 'item_id', $this->product_id]);
+      $query->joinWith('items')->andWhere(['IN', 'order_item.item_id', $this->product_id]);
     }
     if(!empty($this->date_to) && !empty($this->date_from)){
-      $query->andFilterWhere(['between', 'created_at', $this->date_from, $this->date_to]);      
+      $query->andFilterWhere(['between', 'orders.created_at', $this->date_from, $this->date_to]);      
     }
     if($this->orderStatus != -1){
-      $query->andFilterWhere(['status' => $this->orderStatus]);
+      $query->andFilterWhere(['orders.status' => $this->orderStatus]);
     }
     if($this->paymentStatus != -1){
-      $query->andFilterWhere(['status_payments' => $this->paymentStatus]);
+      $query->andFilterWhere(['orders.status_payments' => $this->paymentStatus]);
     }
 
 
     if($this->payment_type != -1){
-      $query->andFilterWhere(['payment_type' => $this->payment_type]);
+      $query->andFilterWhere(['orders.payment_type' => $this->payment_type]);
     }
     if(!empty($this->city)){
       $city_id = City::find()->where(['like','title',$this->city]);
       if($city_id->count()){
         foreach ($city_id->all() as $model) {          
-          $query->andFilterWhere(['city_id' => $model->id]);
+          $query->andFilterWhere(['orders.city_id' => $model->id]);
         }
       }else
-      $query->andFilterWhere(['city_id' => 0]);
+      $query->andFilterWhere(['orders.city_id' => 0]);
     }
     $query->andFilterWhere(['like', 'id', $this->id])
-        ->andFilterWhere(['like', 'client_name', $this->client_name])
-        ->andFilterWhere(['like', 'created_at', $this->created_at])
-        ->andFilterWhere(['like', 'delivery_date', $this->delivery_date])
-        ->andFilterWhere(['like', 'address', $this->address])
-        ->andFilterWhere(['like', 'phone', $this->phone])
-        ->andFilterWhere(['like', 'email', $this->email])
-        ->andFilterWhere(['like', 'price', (string)$this->price]);
+        ->andFilterWhere(['like', 'orders.client_name', $this->client_name])
+        ->andFilterWhere(['like', 'orders.created_at', $this->created_at])
+        ->andFilterWhere(['like', 'orders.delivery_date', $this->delivery_date])
+        ->andFilterWhere(['like', 'orders.address', $this->address])
+        ->andFilterWhere(['like', 'orders.phone', $this->phone])
+        ->andFilterWhere(['like', 'orders.email', $this->email])
+        ->andFilterWhere(['like', 'orders.price', (string)$this->price]);
 
 
     return $dataProvider;
