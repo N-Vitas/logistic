@@ -21,12 +21,13 @@ class ProductAnalyzeSearch extends ProductAnalytics
     public $product_balance;
     public $date_from;
     public $date_to;
+    public $groups;
 
     public function rules()
     {
         return array_merge(parent::rules(), [
             [['created_at','increase','decrease','product_title', 'product_article', 'product_barcode', 'product_nomenclature', 'product_code_client','product_balance'], 'string'],
-            [['date_from','date_to'],'safe']
+            [['date_from','date_to','groups'],'safe']
         ]);
     }
 
@@ -39,6 +40,7 @@ class ProductAnalyzeSearch extends ProductAnalytics
             'product_code_client',
             'product_balance',
             'date_from' => 'Выбор перриода',
+            'groups' => 'Группировка',
         ]);
     }
 
@@ -92,6 +94,10 @@ class ProductAnalyzeSearch extends ProductAnalytics
 
         if(!$this->load($params)){
             return $dataProvider;
+        }
+        
+        if(!empty($this->groups)){
+            $query->groupBy(['products.title','product_analytics.increase']);
         }
         
         if (!empty($this->date_from)) {

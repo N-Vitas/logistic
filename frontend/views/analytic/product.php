@@ -11,13 +11,6 @@ $this->title = 'Остаток на складе';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="product-index">
-<div class="row">
-      <div class="col-md-2">         
-        <div class="btn-group btn-block">
-          <?= Html::a('< Назад', ['/product'], ['class' => 'btn btn-info btn-block']) ?>
-        </div> 
-      </div>
-    </div>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
