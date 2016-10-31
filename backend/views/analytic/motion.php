@@ -85,6 +85,23 @@ $this->title = "Отчет по остаткам";
       'columns' => [
         ['class' => 'yii\grid\SerialColumn'],
         [
+          'attribute' => 'created_at',
+          // 'format' => 'raw',
+          'value' => 'created_at',
+          'filter' => DatePicker::widget([
+            'model' => $searchModel,
+            'language' => 'ru',
+            // 'size' => 'lg',
+            'attribute' => 'created_at',
+            // 'template' => '{addon}{input}',
+            'clientOptions' => [
+                'autoclose' => true,
+                'format' => 'yyyy-mm-dd',
+                'clearBtn'=>true,
+            ]
+          ])
+        ],
+        [
           'value' => 'product.title',
           'attribute' => 'product_title'
         ],
@@ -100,23 +117,6 @@ $this->title = "Отчет по остаткам";
           'value' => 'product.code_client',
           'attribute' => 'product_code_client'
         ],
-        [
-            'attribute' => 'created_at',
-            // 'format' => 'raw',
-            'value' => 'created_at',
-            'filter' => DatePicker::widget([
-              'model' => $searchModel,
-              'language' => 'ru',
-              // 'size' => 'lg',
-              'attribute' => 'created_at',
-              // 'template' => '{addon}{input}',
-              'clientOptions' => [
-                  'autoclose' => true,
-                  'format' => 'yyyy-mm-dd',
-                  'clearBtn'=>true,
-              ]
-            ])
-          ],
         'increase',
         'decrease',
       ]

@@ -45,7 +45,7 @@ class ProductAnalytics extends \yii\db\ActiveRecord
             'product_id' => 'Продукт',
             'decrease' => 'Уход',
             'increase' => 'Приход',
-            'created_at' => 'Дата отчета',
+            'created_at' => 'Дата движения',
             'product_article' => 'Артикуль',
             'product_barcode' => 'Штрих-код',
             'product_code_client' => 'Код клиента',
