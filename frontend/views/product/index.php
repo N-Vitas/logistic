@@ -13,15 +13,15 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="product-index">
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
-    <div class="pull-right">
-        <?= Html::a('Отчет по остаткам', ['analytic/product'], ['class' => 'btn btn-success']) ?>
+    <div class="row">
+        <div class="col-md-3">
+            <?= Html::a('Оформить заказ на доставку', ['order/create'], ['class' => 'btn btn-info btn-block']) ?>            
+        </div>
+        <div class="col-md-offset-6 col-md-3">
+            <?= Html::a('Отчет по остаткам', ['analytic/product'], ['class' => 'btn btn-success btn-block']) ?>            
+        </div>
     </div>
-
-    <p>
-        <?= Html::a('Оформить заказ на доставку', ['order/create'], ['class' => 'btn btn-info']) ?>
-    </p>
-
+    <p></p>
     <?= \common\widgets\ClientEndingProducts::widget(['client_id' => \Yii::$app->user->getIdentity()->client_id]) ?>
 
     <?= GridView::widget([

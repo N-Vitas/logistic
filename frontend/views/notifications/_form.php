@@ -14,7 +14,7 @@ use wbraganca\tagsinput\TagsinputWidget;
     <?php $form = ActiveForm::begin(); ?>
     <?php empty($model->errors) ? $tagClass = 'label label-success' : $tagClass = 'label label-danger';?>
     <?php if (\Yii::$app->user->can('createClientManager')) : ?>
-        <?= $form->field($model, 'low_products')->textInput() ?>
+        <? //$form->field($model, 'low_products')->textInput() ?>
         <div class="btn-block">
             <?= $form->field($model, 'emails')->widget(TagsinputWidget::classname(), [
                 'clientOptions' => [

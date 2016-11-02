@@ -14,14 +14,23 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <div class="pull-right">
-        <?= Html::a('Отчет по платежам', ['/analytic/payments'], ['class' => 'btn btn-success']) ?>
-        <?= Html::a('Отчет по доставкам', ['/analytic/delivery'], ['class' => 'btn btn-success']) ?>
     </div>
 
     <p>
-        <?= Html::a('Оформить заказ на доставку', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
+    <div class="row">
+        <div class="col-md-3">          
+            <?= Html::a('Оформить заказ на доставку', ['create'], ['class' => 'btn btn-success btn-block']) ?>
+        </div>
+        <div class="col-md-offset-5 col-md-2">        
+            <?= Html::a('Отчет по платежам', ['/analytic/payments'], ['class' => 'btn btn-success btn-block']) ?>
+        </div>
+        <div class="col-md-2">         
+            <?= Html::a('Отчет по доставкам', ['/analytic/delivery'], ['class' => 'btn btn-success btn-block']) ?>
+        </div>
+    </div>
+    <p></p>
     <div class="row">
         <div class="col-md-4">
             <div class="alert alert-info">

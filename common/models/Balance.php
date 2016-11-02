@@ -3,6 +3,9 @@
 namespace common\models;
 
 use Yii;
+use common\models\Product;
+use common\models\Client;
+use common\models\NotificationSettings;
 
 /**
  * This is the model class for table "products".

@@ -4,6 +4,7 @@ namespace frontend\controllers;
 
 use Yii;
 use common\models\Order;
+use common\models\Product;
 use frontend\models\OrderSearch;
 use frontend\components\BaseController;
 use yii\data\ActiveDataProvider;
@@ -90,7 +91,7 @@ class OrderController extends BaseController
             'user_id' => \Yii::$app->user->id,
             'payment_type' => 1
         ]);
-
+        // var_dump(Yii::$app->request->post());
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             if (isset($_POST['products'])) {
                 $products = json_decode($_POST['products'], true);
@@ -99,6 +100,10 @@ class OrderController extends BaseController
                 if (!empty($products)) {
                     foreach ($products as $id => $product) {
                         $query[] = "({$model->id}, {$id}, {$product['quantity']}, {$product['price']})";
+                        if($productModel = Product::findOne($id)){
+                            $productModel->balance = $productModel->balance - $product['quantity'];
+                            $productModel->save();
+                        }
                     }
 
                     \Yii::$app->db
