@@ -13,6 +13,18 @@ use common\models\NotificationSettings;
 */
 class BalanceController extends Controller
 {
+    public function actionTest()
+    {
+      $file = __DIR__."/../../test.txt";
+      if(file_exists($file)){
+        $fp = fopen($file, 'a');
+      }else{
+        $fp = fopen($file, 'w');
+      }
+      fwrite($fp, time()."\n"); // Запись в файл
+      fclose($fp);
+    }
+    
     /**
     * Перебирает базу продуктов и добавляет минимальное кол-во остатка для уведомления.
     */
