@@ -65,7 +65,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php $form = ActiveForm::begin(['method' => 'get']); ?>
     <p></p>
     <div class="input-group">
-      <?= $form->field($searchModel, 'title',['template'=>'{input}'])?>
+      <?= $form->field($searchModel, 'title',['template'=>'{input}'])->textInput(['placeholder' => 'Искать по наименованию'])?>
       <span class="input-group-btn">
         <button class="btn btn-info" type="button">Поиск</button>
       </span>
