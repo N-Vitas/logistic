@@ -2,6 +2,8 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\widgets\ListView;
+use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $searchModel frontend\models\ProductSearch */
@@ -18,12 +20,13 @@ $this->params['breadcrumbs'][] = $this->title;
             <?= Html::a('Оформить заказ на доставку', ['order/create'], ['class' => 'btn btn-info btn-block']) ?>            
         </div>
         <div class="col-md-offset-6 col-md-3">
-            <?= Html::a('Отчет по остаткам', ['analytic/product'], ['class' => 'btn btn-success btn-block']) ?>            
+            <?= Html::a('Отчет по остаткам', ['analytic/product'], ['class' => 'btn btn-success btn-block']) ?> 
         </div>
     </div>
     <p></p>
     <?= \common\widgets\ClientEndingProducts::widget(['client_id' => \Yii::$app->user->getIdentity()->client_id]) ?>
-
+    <?= \common\widgets\PageViewContentForm::widget(['view'=> $view])?>
+    <?php if($view == 'table'):?>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
@@ -58,5 +61,23 @@ $this->params['breadcrumbs'][] = $this->title;
             ]
         )
     ]); ?>
-
+    <?php else:?>
+    <?php $form = ActiveForm::begin(['method' => 'get']); ?>
+    <p></p>
+    <div class="input-group">
+      <?= $form->field($searchModel, 'title',['template'=>'{input}'])?>
+      <span class="input-group-btn">
+        <button class="btn btn-info" type="button">Поиск</button>
+      </span>
+    </div>
+    <?php ActiveForm::end(); ?> 
+    <?= ListView::widget([        
+        'dataProvider' => $dataProvider,
+        'itemView' => 'product_list',
+        'itemOptions' => [
+            'tag' => 'div',
+            'class' => 'news-item',
+        ],
+    ]);?>
+    <?php endif;?>
 </div>
