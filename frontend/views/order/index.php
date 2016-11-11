@@ -2,6 +2,8 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\widgets\ListView;
+use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $searchModel frontend\models\OrderSearch */
@@ -11,47 +13,10 @@ $this->title = 'Заказы';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="order-index">
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
-    <div class="pull-right">
-    </div>
-
-    <p>
-    </p>
-
-    <div class="row">
-        <div class="col-md-3">          
-            <?= Html::a('Оформить заказ на доставку', ['create'], ['class' => 'btn btn-success btn-block']) ?>
-        </div>
-        <div class="col-md-offset-5 col-md-2">        
-            <?= Html::a('Отчет по платежам', ['/analytic/payments'], ['class' => 'btn btn-success btn-block']) ?>
-        </div>
-        <div class="col-md-2">         
-            <?= Html::a('Отчет по доставкам', ['/analytic/delivery'], ['class' => 'btn btn-success btn-block']) ?>
-        </div>
-    </div>
+    <?= \common\widgets\DeliveryStatus::widget(['client_id' => \Yii::$app->user->getIdentity()->client_id]) ?>
     <p></p>
-    <div class="row">
-        <div class="col-md-4">
-            <div class="alert alert-info">
-                <h4><i class="fa fa-calendar"></i> Доставлено вчера</h4>
-                <h2><?= $deliveredYesterday ?></h2>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="alert alert-success">
-                <h4><i class="fa fa-check"></i> Доставлено сегодня</h4>
-                <h2><?= $deliveredToday ?></h2>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="alert alert-warning">
-                <h4><i class="fa fa-clock-o"></i> Ожидает доставки</h4>
-                <h2><?= $toDeliver ?></h2>
-            </div>
-        </div>
-    </div>
-
+    <?= \common\widgets\PageViewContentForm::widget(['view'=> $view])?>
+    <?php if($view == 'table'):?>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
@@ -99,5 +64,23 @@ $this->params['breadcrumbs'][] = $this->title;
             ]
         ],
     ]); ?>
-
+    <?php else:?>
+    <?php $form = ActiveForm::begin(['method' => 'get']); ?>
+    <p></p>
+    <div class="input-group">
+      <?= $form->field($searchModel, 'client_name',['template'=>'{input}'])->textInput(['placeholder' => 'Искать по клиенту'])?>
+      <span class="input-group-btn">
+        <button class="btn btn-info" type="button">Поиск</button>
+      </span>
+    </div>
+    <?php ActiveForm::end(); ?> 
+    <?= ListView::widget([        
+        'dataProvider' => $dataProvider,
+        'itemView' => 'order_list',
+        'itemOptions' => [
+            'tag' => 'div',
+            'class' => 'news-item',
+        ],
+    ]);?>
+    <?php endif;?>
 </div>

@@ -5,6 +5,7 @@ use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 use \dosamigos\datepicker\DateRangePicker;
 use \dosamigos\datepicker\DatePicker;
+use yii\widgets\ListView;
 /**
  * @var $dataProvider \yii\data\ActiveDataProvider
  */
@@ -65,7 +66,7 @@ $this->title = "Отчет по остаткам";
   </div>
   <div class="col-md-2">
     <div class="btn-group btn-block">
-      <?= Html::button('<i class="glyphicon glyphicon-ok"></i> Сформулировать отчет', [
+      <?= Html::button('<i class="glyphicon glyphicon-ok"></i> Применить', [
           'class' => 'btn btn-success btn-block',
           'type' => 'submit'
       ]) ?>
@@ -78,8 +79,10 @@ $this->title = "Отчет по остаткам";
   </div>
   <?php ActiveForm::end(); ?>  
 </div>
+<?= \common\widgets\PageViewContentForm::widget(['view'=> $view])?>
 <div class="row">
   <div class="col-md-12">
+    <?php if($view == 'table'):?>
     <?= GridView::widget([
       'dataProvider' => $dataProvider,
       'filterModel' => $searchModel,         
@@ -118,6 +121,25 @@ $this->title = "Отчет по остаткам";
           'decrease',
         ]
       )
-    ]); ?>        
+    ]); ?>
+    <?php else:?>
+    <?php $form = ActiveForm::begin(['method' => 'get']); ?>
+    <p></p>
+    <div class="input-group">
+      <?= $form->field($searchModel, 'product_title',['template'=>'{input}'])->textInput(['placeholder' => 'Искать по наименованию'])?>
+      <span class="input-group-btn">
+        <button class="btn btn-info" type="button">Поиск</button>
+      </span>
+    </div>
+    <?php ActiveForm::end(); ?> 
+    <?= ListView::widget([        
+        'dataProvider' => $dataProvider,
+        'itemView' => 'motion_list',
+        'itemOptions' => [
+            'tag' => 'div',
+            'class' => 'news-item',
+        ],
+    ]);?>
+    <?php endif;?>      
   </div>
 </div>

@@ -5,7 +5,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\grid\GridView;
 use dosamigos\datepicker\DatePicker;
-use yii\widgets\Pjax;
+use yii\widgets\ListView;
 
 $this->title = 'Отчет по платежам';
 $this->params['breadcrumbs'][] = $this->title;
@@ -15,7 +15,8 @@ $this->params['breadcrumbs'][] = $this->title;
 <?= \common\widgets\FilterDateRangeForm::widget(['filterModel' => $searchModel,'back' => '/order']) ?>
 <div class="row">
 	<div class="col-md-12">
-	<?php ////Pjax::begin(); ?>
+    <?= \common\widgets\PageViewContentForm::widget(['view'=> $view])?>
+    <?php if($view == 'table'):?>
 		<?= GridView::widget([
       'dataProvider' => $dataProvider,
       'filterModel' => $searchModel,
@@ -107,7 +108,25 @@ $this->params['breadcrumbs'][] = $this->title;
           ]
         ],
     ]); ?>
-		<?php //Pjax::end(); ?>
+    <?php else:?>
+    <?php $form = ActiveForm::begin(['method' => 'get']); ?>
+    <p></p>
+    <div class="input-group">
+      <?= $form->field($searchModel, 'client_name',['template'=>'{input}'])->textInput(['placeholder' => 'Искать по клиенту'])?>
+      <span class="input-group-btn">
+        <button class="btn btn-info" type="button">Поиск</button>
+      </span>
+    </div>
+    <?php ActiveForm::end(); ?> 
+    <?= ListView::widget([        
+        'dataProvider' => $dataProvider,
+        'itemView' => 'payments_list',
+        'itemOptions' => [
+            'tag' => 'div',
+            'class' => 'news-item',
+        ],
+    ]);?>
+    <?php endif;?>
 	</div>
 </div>
 

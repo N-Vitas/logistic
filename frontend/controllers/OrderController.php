@@ -17,6 +17,9 @@ use yii\filters\AccessControl;
  */
 class OrderController extends BaseController
 {
+
+    public $list_view = 'table';
+
     public function behaviors()
     {
         return array_merge(parent::behaviors(), [
@@ -28,7 +31,6 @@ class OrderController extends BaseController
             ],
         ]);
     }
-
     /**
      * Lists all Order models.
      * @return mixed
@@ -38,32 +40,11 @@ class OrderController extends BaseController
         $searchModel = new OrderSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams, $this->client->is_id);
 
-        $yesterdayBegin = date('Y-m-d H:i:s',mktime(date("H"), date("i"), date("s"), date("m")  , date("d")-1, date("Y")));// strtotime(date('Y-m-d') . ' -1 day');
-        $yesterdayEnd = date('Y-m-d H:i:s',mktime(date("H"), date("i"), date("s"), date("m")  , date("d"), date("Y")));//strtotime(date('Y-m-d') . '');
-        
-        $deliveredYesterday = Order::find()
-            ->where(['between', 'delivery_date', $yesterdayBegin, $yesterdayEnd])
-            ->andWhere(['client_id' => $this->client->is_id])
-            ->andWhere(['status' => Order::STATUS_COMPLETE])
-            ->count();
-
-        $deliveredToday = Order::find()
-            ->where(['>', 'delivery_date', $yesterdayEnd])
-            ->andWhere(['client_id' => $this->client->is_id])
-            ->andWhere(['status' => Order::STATUS_COMPLETE])
-            ->count();
-        $toDeliver = Order::find()
-            ->andWhere(['client_id' => $this->client->is_id])
-            ->where(['in', 'status', Order::STATUS_DELIVERING])
-            ->count();
-
         return $this->render('index', [
             'columns' => $this->showColumns,
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-            'deliveredYesterday' => $deliveredYesterday,
-            'deliveredToday' => $deliveredToday,
-            'toDeliver' => $toDeliver
+            'view' =>  $this->list_view
         ]);
     }
 

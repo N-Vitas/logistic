@@ -27,6 +27,7 @@ class BaseController extends \yii\web\Controller
 
     public $settings;
     public $showColumns = [];
+    public $list_view = 'table';
 
     public function init()
     {
@@ -68,6 +69,12 @@ class BaseController extends \yii\web\Controller
             if ($this->settings->show_code_client) {
                 $this->showColumns[] = 'code_client';
             }
+            if (!empty($_POST['list_view'])) {
+                $this->list_view = \Yii::$app->request->post('list_view');
+            }else if (!$this->list_view = \Yii::$app->session->get('list_view')){
+                $this->list_view = 'table';
+            }
+            \Yii::$app->session->set('list_view', $this->list_view);
         }
 
 

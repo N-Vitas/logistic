@@ -17,8 +17,6 @@ use yii\filters\VerbFilter;
  */
 class ProductController extends BaseController
 {
-    public $list_view = 'table';
-
     public function behaviors()
     {
         return array_merge(parent::behaviors(), [
@@ -29,18 +27,6 @@ class ProductController extends BaseController
                 ],
             ],
         ]);
-    }
-
-    public function init()
-    {
-        parent::init();
-
-        if (!empty($_POST['list_view'])) {
-            $this->list_view = $_POST['list_view'];
-        }else if (!$this->list_view = \Yii::$app->session->get('list_view')){
-            $this->list_view = 'table';
-        }
-        \Yii::$app->session->set('list_view', $this->list_view);
     }
     /**
      * Lists all Product models.

@@ -60,6 +60,7 @@ class AnalyticController extends BaseController
         'searchModel' => $searchModel,
         'dataProvider' => $dataProvider,
         'toXls' => $this->toXls,
+        'view' =>  $this->list_view
       ]);
     }
 
@@ -73,6 +74,7 @@ class AnalyticController extends BaseController
         'searchModel' => $searchModel,
         'dataProvider' => $dataProvider,
         'toXls' => $this->toXls,
+        'view' =>  $this->list_view
       ]);
     }
 
@@ -90,6 +92,7 @@ class AnalyticController extends BaseController
             'dataProvider' => $dataProvider,
             'dateFrom' => $dateFrom,
             'dateTo' => $dateTo,
+            'view' =>  $this->list_view
         ]);
     }
 
@@ -109,7 +112,8 @@ class AnalyticController extends BaseController
       return $this->render($this->toXls.'motion', [
         'columns' => $columns,
         'dataProvider' => $dataProvider,
-        'searchModel' => $searchModel
+        'searchModel' => $searchModel,
+        'view' =>  $this->list_view
       ]);
     }
 
@@ -123,6 +127,7 @@ class AnalyticController extends BaseController
         'searchModel' => $searchModel,
         'dataProvider' => $dataProvider,
         'columns' => $this->showColumns,
+        'view' =>  $this->list_view
       ]);
     }
 
