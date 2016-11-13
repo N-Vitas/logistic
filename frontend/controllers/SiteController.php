@@ -178,15 +178,15 @@ class SiteController extends BaseController
 
         if (Yii::$app->request->isPost) {
             if ($user->load(Yii::$app->request->post())) {
-                $user->imageFile = UploadedFile::getInstance($user, 'imageFile');
-                if($user->imageFile){
-                    $basePath = \Yii::getAlias('@frontend/web/upload/').$user->imageFile->name;
-                    $uri = '/upload/'.$user->imageFile->name;
+                $file = UploadedFile::getInstance($user, 'imageFile');
+                if($file){
+                    $basePath = \Yii::getAlias('@frontend/web/upload/').$file->name;
+                    $uri = '/upload/'.$file->name;
                     // if(!is_dir($dirPath)){
                     //     var_dump(is_dir($dirPath));die;
                     //     mkdir($dirPath,0777,true);
                     // }
-                    move_uploaded_file($user->imageFile->tempName, $basePath);
+                    move_uploaded_file($file->tempName, $basePath);
                     $user->image = $uri;          
                 }
                 if($user->save()){   
