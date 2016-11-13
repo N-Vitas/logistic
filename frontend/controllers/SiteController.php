@@ -189,7 +189,7 @@ class SiteController extends BaseController
                     move_uploaded_file($user->imageFile->tempName, $basePath);
                     $user->image = $uri;          
                 }
-                if($user->save(false)){   
+                if($user->save()){   
                     \Yii::$app->session->setFlash('success', 'Профиль успешно обновлен');
                     $this->refresh();
                 }

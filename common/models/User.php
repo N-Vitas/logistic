@@ -47,6 +47,7 @@ class User extends ActiveRecord implements IdentityInterface
 
     public $password;
     public $passwordCompare;
+    public $imageFile;
 
     /**
      * @inheritdoc
@@ -72,14 +73,16 @@ class User extends ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
+            [['username'], 'unique'],
+            [['email'], 'unique'],
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
             ['password', 'required', 'on' => 'create'],
             ['password', 'string', 'min' => 6, 'tooShort' => 'Минимальная длина пароля - 6 символов'],
-            [['username', 'email'], 'unique'],
             [['username', 'email'], 'required'],
             ['email', 'email'],
             ['image', 'safe'],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
+            [['imageFile'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg'],
 
             [['id', 'status', 'created_at', 'updated_at'], 'integer'],
             [['auth_key', 'password_hash', 'password_reset_token', 'password'], 'safe'],

@@ -29,6 +29,7 @@ class ClientUser extends \common\models\User
     public function rules()
     {
         return array_merge(parent::rules(), [
+            [['username', 'email'], 'unique'],
             [['role', 'username', 'email'], 'string'],
             [['username', 'email'], 'required'],
             ['password', 'string', 'min' => 6, 'tooShort' => 'Минимальная длина пароля - 6 символов'],
