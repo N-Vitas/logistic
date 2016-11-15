@@ -6,6 +6,8 @@ use \common\models\Order;
 use yii\helpers\Html;
 use yii\grid\GridView;
 use dosamigos\datepicker\DatePicker;
+use yii\widgets\ListView;
+use yii\widgets\ActiveForm;
 
 $this->title = "Главная";
 ?>
@@ -16,6 +18,10 @@ $this->title = "Главная";
         <?= \common\widgets\DeliveryStatus::widget(['client_id' => \Yii::$app->controller->client_id]) ?>
 
         <?= \common\widgets\PaymentsStatus::widget(['client_id' => \Yii::$app->controller->client_id]) ?>
+
+        <p></p>
+        <?= \common\widgets\PageViewContentForm::widget(['view'=> $view])?>
+        <p></p>
         <!-- Nav tabs -->
         <ul class="nav nav-tabs" role="tablist">
             <li role="presentation" class="active"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">Ожидает отправку</a></li>
@@ -25,6 +31,7 @@ $this->title = "Главная";
         <!-- Tab panes -->
         <div class="tab-content">
             <div role="tabpanel" class="tab-pane active" id="messages">
+      <?php if($view == 'table'):?>
       <?= GridView::widget([
         'dataProvider' => $toDeliverProvider,
         'filterModel' => $searchToDeliver,
@@ -107,11 +114,31 @@ $this->title = "Главная";
           ],
         ],
     ]); ?>
+    <?php else:?>
+    <?php $form = ActiveForm::begin(['method' => 'get']); ?>
+    <p></p>
+    <div class="input-group">
+      <?= $form->field($searchToDeliver, 'client_name',['template'=>'{input}'])->textInput(['placeholder' => 'Искать по клиенту'])?>
+      <span class="input-group-btn">
+        <button class="btn btn-info" type="button">Поиск</button>
+      </span>
+    </div>
+    <?php ActiveForm::end(); ?> 
+    <?= ListView::widget([        
+        'dataProvider' => $toDeliverProvider,
+        'itemView' => 'order_list',
+        'itemOptions' => [
+            'tag' => 'div',
+            'class' => 'news-item',
+        ],
+    ]);?>
+    <?php endif;?>
             </div>
             <div role="tabpanel" class="tab-pane" id="settings">
+      <?php if($view == 'table'):?>
               <?= GridView::widget([
                 'dataProvider' => $deliveredProvider,
-                'filterModel' => $searchDelivered,
+                // 'filterModel' => $searchDelivered,
                 'tableOptions' => [
                     'class' => 'table table-striped table-bordered'
                 ],
@@ -191,6 +218,16 @@ $this->title = "Главная";
                     ],
                 ],
             ]); ?>
+    <?php else:?>
+    <?= ListView::widget([        
+        'dataProvider' => $deliveredProvider,
+        'itemView' => 'order_list',
+        'itemOptions' => [
+            'tag' => 'div',
+            'class' => 'news-item',
+        ],
+    ]);?>
+    <?php endif;?>
             </div>
         </div>
 

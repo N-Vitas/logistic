@@ -123,7 +123,8 @@ class AnalyticController extends BaseController
       return $this->render('motion', [
         'columns' => $columns,
         'dataProvider' => $dataProvider,
-        'searchModel' => $searchModel
+        'searchModel' => $searchModel,
+        'view' =>  $this->list_view
       ]);
     }
 
@@ -143,6 +144,7 @@ class AnalyticController extends BaseController
         'searchModel' => $searchModel,
         'dataProvider' => $dataProvider,
         'columns' => $columns,
+        'view' =>  $this->list_view
       ]);
 
         // $searchModel = new ProductAnalyzeSearch();
@@ -181,6 +183,7 @@ class AnalyticController extends BaseController
         'searchModel' => $searchModel,
         'dataProvider' => $dataProvider,
         'client_id' => $this->client->id,
+        'view' =>  $this->list_view
       ]);
     }
 
@@ -223,6 +226,7 @@ class AnalyticController extends BaseController
       'searchModel' => $searchModel,
       'dataProvider' => $dataProvider,
       'client_id' => $this->client->id,
+      'view' =>  $this->list_view
     ]);
   }
 

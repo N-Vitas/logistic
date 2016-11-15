@@ -41,8 +41,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'activeOrders',
                 'value' => function($model) {
                     return \common\models\Order::find()
-                        ->where(['client_id' => $model->id])
-                        ->andWhere(['in', 'status', \common\models\Order::$activeStatuses])
+                        ->where(['client_id' => $model->is_id])
+                        ->andWhere(['in', 'status', [0,1,2]])
                         ->count();
                 }
             ],

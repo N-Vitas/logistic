@@ -81,6 +81,7 @@ class SiteController extends BaseController
             'toDeliverProvider' => $toDeliverProvider,
             'searchDelivered' => $searchDelivered,
             'deliveredProvider' => $deliveredProvider,
+            'view' =>  $this->list_view
         ]);
     }
 
