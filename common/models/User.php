@@ -82,7 +82,7 @@ class User extends ActiveRecord implements IdentityInterface
             ['email', 'email'],
             ['image', 'safe'],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
-            [['imageFile'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg'],
+            [['imageFile'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg, jpeg, bmp, gif'],
 
             [['id', 'status', 'created_at', 'updated_at'], 'integer'],
             [['auth_key', 'password_hash', 'password_reset_token', 'password'], 'safe'],

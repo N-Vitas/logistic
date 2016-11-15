@@ -28,7 +28,7 @@ class ServiceUser extends User
         return array_merge(parent::rules(), [
             [['username', 'email'], 'required'],
             ['password', 'string', 'min' => 6, 'tooShort' => 'Минимальная длина пароля - 6 символов'],
-            [['imageFile'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg'],
+            [['imageFile'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg, jpeg, bmp, gif'],
             ['imageFile', 'safe'],
             ['passwordCompare', 'compare', 'compareAttribute' => 'password',
                 'message' => 'Поле "{attribute}" должно совпадать с полем "{compareValueOrAttribute}"'],
