@@ -4,6 +4,11 @@
   </div>
   <div class="box-body list-group">
   	<div class="container-fluid">
+  	
+	    <div class="list-group-item row">
+	    	<div class="col-md-6 col-lg-6 col-xs-6"><?=$model->getAttributeLabel('created_at')?></div>
+	    	<div class="col-md-6 col-lg-6 col-xs-6"><?=$model->created_at?></div>            	
+	    </div>
 	    <div class="list-group-item row">
 	    	<div class="col-md-6 col-lg-6 col-xs-6"><?=$model->getAttributeLabel('product.nomenclature')?></div>
 	    	<div class="col-md-6 col-lg-6 col-xs-6"><?=$model->product->nomenclature?></div>            	
