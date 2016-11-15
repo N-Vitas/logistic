@@ -88,6 +88,7 @@ class DBSyncHelper
 
                 if ($order->updated_at < $obj->status_date) {
                     $order->status = $obj->status;
+                    $order->status_payments = isset($obj->status_payments)?$obj->status_payments:0;
                     $order->updated_at = $obj->status_date;
                     $order->save();
                     $updated++;
@@ -114,7 +115,7 @@ class DBSyncHelper
             'orders.phone',
             'orders.email',
             'orders.city_id',
-            'orders.payment_type',
+            'orders.payment_type'
         ];
 
         $itemColumns = [

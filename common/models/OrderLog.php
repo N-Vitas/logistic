@@ -31,8 +31,8 @@ class OrderLog extends \yii\db\ActiveRecord
     {
         return [
             [['created_at', 'status_date'], 'safe'],
-            [['order_id', 'status'], 'required'],
-            [['order_id', 'status'], 'integer']
+            [['order_id', 'status','status_payments'], 'required'],
+            [['order_id', 'status','status_payments'], 'integer']
         ];
     }
 
@@ -47,6 +47,7 @@ class OrderLog extends \yii\db\ActiveRecord
             'order_id' => 'Order ID',
             'status' => 'Status',
             'status_date' => 'Status Date',
+            'status_payments' => 'Status Payments'
         ];
     }
 
