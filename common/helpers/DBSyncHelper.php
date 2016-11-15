@@ -31,7 +31,7 @@ class DBSyncHelper
             "UPDATE one_c.sync_status SET status = $status WHERE name = '$key'"
         )->execute();
     }
-
+    //actionImportProducts 
     public static function importProducts()
     {
         $array = \Yii::$app->db->createCommand("SELECT * FROM one_c.tovars")
@@ -134,6 +134,7 @@ class DBSyncHelper
             ->all();
 
 
+        // var_dump($orders);die;
         // loop over the rows, outputting them
         foreach ($orders as $order) {
             $order['address'] = $order['city']['title'] . ',' . $order['address'];
@@ -143,7 +144,7 @@ class DBSyncHelper
             $orderItems = OrderItem::find()
                 ->select($itemColumns)
                 ->joinWith('product')
-                ->where(['order_id' => $order])
+                ->where(['order_id' => $order['id']])
                 ->asArray()
                 ->all();
             foreach ($orderItems as $orderItem) {
@@ -155,7 +156,6 @@ class DBSyncHelper
                 );
             }
         }
-
         if (sizeof($output)) {
             foreach ($output as $row) {
                 \Yii::$app->db->createCommand("
