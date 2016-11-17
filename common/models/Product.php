@@ -118,7 +118,7 @@ class Product extends \yii\db\ActiveRecord
           if(count($emails) > 0){
             foreach ($emails as $email) {
               // Если нет ошибки  отправки письма то записываем в лог email получателя
-              if(!empty($email) && $this->sendEmail($email,$endingProducts,$endedProducts)){
+              if(!empty($email) && $this->sendEmail($email,$endingProductsCount,$endedProductsCount)){
                 Yii::info("Send notification for $email", 'emailSend');  
               }              
             }
