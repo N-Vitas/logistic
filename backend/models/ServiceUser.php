@@ -53,10 +53,16 @@ class ServiceUser extends User
     {
         // $auth = \Yii::$app->getAuthManager();
         // var_dump($changedAttributes,$this->role,$auth->getRole($this->role));die;
-        // if ($insert) {
+        if ($insert) {
             $auth = \Yii::$app->getAuthManager();
             $auth->assign($auth->getRole($this->role), $this->id);
-        // }
+        }else{            
+            $auth = \Yii::$app->getAuthManager();
+            $item = $auth->getRole($this->role);
+            $item = $item ? : $auth->getPermission($this->role);
+            $auth->revoke($item,$this->id);            
+            $auth->assign($auth->getRole($this->role), $this->id);
+        }
 
 
         parent::afterSave($insert, $changedAttributes);
