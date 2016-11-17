@@ -29,7 +29,7 @@ class ServiceUser extends User
             [['username', 'email'], 'required'],
             ['password', 'string', 'min' => 6, 'tooShort' => 'Минимальная длина пароля - 6 символов'],
             [['imageFile'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg, jpeg, bmp, gif'],
-            ['imageFile', 'safe'],
+            [['imageFile','role'], 'safe'],
             ['passwordCompare', 'compare', 'compareAttribute' => 'password',
                 'message' => 'Поле "{attribute}" должно совпадать с полем "{compareValueOrAttribute}"'],
 
@@ -51,10 +51,12 @@ class ServiceUser extends User
 
     public function afterSave($insert, $changedAttributes)
     {
-        if ($insert) {
+        // $auth = \Yii::$app->getAuthManager();
+        // var_dump($changedAttributes,$this->role,$auth->getRole($this->role));die;
+        // if ($insert) {
             $auth = \Yii::$app->getAuthManager();
             $auth->assign($auth->getRole($this->role), $this->id);
-        }
+        // }
 
 
         parent::afterSave($insert, $changedAttributes);
