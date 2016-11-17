@@ -60,7 +60,7 @@ class ServiceUser extends User
             $auth = \Yii::$app->getAuthManager();
             $item = $auth->getRole($this->role);
             $item = $item ? : $auth->getPermission($this->role);
-            $auth->revoke($item,$this->id);            
+            $auth->revokeAll($this->id);            
             $auth->assign($auth->getRole($this->role), $this->id);
         }
 
