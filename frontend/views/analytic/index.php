@@ -77,7 +77,7 @@ ksort($placeholder);
   </div>  
 </div>
 <p></p>
-<?= \common\widgets\DeliveryStatus::widget(['client_id' => $client_id]) ?>
+<?= \common\widgets\DeliveryStatus::widget(['client_id' => \Yii::$app->user->getIdentity()->client_id]) ?>
 <div class="row">
   <?php $form = ActiveForm::begin(['method' => 'get']); ?>
   <div class="col-md-12">
