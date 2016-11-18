@@ -5,19 +5,54 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\grid\GridView;
 use dosamigos\datepicker\DatePicker;
+use dosamigos\datepicker\DateRangePicker;
 use yii\widgets\ListView;
 
 $this->title = 'Отчет по платежам';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
+<?= $this->render('_client_form'); ?>  
 <div class="row">
-<div class="col-md-12">
-  <?= $this->render('_client_form'); ?>
+  <?php $form = ActiveForm::begin(['method' => 'get']); ?>
+  <div class="col-md-4">
+    <div class="btn-group btn-block">
+      <?= $form->field($searchModel, 'date_from',['template'=>'{input}'])->widget(DateRangePicker::className(), [
+        'attributeTo' => 'date_to', 
+        'form' => $form, // best for correct client validation
+        'language' => 'ru',
+        'labelTo' => 'До',
+        // 'size' => 'lg',
+        'clientOptions' => [
+            'autoclose' => true,
+            'format' => 'yyyy-mm-dd',
+            'clearBtn'=>true,
+            'toggleActive' => true,
+        ]
+      ]); ?>
+    </div>
+  </div>  
+  <div class="col-md-4">
+    <div class="btn-group btn-block">
+      <?= Html::button('<i class="glyphicon glyphicon-refresh"></i> Сбросить перриод', [
+          'class' => 'btn btn-success btn-block',
+          'type' => 'button',
+          'onClick' => 'jQuery("#searchanalitic-date_from,#searchanalitic-date_to").val("");this.form.submit()',
+      ]) ?>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="btn-group btn-block">
+        <?= Html::button('<i class="glyphicon glyphicon-ok"></i> Сформулировать отчет', [
+            'class' => 'btn btn-success btn-block',
+            'type' => 'submit'
+        ]) ?>
+    </div>
+  </div>
+<?php ActiveForm::end(); ?> 
 </div>
-</div>
+<p></p>
 <?= \common\widgets\PaymentsStatus::widget(['client_id' => $client_id]) ?>
-<?= \common\widgets\FilterDateRangeForm::widget(['filterModel' => $searchModel,'export'=>false]) ?>
 <div class="row">
     <div class="col-md-12">
       <?= \common\widgets\PageViewContentForm::widget(['view'=> $view])?>

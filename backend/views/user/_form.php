@@ -14,6 +14,9 @@ use yii\widgets\ActiveForm;
 
     <div class="row">
         <div class="col-md-8">
+            <h2>Общая информация</h2>
+            <hr>
+
             <?= $form->field($model, 'username')->textInput() ?>
             <?= $form->field($model, 'email')->textInput() ?>
 
@@ -26,9 +29,11 @@ use yii\widgets\ActiveForm;
             <?php endif; ?>
         </div>
         <div class="col-md-4">
-            <h1><?= $model->isNewRecord ? 'Пароль' : 'Смена пароля'?></h1>
+            <h2><?= $model->isNewRecord ? 'Пароль' : 'Смена пароля' ?></h2>
+            <hr>
             <?= $form->field($model, 'password')->passwordInput() ?>
             <?= $form->field($model, 'passwordCompare')->passwordInput() ?>
+
         </div>
     </div>
 

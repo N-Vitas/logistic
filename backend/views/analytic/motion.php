@@ -10,7 +10,7 @@ use yii\widgets\ListView;
  * @var $dataProvider \yii\data\ActiveDataProvider
  */
 
-$this->title = "Отчет по остаткам";
+$this->title = "Движение товара";
 ?>
 <div class="row">
   <div class="col-md-12">

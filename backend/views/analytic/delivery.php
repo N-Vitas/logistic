@@ -5,19 +5,100 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\grid\GridView;
 use dosamigos\datepicker\DatePicker;
+use dosamigos\datepicker\DateRangePicker;
 use yii\widgets\ListView;
+use common\models\Product;
+use kartik\select2\Select2;
+use yii\helpers\ArrayHelper;
 
 $this->title = 'Доставка';
 $this->params['breadcrumbs'][] = $this->title;
+$radiolist = [
+  'title' => 'По наименованию',
+  'code_client' => 'По коду клиента',
+  'barcode' => 'По артиклю',
+  'nomenclature' => 'По номенклатуре'
+];
+$products = Product::find()
+    ->where(['client_id' => Yii::$app->controller->client->is_id])
+    ->asArray()
+    ->all();
+switch ($filterModel->filter) {
+  case 'code_client':
+    $placeholder[0] = 'Выберите код клиента';
+    break;
+  case 'barcode':
+    $placeholder[0] = 'Выберите артикл';
+    break;
+  case 'nomenclature':
+    $placeholder[0] = 'Выберите номенклатуру';
+    break;
+  
+  default:
+    $placeholder[0] = 'Выберите наименование';
+    break;
+}
+ksort($placeholder);
 ?>
 
 <div class="row">
-<div class="col-md-12">
-  <?= $this->render('_client_form'); ?>
+  <?= $this->render('_search_client_form'); ?>  
+  <?php $form = ActiveForm::begin(['method' => 'get']); ?>
+  <div class="col-md-3">
+    <div class="btn-group btn-block">
+      <?= $form->field($searchModel, 'date_from',['template'=>'{input}'])->widget(DateRangePicker::className(), [
+        'attributeTo' => 'date_to', 
+        'form' => $form, // best for correct client validation
+        'language' => 'ru',
+        'labelTo' => 'До',
+        // 'size' => 'lg',
+        'clientOptions' => [
+            'autoclose' => true,
+            'format' => 'yyyy-mm-dd',
+            'clearBtn'=>true,
+            'toggleActive' => true,
+        ]
+      ]); ?>
+    </div>
+  </div>  
+  <div class="col-md-3">
+    <div class="btn-group btn-block">
+        <?= Html::button('<i class="glyphicon glyphicon-ok"></i> Сформулировать отчет', [
+            'class' => 'btn btn-success btn-block',
+            'type' => 'submit'
+        ]) ?>
+    </div>
+  </div>
+<?php ActiveForm::end(); ?> 
 </div>
-</div>
+<p></p>
 <?= \common\widgets\DeliveryStatus::widget(['client_id' => $client_id]) ?>
-<?= \common\widgets\FilterDeliveryForm::widget(['filterModel' => $searchModel,'export'=>false]) ?>
+<?php // \common\widgets\FilterDeliveryForm::widget(['filterModel' => $searchModel,'export'=>false]) ?>
+<div class="row">
+  <?php $form = ActiveForm::begin(['method' => 'get']); ?>
+  <div class="col-md-12">
+      <div class="btn-group btn-block">
+        <?= $form->field($searchModel, 'filter',['template'=>'{label}{input}'])->dropDownList($radiolist, ['class' => 'form-control','id'=>'change', 'onchange'=>'this.form.submit()']); ?>
+      </div>
+      <div class="btn-group btn-block">
+        <?= $form->field($searchModel, 'product_id',['template'=>'{label}{input}'])
+          ->widget(Select2::className(), [
+            'data' => ArrayHelper::map($products, 'id', $searchModel->filter),
+            'options' => [
+                'placeholder' => 'Выберите продукт',
+                'multiple' => true,
+            ],
+            'pluginOptions' => [
+              'allowClear' => true,
+            ],            
+          ]);
+        ?>
+      </div>           
+  </div>
+  <div class="col-md-4">
+  </div>
+  <?php ActiveForm::end(); ?>  
+</div>
 <?= \common\widgets\PageViewContentForm::widget(['view'=> $view])?>
 <div class="row">
 	<div class="col-md-12">

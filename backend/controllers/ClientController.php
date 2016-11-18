@@ -126,8 +126,11 @@ class ClientController extends BaseController
         $searchModel = new OrderSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams, $client->is_id);
 
-        $yesterdayBegin = strtotime(date('Y-m-d') . ' -1 day');
-        $yesterdayEnd = strtotime(date('Y-m-d') . '');
+        // $yesterdayBegin = strtotime(date('Y-m-d') . ' -1 day');
+        // $yesterdayEnd = strtotime(date('Y-m-d') . '');
+        
+        $yesterdayBegin = date('Y-m-d H:i:s',mktime(date("H"), date("i"), date("s"), date("m")  , date("d")-1, date("Y")));
+        $yesterdayEnd = date('Y-m-d H:i:s',mktime(date("H"), date("i"), date("s"), date("m")  , date("d"), date("Y")));
 
         $deliveredYesterday = Order::find()
             ->where(['between', 'delivery_date', $yesterdayBegin, $yesterdayEnd])

@@ -73,17 +73,17 @@ $user = \Yii::$app->user->identity; ?>
                         ],
 //                        'visible' =>
                     ],
-                    [
-                        'label' => 'Панель разработчика',
-                        'icon' => 'fa fa-share',
-                        'url' => '#',
-                        'items' => [
-                            ['label' => 'Gii', 'icon' => 'fa fa-file-code-o', 'url' => ['/gii'],],
-                            ['label' => 'Debug', 'icon' => 'fa fa-dashboard', 'url' => ['/debug'],],
-                        ],
+                    // [
+                    //     'label' => 'Панель разработчика',
+                    //     'icon' => 'fa fa-share',
+                    //     'url' => '#',
+                    //     'items' => [
+                    //         ['label' => 'Gii', 'icon' => 'fa fa-file-code-o', 'url' => ['/gii'],],
+                    //         ['label' => 'Debug', 'icon' => 'fa fa-dashboard', 'url' => ['/debug'],],
+                    //     ],
 
-                        'visible' => YII_DEBUG
-                    ],
+                    //     'visible' => YII_DEBUG
+                    // ],
                 ],
             ]
         ) ?>

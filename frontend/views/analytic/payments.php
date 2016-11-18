@@ -11,8 +11,8 @@ $this->title = 'Отчет по платежам';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
-<?= \common\widgets\PaymentsStatus::widget(['client_id' => \Yii::$app->user->getIdentity()->client_id]) ?>
-<?= \common\widgets\FilterDateRangeForm::widget(['filterModel' => $searchModel,'back' => '/order']) ?>
+<?= \common\widgets\FilterDateRangeForm::widget(['filterModel' => $searchModel]) ?><p></p>
+<?= \common\widgets\PaymentsStatus::widget(['client_id' => \Yii::$app->user->getIdentity()->client_id]) ?><p></p>
 <div class="row">
 	<div class="col-md-12">
     <?= \common\widgets\PageViewContentForm::widget(['view'=> $view])?>

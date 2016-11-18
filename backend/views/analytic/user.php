@@ -12,17 +12,10 @@ use yii\widgets\ActiveForm;
 
 $this->title = "Отчет по менеджерам";
 ?>
-<?= $this->render('_client_form'); ?>
 <div class="row">
+  <?= $this->render('_search_client_form'); ?>
   <?php $form = ActiveForm::begin(['method' => 'get']); ?>
-  <div class="col-md-2">         
-    <div class="btn-group btn-block">
-      <?= Html::a('< назад', ['/user'], ['class' => 'btn btn-info btn-block']) ?>
-    </div> 
-  </div>
-  <div class="col-md-4">  
-  </div>
-  <div class="col-md-4">        
+  <div class="col-md-3">        
     <div class="btn-group btn-block">
         <?= \dosamigos\datepicker\DateRangePicker::widget([
             'name' => 'dateFrom',
@@ -39,7 +32,7 @@ $this->title = "Отчет по менеджерам";
         ]); ?>
     </div>
   </div>
-  <div class="col-md-2">
+  <div class="col-md-3">
     <div class="btn-group btn-block">
       <?= Html::button('<i class="glyphicon glyphicon-ok"></i> Сформулировать отчет', [
           'class' => 'btn btn-success btn-block',
@@ -49,6 +42,7 @@ $this->title = "Отчет по менеджерам";
   </div>
   <?php ActiveForm::end(); ?>  
 </div>
+<p></p>
 <?= GridView::widget([
     'dataProvider' => $dataProvider,
     'columns' => [
