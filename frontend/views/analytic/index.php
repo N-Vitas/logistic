@@ -24,7 +24,7 @@ $products = Product::find()
     ->where(['client_id' => Yii::$app->controller->client->is_id])
     ->asArray()
     ->all();
-switch ($filterModel->filter) {
+switch ($searchModel->filter) {
   case 'code_client':
     $placeholder[0] = 'Выберите код клиента';
     break;
@@ -78,7 +78,6 @@ ksort($placeholder);
 </div>
 <p></p>
 <?= \common\widgets\DeliveryStatus::widget(['client_id' => $client_id]) ?>
-<?php // \common\widgets\FilterDeliveryForm::widget(['filterModel' => $searchModel,'export'=>false]) ?>
 <div class="row">
   <?php $form = ActiveForm::begin(['method' => 'get']); ?>
   <div class="col-md-12">
