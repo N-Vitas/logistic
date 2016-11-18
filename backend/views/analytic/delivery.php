@@ -73,7 +73,6 @@ ksort($placeholder);
 </div>
 <p></p>
 <?= \common\widgets\DeliveryStatus::widget(['client_id' => $client_id]) ?>
-<?php // \common\widgets\FilterDeliveryForm::widget(['filterModel' => $searchModel,'export'=>false]) ?>
 <div class="row">
   <?php $form = ActiveForm::begin(['method' => 'get']); ?>
   <div class="col-md-12">
