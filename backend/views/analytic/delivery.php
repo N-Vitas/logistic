@@ -23,7 +23,7 @@ $products = Product::find()
     ->where(['client_id' => Yii::$app->controller->client->is_id])
     ->asArray()
     ->all();
-switch ($filterModel->filter) {
+switch ($searchModel->filter) {
   case 'code_client':
     $placeholder[0] = 'Выберите код клиента';
     break;
