@@ -20,16 +20,3 @@
 
 <hr>
 <?php $action = empty($action) ? ['analyze/user'] : $action ?>
-
-<?php/* \yii\widgets\ActiveForm::begin([
-    'action' => \yii\helpers\Url::current(),
-]) ?>
-    <div class="col-md-3">
-        <?= \yii\helpers\Html::dropDownList('client_id', \Yii::$app->controller->client_id, \Yii::$app->controller->clients, [
-            'class' => 'form-control'
-        ]) ?>
-    </div>
-    <div class="col-md-3">
-        <?= \yii\helpers\Html::button('Применить', ['class' => 'btn btn-success btn-block', 'type' => 'submit']) ?>
-    </div>
-<?php \yii\widgets\ActiveForm::end() */?>
