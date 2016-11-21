@@ -140,7 +140,7 @@ class ClientUser extends \common\models\User
 
     public function getNewOrdersCount()
     {
-        $params = \Yii::$app->request->queryParams['ClientUser'];        
+        $params = \Yii::$app->request->queryParams['ClientUser'] || ['ClientUser'=>['dateFrom'=>'','dateTo'=>'']];        
         $query = Order::find()
             ->where([
                 'client_id' => $this->client->is_id,
@@ -160,7 +160,7 @@ class ClientUser extends \common\models\User
 
     public function getWorkOrdersCount()
     {
-        $params = \Yii::$app->request->queryParams['ClientUser']; 
+        $params = \Yii::$app->request->queryParams['ClientUser'] || ['ClientUser'=>['dateFrom'=>'','dateTo'=>'']]; 
         $query = Order::find()
             ->where([
                 'client_id' => $this->client->is_id,
@@ -180,7 +180,7 @@ class ClientUser extends \common\models\User
 
     public function getCompleteOrdersCount()
     {
-        $params = \Yii::$app->request->queryParams['ClientUser']; 
+        $params = \Yii::$app->request->queryParams['ClientUser'] || ['ClientUser'=>['dateFrom'=>'','dateTo'=>'']]; 
         $query = Order::find()
             ->where([
                 'client_id' => $this->client->is_id,
