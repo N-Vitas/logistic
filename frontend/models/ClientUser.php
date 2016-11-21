@@ -140,19 +140,19 @@ class ClientUser extends \common\models\User
 
     public function getNewOrdersCount()
     {
-        $params = \Yii::$app->request->getQueryParams('ClientUser');// || ['ClientUser'=>['dateFrom'=>'','dateTo'=>'']];        
+        $params = \Yii::$app->request->getQueryParams();// || ['ClientUser'=>['dateFrom'=>'','dateTo'=>'']];         
         $query = Order::find()
             ->where([
                 'client_id' => $this->client->is_id,
                 'status' => Order::STATUS_NEW,
                 'user_id' => $this->id
             ]);
-        if (!empty($params['dateFrom'])) {
-            $query->andWhere(['>=', 'created_at', $params['dateFrom']]);
+        if (!empty($params['ClientUser']['dateFrom'])) {
+            $query->andWhere(['>=', 'created_at', $params['ClientUser']['dateFrom']]);
         }
 
-        if (!empty($params['dateTo'])) {
-            $query->andWhere(['<=', 'created_at', $params['dateTo']]);
+        if (!empty($params['ClientUser']['dateTo'])) {
+            $query->andWhere(['<=', 'created_at', $params['ClientUser']['dateTo']]);
         }
 
         return $query->count();
@@ -167,12 +167,12 @@ class ClientUser extends \common\models\User
                 'status' => Order::STATUS_FILLED,
                 'user_id' => $this->id
             ]);
-        if (!empty($params['dateFrom'])) {
-            $query->andWhere(['>=', 'created_at', $params['dateFrom']]);
+        if (!empty($params['ClientUser']['dateFrom'])) {
+            $query->andWhere(['>=', 'created_at', $params['ClientUser']['dateFrom']]);
         }
 
-        if (!empty($params['dateTo'])) {
-            $query->andWhere(['<=', 'created_at', $params['dateTo']]);
+        if (!empty($params['ClientUser']['dateTo'])) {
+            $query->andWhere(['<=', 'created_at', $params['ClientUser']['dateTo']]);
         }
 
         return $query->count();
@@ -186,12 +186,12 @@ class ClientUser extends \common\models\User
                 'client_id' => $this->client->is_id,
                 'user_id' => $this->id
             ])->andWhere(['in','status',[Order::STATUS_CANCELED,Order::STATUS_COMPLETE]]);
-        if (!empty($params['dateFrom'])) {
-            $query->andWhere(['>=', 'created_at', $params['dateFrom']]);
+        if (!empty($params['ClientUser']['dateFrom'])) {
+            $query->andWhere(['>=', 'created_at', $params['ClientUser']['dateFrom']]);
         }
 
-        if (!empty($params['dateTo'])) {
-            $query->andWhere(['<=', 'created_at', $params['dateTo']]);
+        if (!empty($params['ClientUser']['dateTo'])) {
+            $query->andWhere(['<=', 'created_at', $params['ClientUser']['dateTo']]);
         }
 
         return $query->count();
