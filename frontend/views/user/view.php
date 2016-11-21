@@ -31,18 +31,18 @@ $this->params['breadcrumbs'][] = $this->title;
             'username',
             'email:email',
             'status',
-            [
-                'attribute' => 'created_at',
-                'value' => function($model) {
-                    return date('Y-m-d', $model->created_at);
-                }
-            ],
-            [
-                'attribute' => 'updated_at',
-                'value' => function($model) {
-                    return date('Y-m-d', $model->updated_at);
-                }
-            ],
+            // [
+            //     'attribute' => 'created_at',
+            //     'value' => function($model) {
+            //         return date('Y-m-d', $model->created_at);
+            //     }
+            // ],
+            // [
+            //     'attribute' => 'updated_at',
+            //     'value' => function($model) {
+            //         return date('Y-m-d', $model->updated_at);
+            //     }
+            // ],
         ],
     ]) ?>
 

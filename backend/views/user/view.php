@@ -14,7 +14,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <?= Html::a('< Назад', Yii::$app->request->referrer, ['class' => 'btn btn-info']) ?>
+    <?= Html::a('< Назад', Yii::$app->request->referrer, ['class' => 'btn btn-info','style'=>'margin-bottom: 17px;']) ?>
     <p>
         <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
         <?= Html::a('Delete', ['delete', 'id' => $model->id], [

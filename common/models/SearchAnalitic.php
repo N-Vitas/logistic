@@ -57,7 +57,7 @@ class SearchAnalitic extends Order
   {
     return array_merge(parent::attributeLabels(),[
       'date_from' => 'Выбор перриода',
-      'filter' => 'Фильтр продукта',
+      'filter' => 'Найти заказ',
     ]);
   }
 

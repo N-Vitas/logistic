@@ -18,7 +18,7 @@ $atributes = $model->attributeLabels();
     <h1><?= Html::encode($this->title) ?></h1>
     <hr>
     
-    <?= Html::a('< Назад', Yii::$app->request->referrer, ['class' => 'btn btn-info']) ?>
+    <?= Html::a('< Назад', Yii::$app->request->referrer, ['class' => 'btn btn-info','style'=>'margin-bottom: 17px;']) ?>
     <table id="w0" class="table table-striped table-bordered detail-view">
       <tbody>
         <tr><th><?= $atributes['id'] ?></th><td><?= $model->id ?></td></tr>

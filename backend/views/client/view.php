@@ -27,7 +27,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     ],
                 ]) ?>
             </p>
-            <?= Html::a('< Назад', ['index'], ['class' => 'btn btn-warning']) ?>
+            <?= Html::a('< Назад', ['index'], ['class' => 'btn btn-warning','style'=>'margin-bottom: 17px;']) ?>
 
             <?= DetailView::widget([
                 'model' => $model,
