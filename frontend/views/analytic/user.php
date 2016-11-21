@@ -22,18 +22,18 @@ $this->title = "Отчет по менеджерам";
   </div>
   <div class="col-md-3">         
     <div class="btn-group btn-block">
-        <?= \dosamigos\datepicker\DateRangePicker::widget([
-            'name' => 'dateFrom',
-            'value' => !empty($dateFrom) ? $dateFrom : "",
-            'nameTo' => 'dateTo',
-            'valueTo' => !empty($dateTo) ? $dateTo : "",
-            'labelTo' => 'До',
-            'language' => 'ru',
-            'clientOptions' => [
-                'autoclose' => true,
-                'clearBtn'=>true,
-                'format' => 'yyyy-mm-dd',
-            ],
+        <?= $form->field($searchModel, 'dateFrom',['template'=>'{input}'])->widget(\dosamigos\datepicker\DateRangePicker::className(), [
+          'attributeTo' => 'dateTo', 
+          'form' => $form, // best for correct client validation
+          'language' => 'ru',
+          'labelTo' => 'До',
+          // 'size' => 'lg',
+          'clientOptions' => [
+              'autoclose' => true,
+              'format' => 'yyyy-mm-dd',
+              'clearBtn'=>true,
+              'toggleActive' => true,
+          ]
         ]); ?>
     </div>
   </div>
@@ -52,6 +52,10 @@ $this->title = "Отчет по менеджерам";
   </div>
   <?php ActiveForm::end(); ?>  
 </div>
+<p></p>
+<?= \common\widgets\PageViewContentForm::widget(['view'=> $view])?>
+<p></p>
+<?php if($view == 'table'):?>
 <?= GridView::widget([
     'dataProvider' => $dataProvider,
     'columns' => [
@@ -59,22 +63,41 @@ $this->title = "Отчет по менеджерам";
         'username',
         [
             'attribute' => 'newOrderCount',
-            'value' => function($model) use ($dateFrom, $dateTo) {
-                return $model->getNewOrdersCount($dateFrom, $dateTo);
+            'value' => function($model){
+                return $model->getNewOrdersCount();
             }
         ],
         [
             'attribute' => 'workOrderCount',
-            'value' => function($model) use ($dateFrom, $dateTo) {
-                return $model->getWorkOrdersCount($dateFrom, $dateTo);
+            'value' => function($model){
+                return $model->getWorkOrdersCount();
             }
         ],
         [
             'attribute' => 'completeOrderCount',
-            'value' => function($model) use ($dateFrom, $dateTo) {
-                return $model->getCompleteOrdersCount($dateFrom, $dateTo);
+            'value' => function($model){
+                return $model->getCompleteOrdersCount();
             }
         ],
         // 'created_at',
     ],
 ]); ?>
+<?php else:?>
+<?php $form = ActiveForm::begin(['method' => 'get','enableClientValidation' => false]); ?>
+<p></p>
+<div class="input-group">
+  <?= $form->field($searchModel, 'username',['template'=>'{input}'])->textInput(['placeholder' => 'Искать по клиенту'])?>
+  <span class="input-group-btn">
+    <button class="btn btn-info" type="submit">Поиск</button>
+  </span>
+</div>
+<?php ActiveForm::end(); ?> 
+<?= ListView::widget([        
+    'dataProvider' => $dataProvider,
+    'itemView' => 'user_list',
+    'itemOptions' => [
+        'tag' => 'div',
+        'class' => 'news-item',
+    ],
+]);?>
+<?php endif;?>

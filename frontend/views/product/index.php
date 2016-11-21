@@ -16,10 +16,10 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
     <div class="row">
-        <div class="col-md-3">
+        <div class="col-xs-12 col-md-3">
             <?= Html::a('Оформить заказ на доставку', ['order/create'], ['class' => 'btn btn-info btn-block']) ?>            
         </div>
-        <div class="col-md-offset-6 col-md-3">
+        <div class="col-xs-12 col-md-offset-6 col-md-3">
             <?= Html::a('Отчет по остаткам', ['analytic/product'], ['class' => 'btn btn-success btn-block']) ?> 
         </div>
     </div>

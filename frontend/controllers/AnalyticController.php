@@ -78,21 +78,16 @@ class AnalyticController extends BaseController
       ]);
     }
 
-    public function actionUser($dateFrom = false, $dateTo = false)
+    public function actionUser()
     {
 
-        $query = ClientUser::find()
-            ->where(['user.client_id' => $this->client_id]);
-
-        $dataProvider = new ActiveDataProvider(['query' => $query, 'sort' => [
-            'defaultOrder' => ['created_at' => SORT_DESC]
-        ]]);
+        $searchModel = new ClientUser();
+        $dataProvider = $searchModel->search($this->client_id,Yii::$app->request->queryParams);
 
         return $this->render($this->toXls.'user', [
-            'dataProvider' => $dataProvider,
-            'dateFrom' => $dateFrom,
-            'dateTo' => $dateTo,
-            'view' =>  $this->list_view
+          'dataProvider' => $dataProvider,
+          'searchModel' => $searchModel,
+          'view' =>  $this->list_view
         ]);
     }
 
