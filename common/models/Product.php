@@ -69,7 +69,7 @@ class Product extends \yii\db\ActiveRecord
 
   public function afterSave($insert, $changedAttributes)
   {
-    if (!empty($changedAttributes['balance'])) {
+    if (!empty($this->balance)) {
         if ($insert) {
             $this->oldBalance = 0;
         }
@@ -80,7 +80,6 @@ class Product extends \yii\db\ActiveRecord
         } else {
             $analytics->decrease = $this->oldBalance - $this->balance;
         }
-
         $analytics->save();
     }
     $balance = $this->getBalance()->one();
