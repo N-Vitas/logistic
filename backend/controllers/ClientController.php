@@ -8,6 +8,7 @@ use common\models\NotificationSettings;
 use common\models\Order;
 use frontend\models\OrderSearch;
 use frontend\models\ProductSearch;
+use common\models\SearchAnalitic;
 use Yii;
 use common\models\Client;
 use backend\models\ClientSearch;
@@ -46,6 +47,7 @@ class ClientController extends BaseController
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'view' =>  $this->list_view
         ]);
     }
 
@@ -116,46 +118,55 @@ class ClientController extends BaseController
             'dataProvider' => $dataProvider,
             'client' => $client,
             'columns' => self::getClientColumns($client),
+            'view' =>  $this->list_view
         ]);
     }
 
     public function actionOrders($id)
     {
         $client = $this->findModel($id);
-
-        $searchModel = new OrderSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams, $client->is_id);
-
-        // $yesterdayBegin = strtotime(date('Y-m-d') . ' -1 day');
-        // $yesterdayEnd = strtotime(date('Y-m-d') . '');
-        
-        $yesterdayBegin = date('Y-m-d H:i:s',mktime(date("H"), date("i"), date("s"), date("m")  , date("d")-1, date("Y")));
-        $yesterdayEnd = date('Y-m-d H:i:s',mktime(date("H"), date("i"), date("s"), date("m")  , date("d"), date("Y")));
-
-        $deliveredYesterday = Order::find()
-            ->where(['between', 'delivery_date', $yesterdayBegin, $yesterdayEnd])
-            ->andWhere(['client_id' => $client->is_id])
-            ->andWhere(['status' => Order::STATUS_COMPLETE])
-            ->count();
-
-        $deliveredToday = Order::find()
-            ->where(['>', 'delivery_date', $yesterdayEnd])
-            ->andWhere(['status' => Order::STATUS_COMPLETE])
-            ->count();
-
-        $toDeliver = Order::find()
-            ->where(['in', 'status', Order::$activeStatuses])
-            ->count();
+        $searchModel = new SearchAnalitic();
+        $dataProvider = $searchModel->search($client->is_id,Yii::$app->request->queryParams);
 
         return $this->render('order/index', [
-            'client' => $client,
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-            'deliveredYesterday' => $deliveredYesterday,
-            'deliveredToday' => $deliveredToday,
-            'toDeliver' => $toDeliver,
-            'columns' => self::getClientColumns($client),
+            'client' => $client,
+            'view' =>  $this->list_view
         ]);
+        // $searchModel = new OrderSearch();
+        // $dataProvider = $searchModel->search(Yii::$app->request->queryParams, $client->is_id);
+
+        // // $yesterdayBegin = strtotime(date('Y-m-d') . ' -1 day');
+        // // $yesterdayEnd = strtotime(date('Y-m-d') . '');
+        
+        // $yesterdayBegin = date('Y-m-d H:i:s',mktime(date("H"), date("i"), date("s"), date("m")  , date("d")-1, date("Y")));
+        // $yesterdayEnd = date('Y-m-d H:i:s',mktime(date("H"), date("i"), date("s"), date("m")  , date("d"), date("Y")));
+
+        // $deliveredYesterday = Order::find()
+        //     ->where(['between', 'delivery_date', $yesterdayBegin, $yesterdayEnd])
+        //     ->andWhere(['client_id' => $client->is_id])
+        //     ->andWhere(['status' => Order::STATUS_COMPLETE])
+        //     ->count();
+
+        // $deliveredToday = Order::find()
+        //     ->where(['>', 'delivery_date', $yesterdayEnd])
+        //     ->andWhere(['status' => Order::STATUS_COMPLETE])
+        //     ->count();
+
+        // $toDeliver = Order::find()
+        //     ->where(['in', 'status', Order::$activeStatuses])
+        //     ->count();
+
+        // return $this->render('order/index', [
+        //     'client' => $client,
+        //     'searchModel' => $searchModel,
+        //     'dataProvider' => $dataProvider,
+        //     'deliveredYesterday' => $deliveredYesterday,
+        //     'deliveredToday' => $deliveredToday,
+        //     'toDeliver' => $toDeliver,
+        //     'columns' => self::getClientColumns($client),
+        // ]);
     }
 
     /**

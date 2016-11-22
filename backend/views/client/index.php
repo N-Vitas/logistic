@@ -2,6 +2,8 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\widgets\ActiveForm;
+use yii\widgets\ListView;
 
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\ClientSearch */
@@ -18,7 +20,9 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>
         <?= Html::a('Новый клиент', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
-
+    <?= \common\widgets\PageViewContentForm::widget(['view'=> $view])?>
+    <p></p>
+    <?php if($view == 'table'):?>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
@@ -53,5 +57,24 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ],
     ]); ?>
+    <?php else:?>
+    <?php $form = ActiveForm::begin(['method' => 'get']); ?>
+    <p></p>
+    <div class="input-group">
+      <?= $form->field($searchModel, 'name',['template'=>'{input}'])->textInput(['placeholder' => 'Искать по клиенту'])?>
+      <span class="input-group-btn">
+        <button class="btn btn-info" type="button">Поиск</button>
+      </span>
+    </div>
+    <?php ActiveForm::end(); ?> 
+    <?= ListView::widget([        
+        'dataProvider' => $dataProvider,
+        'itemView' => 'client_list',
+        'itemOptions' => [
+            'tag' => 'div',
+            'class' => 'news-item',
+        ],
+    ]);?>
+    <?php endif;?>
 
 </div>
