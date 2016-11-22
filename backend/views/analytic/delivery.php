@@ -42,9 +42,11 @@ ksort($placeholder);
 ?>
 
 <div class="row">
-  <?= $this->render('_search_client_form'); ?>  
+  <div class="col-md-12">
+      <?= $this->render('_client_form'); ?>
+  </div>
   <?php $form = ActiveForm::begin(['method' => 'get']); ?>
-  <div class="col-md-3">
+  <div class="col-md-4">
     <div class="btn-group btn-block">
       <?= $form->field($searchModel, 'date_from',['template'=>'{input}'])->widget(DateRangePicker::className(), [
         'attributeTo' => 'date_to', 
@@ -61,7 +63,16 @@ ksort($placeholder);
       ]); ?>
     </div>
   </div>  
-  <div class="col-md-3">
+  <div class="col-md-4">
+    <div class="btn-group btn-block">
+      <?= Html::button('<i class="glyphicon glyphicon-refresh"></i> Сбросить перриод', [
+          'class' => 'btn btn-success btn-block',
+          'type' => 'button',
+          'onClick' => 'jQuery("#searchanalitic-date_from,#searchanalitic-date_to").val("");this.form.submit()',
+      ]) ?>
+    </div>
+  </div>
+  <div class="col-md-4">
     <div class="btn-group btn-block">
         <?= Html::button('<i class="glyphicon glyphicon-ok"></i> Сформулировать отчет', [
             'class' => 'btn btn-success btn-block',
@@ -69,16 +80,17 @@ ksort($placeholder);
         ]) ?>
     </div>
   </div>
-<?php ActiveForm::end(); ?> 
+  <?php ActiveForm::end(); ?> 
 </div>
 <p></p>
-<?= \common\widgets\DeliveryStatus::widget(['client_id' => $client_id]) ?>
 <div class="row">
   <?php $form = ActiveForm::begin(['method' => 'get']); ?>
-  <div class="col-md-12">
+  <div class="col-md-6">
       <div class="btn-group btn-block">
         <?= $form->field($searchModel, 'filter',['template'=>'{label}{input}'])->dropDownList($radiolist, ['class' => 'form-control','id'=>'change', 'onchange'=>'this.form.submit()']); ?>
       </div>
+  </div>
+  <div class="col-md-6">
       <div class="btn-group btn-block">
         <?= $form->field($searchModel, 'product_id',['template'=>'{label}{input}'])
           ->widget(Select2::className(), [
@@ -94,10 +106,10 @@ ksort($placeholder);
         ?>
       </div>           
   </div>
-  <div class="col-md-4">
-  </div>
   <?php ActiveForm::end(); ?>  
 </div>
+<p></p>
+<?= \common\widgets\DeliveryStatus::widget(['client_id' => $client_id]) ?>
 <?= \common\widgets\PageViewContentForm::widget(['view'=> $view])?>
 <div class="row">
 	<div class="col-md-12">
