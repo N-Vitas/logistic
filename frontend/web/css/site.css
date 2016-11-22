@@ -82,7 +82,9 @@ a.desc:after {
 .grid-view .filters select {
     min-width: 50px;
 }
-
+.btn{
+    margin-bottom: 17px;
+}
 .hint-block {
     display: block;
     margin-top: 5px;

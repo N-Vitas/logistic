@@ -14,12 +14,15 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
-    <div class="pull-right">
-        <?= Html::a('Отчет по пользователям', ['/analytic/user'], ['class' => 'btn btn-info']) ?>
+    <div class="row">
+        <div class="col-md-3">            
+            <?= Html::a('Добавить пользователя', ['create'], ['class' => 'btn btn-success btn-block']) ?>
+        </div>
+        <div class="col-md-3 col-md-offset-6">            
+            <?= Html::a('Отчет по пользователям', ['/analytic/user'], ['class' => 'btn btn-info btn-block']) ?>
+        </div>
     </div>
-
     <p>
-        <?= Html::a('Добавить пользователя', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
