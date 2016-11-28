@@ -96,10 +96,11 @@ class Order extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['client_id', 'client_name', 'phone', 'email', 'payment_type', 'price'], 'required'],
+            [['client_id', 'client_name', 'phone','payment_type', 'price'], 'required'],
             [['created_at', 'comment'], 'safe'],
+            [['email'], 'email'],
             [
-                ['address', 'city_id'],
+                ['address', 'city_id','email'],
                 'required',
                 'when' => function ($model) {
                     return $model->no_shipping;
@@ -113,7 +114,7 @@ class Order extends \yii\db\ActiveRecord
             [['price'], 'number'],
             [
                 [
-                    'client_name', 'address', 'phone', 'email',
+                    'client_name', 'address', 'phone',
                     'payment_type', 'delivery_date'
                 ], 'string', 'max' => 255
             ],
