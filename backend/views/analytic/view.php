@@ -15,7 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     
-    <?= Html::a('< Назад', Yii::$app->request->referrer, ['class' => 'btn btn-info','style'=>'margin-bottom: 17px;']) ?>
+    <?= Html::a('Вернуться к заказам', Yii::$app->request->referrer, ['class' => 'btn btn-info','style'=>'margin-bottom: 17px;']) ?>
 
     <?= DetailView::widget([
         'model' => $model,

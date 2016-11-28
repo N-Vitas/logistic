@@ -13,6 +13,14 @@ $this->title = 'Заказы';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="order-index">
+    <div class="row">
+        <div class="col-xs-12 col-md-3">
+            <?= Html::a('Оформить заказ на доставку', ['order/create'], ['class' => 'btn btn-info btn-block']) ?>            
+        </div>
+        <div class="col-xs-12 col-md-offset-6 col-md-3">
+            <?= Html::a('Отчет по остаткам', ['analytic/product'], ['class' => 'btn btn-success btn-block']) ?> 
+        </div>
+    </div>
     <?= \common\widgets\DeliveryStatus::widget(['client_id' => \Yii::$app->user->getIdentity()->client_id]) ?>
     <p></p>
     <?= \common\widgets\PageViewContentForm::widget(['view'=> $view])?>
