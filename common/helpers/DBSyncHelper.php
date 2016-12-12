@@ -97,6 +97,8 @@ class DBSyncHelper
         }
 
         SyncLog::logImportOrders($created, $updated, $errors);
+
+        \Yii::$app->db->createCommand('TRUNCATE one_c.status_orders')->execute();
     }
 
     public static function exportOrders()
