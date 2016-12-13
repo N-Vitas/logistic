@@ -76,15 +76,15 @@ class Product extends \yii\db\ActiveRecord
         if($this->balance > 0 || $this->oldBalance > 0){         
           $analytics = new ProductAnalytics(['product_id' => $this->id,'created_at' => date('Y-m-d', time())]);
           if ($this->oldBalance < $this->balance) {
-              $analytics->increase = $this->balance - $this->oldBalance;
-              $analytics->decrease = 0;
+              $analytics->increase = $this->balance - $this->oldBalance; // Приход
+              $analytics->decrease = 0;                                  // Уход
               $analytics->save();
           } 
-          if ($this->oldBalance > $this->balance){
-              $analytics->decrease = $this->oldBalance - $this->balance;
-              $analytics->increase = 0;
-              $analytics->save();
-          }        
+          // if ($this->oldBalance > $this->balance){
+          //     $analytics->decrease = $this->oldBalance - $this->balance;
+          //     $analytics->increase = 0;
+          //     $analytics->save();
+          // }        
         }
     }
     $balance = $this->getBalance()->one();

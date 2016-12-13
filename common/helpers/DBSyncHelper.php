@@ -48,8 +48,6 @@ class DBSyncHelper
 
             if (empty($obj)) {
                 $obj = new Product($a);
-
-
                 $created++;
             } else {
                 $updated++;
