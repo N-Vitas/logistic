@@ -78,11 +78,13 @@ class Product extends \yii\db\ActiveRecord
           if ($this->oldBalance < $this->balance) {
               $analytics->increase = $this->balance - $this->oldBalance;
               $analytics->decrease = 0;
-          } else {
+              $analytics->save();
+          } 
+          if ($this->oldBalance > $this->balance){
               $analytics->decrease = $this->oldBalance - $this->balance;
               $analytics->increase = 0;
+              $analytics->save();
           }        
-          $analytics->save();
         }
     }
     $balance = $this->getBalance()->one();

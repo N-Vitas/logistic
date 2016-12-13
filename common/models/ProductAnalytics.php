@@ -60,28 +60,28 @@ class ProductAnalytics extends \yii\db\ActiveRecord
         return self::hasOne(Product::className(), ['id' => 'product_id']);
     }
 
-    public static function getOrCreateByDate($product_id, $date = false)
-    {
-        if (!$date) {
-            $date = date('Y-m-d', time());
-        }
-        if (is_int($date)) {
-            $date = date('Y-m-d', $date);
-        }
+    // public static function getOrCreateByDate($product_id, $date = false)
+    // {
+    //     if (!$date) {
+    //         $date = date('Y-m-d', time());
+    //     }
+    //     if (is_int($date)) {
+    //         $date = date('Y-m-d', $date);
+    //     }
 
-        $model = self::findOne(['created_at' => $date, 'product_id' => $product_id]);
-        if (empty($model)) {
-            $model = new self([
-                'created_at' => $date,
-                'product_id' => $product_id,
-                'increase' => 0,
-                'decrease' => 0,
-            ]);
-            if (!$model->save()) {
-                return false;
-            }
-        }
+    //     $model = self::findOne(['created_at' => $date, 'product_id' => $product_id]);
+    //     // if (empty($model)) {
+    //     //     $model = new self([
+    //     //         'created_at' => $date,
+    //     //         'product_id' => $product_id,
+    //     //         'increase' => 0,
+    //     //         'decrease' => 0,
+    //     //     ]);
+    //     //     if (!$model->save()) {
+    //     //         return false;
+    //     //     }
+    //     // }
 
-        return $model;
-    }
+    //     return $model;
+    // }
 }
