@@ -34,6 +34,12 @@ class DBSyncHelper
     //actionImportProducts 
     public static function importProducts()
     {
+        /*
+        $analytics = new ProductAnalytics(['product_id' => $this->id,'created_at' => date('Y-m-d', time())]);
+    //     //       $analytics->increase = 0; // Приход
+    //     //       $analytics->decrease = $this->reserve; // Уход
+    //     //       $analytics->save();
+        */
         $array = \Yii::$app->db->createCommand("SELECT * FROM one_c.tovars")
             ->queryAll();
         $created = 0;

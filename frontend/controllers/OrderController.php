@@ -83,6 +83,7 @@ class OrderController extends BaseController
                         $query[] = "({$model->id}, {$id}, {$product['quantity']}, {$product['price']})";
                         if($productModel = Product::findOne($id)){
                             $productModel->balance = $productModel->balance - $product['quantity'];
+                            $productModel->reserve = $product['quantity'];
                             $productModel->save();
                         }
                     }
