@@ -51,23 +51,39 @@ class DBSyncHelper
                 'client_id' => $a['client_id'],
                 'nomenclature' => $a['nomenclature']
             ]);
-
-
+            $analytics = new ProductAnalytics(['created_at' => date('Y-m-d', time()),'decrease' => 0 ]);//'product_id' => $product->id,
+            $analyticSaved = false;
+            $ble = (int) preg_replace('/\D/',"",$a['balance']);
             if (empty($obj)) {
                 $obj = new Product($a);
+                $analytics->increase = $ble; // Приход
+                $analyticSaved = true;
                 $created++;
             } else {
                 $updated++;
-            }
-            $obj->balance = (int) preg_replace('/\D/',"",$a['balance']);
+            }            
             if($obj->reserve != 0){
-                $obj->balance = $obj->balance - $obj->reserve;
+                if(($ble - $obj->reserve) > $obj->balance){
+                    $analytics->increase = $ble - $obj->balance;
+                    $analyticSaved = true;
+                }
+                $obj->balance = $ble - $obj->reserve;
+            }else{
+                if($ble > $obj->balance){
+                    $analytics->increase = $ble - $obj->balance;
+                    $analyticSaved = true;                    
+                }
+                $obj->balance = $ble;
             }          
             $obj->updated_at = time();
 
             if (!$obj->save()) {
                 $errors++;
                 print_r($obj->getErrors());
+            }
+            if($analyticSaved){
+                $analytics->product_id = $obj->id;
+                $analytics->save();                                                    
             }
         }
 
