@@ -74,7 +74,7 @@ class DBSyncHelper
         self::setSyncStatus('tovars', 0);
     }
 
-    private function changeProductStatus($orderItemId,$status){
+    public static function changeProductStatus($orderItemId,$status){
         switch ($status) {
             case Order::STATUS_DELIVERING:
                 $orderItems = OrderItem::find()
@@ -137,7 +137,7 @@ class DBSyncHelper
             if (!isset($order->id)) {
                 continue;
             }
-            changeProductStatus($obj->order_id,$obj->status);            
+            self::changeProductStatus($obj->order_id,$obj->status);            
             if (!$obj->save()) {
                 $errors++;
             } else {
