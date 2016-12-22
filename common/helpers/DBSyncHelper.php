@@ -58,7 +58,10 @@ class DBSyncHelper
             } else {
                 $updated++;
             }
-            $obj->balance = (int) preg_replace('/\D/',"",$a['balance']);           
+            $obj->balance = (int) preg_replace('/\D/',"",$a['balance']);
+            if($obj->reserve != 0){
+                $obj->balance = $obj->balance - $obj->reserve;
+            }          
             $obj->updated_at = time();
 
             if (!$obj->save()) {
@@ -69,6 +72,56 @@ class DBSyncHelper
 
         SyncLog::logImportProducts($created, $updated, $errors);
         self::setSyncStatus('tovars', 0);
+    }
+
+    private function changeProductStatus($orderItemId,$status){
+        switch ($status) {
+            case Order::STATUS_DELIVERING:
+                $orderItems = OrderItem::find()
+                ->where(['order_id' => $order['id']])
+                ->all();
+                if($orderItems){
+                    foreach ($orderItems as $orderItem) {
+                        $product = Product::findOne($orderItem->item_id);
+                        if($product){
+                            $product->reserve = 0;
+                            $product->save();
+                        }
+                    }                    
+                }
+                break;
+            case Order::STATUS_COMPLETE:
+                $orderItems = OrderItem::find()
+                ->where(['order_id' => $order['id']])
+                ->all();
+                if($orderItems){
+                    foreach ($orderItems as $orderItem) {
+                        $product = Product::findOne($orderItem->item_id);
+                        if($product){
+                            $product->reserve = 0;
+                            $product->save();
+                        }
+                    }                    
+                }
+                break;
+            case Order::STATUS_CANCELED:
+                $orderItems = OrderItem::find()
+                ->where(['order_id' => $order['id']])
+                ->all();
+                if($orderItems){
+                    foreach ($orderItems as $orderItem) {
+                        $product = Product::findOne($orderItem->item_id);
+                        if($product){
+                            if($product->reserve != 0){
+                                $product->balance = $product->balance + $product->reserve;
+                                $product->reserve = 0;
+                                $product->save();
+                            }
+                        }
+                    }                    
+                }
+                break;
+        }
     }
 
     public static function importOrders()
@@ -84,7 +137,7 @@ class DBSyncHelper
             if (!isset($order->id)) {
                 continue;
             }
-
+            changeProductStatus($obj->order_id,$obj->status);            
             if (!$obj->save()) {
                 $errors++;
             } else {
