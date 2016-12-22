@@ -13,6 +13,7 @@ use common\models\Order;
 use common\models\OrderItem;
 use common\models\OrderLog;
 use common\models\Product;
+use common\models\ProductAnalytics;
 use common\models\SyncLog;
 use yii\helpers\VarDumper;
 
@@ -84,8 +85,17 @@ class DBSyncHelper
                     foreach ($orderItems as $orderItem) {
                         $product = Product::findOne($orderItem->item_id);
                         if($product){
-                            $product->reserve = 0;
-                            $product->save();
+                            if($product->reserve > 0){
+                                $analytics = new ProductAnalytics(['product_id' => $product->id,'created_at' => date('Y-m-d', time())]);
+                                if($analytics){
+                                    $analytics->increase = 0; // Приход
+                                    $analytics->decrease = $product->reserve; // Уход
+                                    $analytics->save();                                    
+                                }
+                                $product->reserve = 0;
+                                $product->save();
+
+                            }
                         }
                     }                    
                 }
@@ -98,8 +108,17 @@ class DBSyncHelper
                     foreach ($orderItems as $orderItem) {
                         $product = Product::findOne($orderItem->item_id);
                         if($product){
-                            $product->reserve = 0;
-                            $product->save();
+                            if($product->reserve > 0){
+                                $analytics = new ProductAnalytics(['product_id' => $product->id,'created_at' => date('Y-m-d', time())]);
+                                if($analytics){
+                                    $analytics->increase = 0; // Приход
+                                    $analytics->decrease = $product->reserve; // Уход
+                                    $analytics->save();                                    
+                                }
+                                $product->reserve = 0;
+                                $product->save();
+
+                            }
                         }
                     }                    
                 }
