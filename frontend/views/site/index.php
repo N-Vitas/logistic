@@ -41,7 +41,9 @@ $this->title = "Главная";
         'columns' => [
           [
             'attribute' => 'id',
-            'contentOptions' =>['class' => 'table_class','style'=>'width:10px;'],
+            'value' => function($model) {
+                return sprintf("%09d", $model->id);
+            },
           ],
           [
             'attribute' => 'created_at',
@@ -145,7 +147,10 @@ $this->title = "Главная";
                 'columns' => [
                   [
                     'attribute' => 'id',
-                    'contentOptions' =>['class' => 'table_class','style'=>'width:10px;'],
+                    'value' => function($model) {
+                        return sprintf("%09d", $model->id);
+                    },
+                    // 'contentOptions' =>['class' => 'table_class','style'=>'width:10px;'],
                   ],
                   [
                     'attribute' => 'created_at',
