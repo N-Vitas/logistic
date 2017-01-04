@@ -42,7 +42,10 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             [
             'attribute' => 'id',
-            'contentOptions' =>['class' => 'table_class','style'=>'width:10px;'],
+            'value' => function($model) {
+                return sprintf("%09d", $model->id);
+            },
+            // 'contentOptions' =>['class' => 'table_class','style'=>'width:10px;'],
           ],
           [
             'attribute' => 'created_at',

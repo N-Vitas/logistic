@@ -6,7 +6,7 @@
   	<div class="container-fluid">
 	    <div class="list-group-item row">
 	    	<div class="col-md-6 col-lg-6 col-xs-6"><?=$model->getAttributeLabel('id')?></div>
-	    	<div class="col-md-6 col-lg-6 col-xs-6"><?=$model->id?></div>            	
+	    	<div class="col-md-6 col-lg-6 col-xs-6"><?=sprintf("%09d", $model->id)?></div>            	
 	    </div>
 	    <div class="list-group-item row">
 	    	<div class="col-md-6 col-lg-6 col-xs-6"><?=$model->getAttributeLabel('created_at')?></div>

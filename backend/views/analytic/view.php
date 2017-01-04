@@ -17,10 +17,25 @@ $this->params['breadcrumbs'][] = $this->title;
     
     <?= Html::a('Вернуться к заказам', Yii::$app->request->referrer, ['class' => 'btn btn-info','style'=>'margin-bottom: 17px;']) ?>
 
-    <?= DetailView::widget([
+    <table id="w0" class="table table-striped table-bordered detail-view">
+        <tbody>
+            <tr><th><?=$model->getAttributeLabel('id')?></th><td><?=sprintf("%09d", $model->id)?></td></tr>
+            <tr><th><?=$model->getAttributeLabel('created_at')?></th><td><?=$model->created_at?></td></tr>
+            <tr><th><?=$model->getAttributeLabel('client_name')?></th><td><?=$model->client_name?></td></tr>
+            <tr><th><?=$model->getAttributeLabel('city.title')?></th><td><?=$model->city->title?></td></tr>
+            <tr><th><?=$model->getAttributeLabel('address')?></th><td><?=$model->address?></td></tr>
+            <tr><th><?=$model->getAttributeLabel('phone')?></th><td><?=$model->phone?></td></tr>
+            <tr><th><?=$model->getAttributeLabel('email')?></th><td><a href="mailto:<?=$model->email?>"><?=$model->email?></a></td></tr>
+            <tr><th><?=$model->getAttributeLabel('paymentType')?></th><td><?=$model->paymentType?></td></tr>
+            <tr><th><?=$model->getAttributeLabel('price')?></th><td><?=$model->price?></td></tr>
+            <tr><th><?=$model->getAttributeLabel('comment')?></th><td><?=$model->comment?></td></tr>
+        </tbody>
+    </table>
+
+    <?php /* DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id',
+            'id',  
             'created_at',
             // 'client_id',
             'client_name',
@@ -32,7 +47,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'price',
             'comment',
         ],
-    ]) ?>
+    ]) */ ?>
 
     <h2>Наименования в заказе</h2>
     <table class="table">
