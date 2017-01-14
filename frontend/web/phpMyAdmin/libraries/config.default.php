@@ -103,7 +103,7 @@ $i = 1;
  *
  * @global string $cfg['Servers'][$i]['host']
  */
-$cfg['Servers'][$i]['host'] = 'clicklog.kz';
+$cfg['Servers'][$i]['host'] = 'localhost';
 
 /**
  * MySQL port - leave blank for default port
