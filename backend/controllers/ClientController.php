@@ -169,6 +169,54 @@ class ClientController extends BaseController
         // ]);
     }
 
+    public function actionOrderCreate($id)
+    {
+        $client = $this->findModel($id);
+        $model = new Order([
+            'client_id' => $client->is_id,
+            'user_id' => \Yii::$app->user->id,
+            'payment_type' => 1
+        ]);
+        // var_dump(Yii::$app->request->post());
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            if (isset($_POST['products'])) {
+                $products = json_decode($_POST['products'], true);
+
+                $query = [];
+                if (!empty($products)) {
+                    foreach ($products as $id => $product) {
+                        $query[] = "({$model->id}, {$id}, {$product['quantity']}, {$product['price']})";
+                        if($productModel = Product::findOne($id)){
+                            $productModel->balance = $productModel->balance - $product['quantity'];
+                            $productModel->reserve = $product['quantity'];
+                            $productModel->save();
+                        }
+                    }
+
+                    \Yii::$app->db
+                        ->createCommand("INSERT INTO order_item (order_id, item_id, quantity, price) VALUES "
+                            . implode(',', $query))
+                        ->execute();
+                }
+            }
+
+            return $this->redirect(['order-view', 'id' => $model->id]);
+        } else {
+            return $this->render('order/create', [
+                'model' => $model,
+            ]);
+        }
+    }
+
+    public function actionOrderView($id){
+        if (($model = Order::findOne($id)) !== null) {
+             return $this->render('order/view', [
+                'model' => $model,
+            ]);
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        } 
+    }
     /**
      * Creates a new Client model.
      * If creation is successful, the browser will be redirected to the 'view' page.
