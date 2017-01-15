@@ -19,10 +19,10 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="col-md-2">
             <?= Html::a('Карточка клиента', ['/client/view', 'id' => $client->id], ['class' => 'btn btn-success btn-block']) ?>            
         </div>
-        <div class="col-md-2">
-            <?= Html::a('Оформить заказ', ['/client/order-create', 'id' => $client->id], ['class' => 'btn btn-success btn-block']) ?>            
+        <div class="col-md-4">
+            <?= Html::a('Оформить заказ для '.$client->name, ['/client/order-create', 'id' => $client->id], ['class' => 'btn btn-success btn-block']) ?>            
         </div>
-        <div class="col-md-2 col-md-offset-4">
+        <div class="col-md-2 col-md-offset-2">
             <?= Html::a('Отчет по платежам', ['/analytic/payments'], ['class' => 'btn btn-success btn-block']) ?>            
         </div>
         <div class="col-md-2">            

@@ -53,7 +53,7 @@ $this->params['breadcrumbs'][] = $this->title;
           <?= Html::a('Остатки клиента на складе', ['products', 'id' => $model->id], ['class' => 'btn btn-block btn-primary' . ($activeProducts == 0 ? ' disabled' : '')]) ?>          
         </div>
         <div class="col-md-6">
-          <?= Html::a('Заказы клиента на доставку', ['orders', 'id' => $model->id], ['class' => 'btn btn-block btn-info' . ($activeOrders == 0 ? ' disabled' : '')]) ?>
+          <?= Html::a('Заказы клиента на доставку', ['orders', 'id' => $model->id], ['class' => 'btn btn-block btn-info' ]) ?>
         </div>
         <div class="col-md-12">
           <h4>Остатки на складе</h4>
