@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use common\models\Client;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Order */
@@ -9,11 +10,12 @@ use yii\widgets\DetailView;
 $this->title = "Заказ на доставку № $model->id";
 $this->params['breadcrumbs'][] = ['label' => 'Orders', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
-    //<?= Html::a('Вернуться к заказам', Yii::$app->request->referrer, ['class' => 'btn btn-info','style'=>'margin-bottom: 17px;']) 
+$client = Client::find()->where(['is_id'=>$model->client_id])->one();
 ?>
 <div class="order-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
+    <?= Html::a('Вернуться к заказам', '/client/orders?id='.$client->id, ['class' => 'btn btn-info','style'=>'margin-bottom: 17px;'])?> 
 
     
 

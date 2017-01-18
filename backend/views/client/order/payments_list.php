@@ -3,7 +3,7 @@ use \common\models\Order;
 ?>
 <div class="box box-success">
   <div class="box-header">
-    <a href="#"><h4 class="box-title"><i class="fa fa-archive"></i> <?=$model->client_name?></h4></a>
+    <a href="/client/order-view?id=<?= $model->id?>"><h4 class="box-title"><i class="fa fa-archive"></i> <?=$model->client_name?></h4></a>
   </div>
   <div class="box-body list-group">
   	<div class="container-fluid">
