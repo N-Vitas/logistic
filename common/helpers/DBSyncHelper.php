@@ -35,6 +35,7 @@ class DBSyncHelper
     //actionImportProducts 
     public static function importProducts()
     {
+        date_default_timezone_set('Asia/Almaty');
         /*
         $analytics = new ProductAnalytics(['product_id' => $this->id,'created_at' => date('Y-m-d', time())]);
     //     //       $analytics->increase = 0; // Приход
@@ -92,10 +93,11 @@ class DBSyncHelper
     }
 
     public static function changeProductStatus($orderItemId,$status){
+        date_default_timezone_set('Asia/Almaty');
         switch ($status) {
             case Order::STATUS_DELIVERING:
                 $orderItems = OrderItem::find()
-                ->where(['order_id' => $order['id']])
+                ->where(['order_id' => $orderItemId])
                 ->all();
                 if($orderItems){
                     foreach ($orderItems as $orderItem) {
@@ -118,7 +120,7 @@ class DBSyncHelper
                 break;
             case Order::STATUS_COMPLETE:
                 $orderItems = OrderItem::find()
-                ->where(['order_id' => $order['id']])
+                ->where(['order_id' => $orderItemId])
                 ->all();
                 if($orderItems){
                     foreach ($orderItems as $orderItem) {
@@ -141,7 +143,7 @@ class DBSyncHelper
                 break;
             case Order::STATUS_CANCELED:
                 $orderItems = OrderItem::find()
-                ->where(['order_id' => $order['id']])
+                ->where(['order_id' => $orderItemId])
                 ->all();
                 if($orderItems){
                     foreach ($orderItems as $orderItem) {
@@ -161,6 +163,7 @@ class DBSyncHelper
 
     public static function importOrders()
     {
+        date_default_timezone_set('Asia/Almaty');
         $array = \Yii::$app->db->createCommand("SELECT * FROM one_c.status_orders")->queryAll();
         $updated = 0;
         $created = 0;
@@ -168,7 +171,7 @@ class DBSyncHelper
         foreach ($array as $a) {
             $obj = new OrderLog($a);
 
-            $order = Order::findOne(['id' => $obj->order_id]);
+            $order = Order::findOne($obj->order_id);
             if (!isset($order->id)) {
                 continue;
             }
@@ -195,8 +198,13 @@ class DBSyncHelper
 
     public static function exportOrders()
     {
-        \Yii::$app->db->createCommand('TRUNCATE one_c.orders')
-            ->execute();
+        date_default_timezone_set('Asia/Almaty');
+        // echo date('Y-m-d H:i:s').PHP_EOL;
+        // echo date('Y-m-d H:i:s', strtotime('-15 minutes', time())).PHP_EOL;
+        // $date = date("H");
+        // if($date == 3)
+            \Yii::$app->db->createCommand('TRUNCATE one_c.orders')->execute();            
+        
 
         $output = [];
 
@@ -222,8 +230,8 @@ class DBSyncHelper
 
         $orders = Order::find()
             ->select($columns)
-            ->where(['exported' => 0])
-            ->andWhere(['>', 'orders.created_at', date('Y-m-d H:i:s', strtotime('-15 minutes', time()))])
+            // ->where(['exported' => 0])
+            ->where(['>', 'orders.updated_at', date('Y-m-d H:i:s', strtotime('-15 minutes', time()))])
             ->joinWith('city')
             ->asArray()
             ->all();
@@ -253,13 +261,14 @@ class DBSyncHelper
         }
         if (sizeof($output)) {
             foreach ($output as $row) {
-                \Yii::$app->db->createCommand("
+                // var_dump($row);continue;
+                $test = \Yii::$app->db->createCommand("
                       INSERT INTO `one_c`.`orders` (`id`, `created_at`, `client_id`, `client_name`, 
                       `address`, `phone`, `email`, `payment_type`, `quantity`, `item_price`, `title`, `nomenclature`) 
                       VALUES ('" . implode("', '", $row) . "')")
                     ->execute();
             }
         }
-        Order::updateAll(['exported' => 1]);
+        //Order::updateAll(['exported' => 1]);
     }
 }
