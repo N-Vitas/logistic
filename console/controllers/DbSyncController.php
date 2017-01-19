@@ -35,4 +35,11 @@ class DbSyncController extends Controller
     {
         DBSyncHelper::exportOrders();
     }
+
+    public function actionTest()
+    {
+        date_default_timezone_set('Asia/Almaty');
+        echo date("H").PHP_EOL;
+        echo date_default_timezone_get().PHP_EOL;
+    }
 }

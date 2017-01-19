@@ -195,6 +195,8 @@ class DBSyncHelper
 
     public static function exportOrders()
     {
+        date_default_timezone_set('Asia/Almaty');
+        echo date("H").PHP_EOL;
         \Yii::$app->db->createCommand('TRUNCATE one_c.orders')
             ->execute();
 
