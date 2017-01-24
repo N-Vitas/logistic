@@ -36,11 +36,11 @@ $('.add-product').click(function() {
     productId = $($(this).data('select')).val();
     if (productId && !productIds[productId]) {
         $('.no-products').addClass('hidden');
-        productIds[productId] = {price : 0, quantity : 1};
+        productIds[productId] = {price : 1, quantity : 1};
         $('.products-list').append('<tr class=\"product-'+productId+'\"><td>'
         +productLabels[productId]+
         '</td><td>'+
-        '<input class=\"form-control product-price-'+productId+'\" data-id=\"'+productId+'\" placeholder=\"Цена\" required value=\"0\">'
+        '<input class=\"form-control product-price-'+productId+'\" data-id=\"'+productId+'\" placeholder=\"Цена\" required value=\"1\">'
         +'</td><td>'
         + '<div class=\"input-group\">'
         +'<input class=\"form-control product-quantity-'+productId+'\" data-id=\"'+productId+'\" placeholder=\"Кол-во\" required value=\"1\" type=\"number\">'
