@@ -47,7 +47,10 @@ class BaseController extends \yii\web\Controller
 
             $this->client = Client::findOne($this->client_id);
             if (empty($this->client) || !$this->client->is_active) {
-                $this->layout = 'client-disabled';
+                // $this->layout = 'client-disabled';
+                \Yii::$app->session
+                    ->setFlash('error', 'Извините ваша учетная запись заблокированна! Свяжитесь с администратором сервиса.');
+                \Yii::$app->user->logout();
                 return '';
             }
 
