@@ -36,6 +36,20 @@ class ClientUser extends \common\models\User
         ]);
     }
 
+    public function beforeSave($insert)
+    {
+        if ($insert) {
+            $this->client_id = \Yii::$app->user->getIdentity()->client_id;
+        }
+        // if ($this->imageFile) {
+        //     $fileName = 'uploads/' . $this->imageFile->baseName . '.' . $this->imageFile->extension;
+        //     if ($this->imageFile->saveAs($fileName)) {
+        //         $this->image = $fileName;
+        //     }
+        // }
+        return parent::beforeSave($insert);
+    }
+    
     public function afterSave($insert, $changedAttributes)
     {
         if ($insert) {
