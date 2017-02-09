@@ -41,6 +41,12 @@ class ClientUser extends \common\models\User
         if ($insert) {
             $auth = \Yii::$app->getAuthManager();
             $auth->assign($auth->getRole($this->role), $this->id);
+        }else{            
+            $auth = \Yii::$app->getAuthManager();
+            $item = $auth->getRole($this->role);
+            $item = $item ? : $auth->getPermission($this->role);
+            $auth->revokeAll($this->id);            
+            $auth->assign($auth->getRole($this->role), $this->id);
         }
 
         parent::afterSave($insert, $changedAttributes);
