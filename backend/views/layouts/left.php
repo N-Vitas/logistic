@@ -45,17 +45,17 @@ $user = \Yii::$app->user->identity; ?>
                     ['label' => 'Менеджеры сервиса', 'icon' => 'fa fa-users', 'url' => ['/user']],
 
                     ['label' => 'Login', 'url' => ['site/login'], 'visible' => Yii::$app->user->isGuest],
-                    [
-                        'label' => 'Настройки',
-                        'icon' => 'fa fa-gear',
-                        'url' => '#',
-                        'items' => [
-                            // ['label' => 'Настройки сервиса', 'icon' => 'fa fa-gear', 'url' => ['/settings']],
-                            ['label' => 'Профиль', 'icon' => 'fa fa-user', 'url' => ['site/profile']],
-                            ['label' => 'Города', 'icon' => 'fa fa-building', 'url' => ['/city']],
+                    // [
+                    //     'label' => 'Настройки',
+                    //     'icon' => 'fa fa-gear',
+                    //     'url' => '#',
+                    //     'items' => [
+                    //         // ['label' => 'Настройки сервиса', 'icon' => 'fa fa-gear', 'url' => ['/settings']],
+                    //         ['label' => 'Профиль', 'icon' => 'fa fa-user', 'url' => ['site/profile']],
+                    //         ['label' => 'Города', 'icon' => 'fa fa-building', 'url' => ['/city']],
 
-                        ],
-                    ],
+                    //     ],
+                    // ],
                     [
                         'label' => 'Аналитика и отчеты',
                         'icon' => 'fa fa-share',
